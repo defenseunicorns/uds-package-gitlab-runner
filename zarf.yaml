@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-runner
+  description: "UDS GitLab Runner Zarf Package"
+  # x-release-please-start-version
+  version: "0.1.0"
+  # x-release-please-end
+  architecture: amd64
+
+variables:
+  - name: GITLAB_RUNNER_DEPENDS_ON
+    autoIndent: true
+    default: |
+      - name: gitlab
+        namespace: bigbang
+  - name: GITLAB_RUNNER_CREATE_NAMESPACE
+    default: "false"
+  - name: AUTO_REGISTER
+    default: "true"
+
+components:
+  - name: gitlab-runner
+    required: true
+    description: "Deploy gitlab-runner"
+    charts:
+      - name: gitlab-runner
+        namespace: gitlab-runner
+        url: https://repo1.dso.mil/big-bang/product/packages/gitlab-runner.git
+        gitPath: chart
+        version: "0.58.1-bb.0"
+        valuesFiles:
+          - values/gitlab-runner-values.yaml
+    images:
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.5.0
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.5.0
+      - registry1.dso.mil/ironbank/redhat/ubi/ubi8:8.7
+    # actions:
+    #   onDeploy:
+    #     after:
+    #       - wait:
+    #           cluster:
+    #             kind: helmRelease
+    #             name: gitlab-runner
+    #             condition: Ready
+    #             namespace: bigbang
+    #         maxTotalSeconds: 900
+    #         description: GitLab-Runner HelmRelease to be Ready

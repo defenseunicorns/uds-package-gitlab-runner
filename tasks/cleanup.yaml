@@ -1,0 +1,5 @@
+tasks:
+  - name: runner-package
+    actions:
+      - description: Remove the UDS Gitlab Runner Package
+        cmd: cd build && zarf package remove zarf-package-gitlab-runner-amd*.tar.zst --confirm

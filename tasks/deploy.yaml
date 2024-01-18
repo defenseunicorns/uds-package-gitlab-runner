@@ -1,0 +1,5 @@
+tasks:
+  - name: runner-package
+    actions:
+      - description: Deploy the UDS Gitlab Runner Package
+        cmd: cd build && zarf package deploy zarf-package-gitlab-runner-amd*.tar.zst --confirm

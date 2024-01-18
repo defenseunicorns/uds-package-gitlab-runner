@@ -1,0 +1,30 @@
+includes:
+  - setup: ./tasks/setup.yaml
+  - create: ./tasks/create.yaml
+  - deploy: ./tasks/deploy.yaml
+  - cleanup: ./tasks/cleanup.yaml
+
+
+tasks:
+  - name: setup
+    actions:
+      - task: setup:k3d-test-cluster
+      - task: setup:gitlab-runner-secret
+
+  - name: create
+    actions:
+      - task: create:runner-package
+
+  - name: deploy
+    actions:
+      - task: deploy:runner-package
+
+  - name: cleanup
+    actions:
+      - task: cleanup:runner-package
+
+  - name: all
+    actions:
+      - task: setup
+      - task: create
+      - task: deploy
