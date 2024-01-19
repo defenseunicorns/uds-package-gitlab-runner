@@ -11,8 +11,7 @@
       ],
       "versioning": "always-bump-patch",
       "extra-files": [
-        "zarf.yaml",
-        "utils/pkg-deps/rbac/zarf.yaml"
+        "zarf.yaml"
       ]
     }
   }

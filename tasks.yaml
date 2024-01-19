@@ -2,29 +2,42 @@ includes:
   - setup: ./tasks/setup.yaml
   - create: ./tasks/create.yaml
   - deploy: ./tasks/deploy.yaml
-  - cleanup: ./tasks/cleanup.yaml
 
 
 tasks:
-  - name: setup
+  - name: k3d-cluster-gitlab-runner
+    description: Deploy k3d cluster and then UDS Gitlab Runner 
     actions:
       - task: setup:k3d-test-cluster
+      - task: setup:gitlab-runner-namespace
       - task: setup:gitlab-runner-secret
-
-  - name: create
-    actions:
       - task: create:runner-package
-
-  - name: deploy
-    actions:
       - task: deploy:runner-package
 
-  - name: cleanup
-    actions:
-      - task: cleanup:runner-package
+  # - name: gitlab-and-gitlab-runner
+  #   description: Deploy UDS Gitlab Package and UDS Gitlab Runner
+  #   actions:
+  #     - task: setup:k3d-test-cluster
+  #     - cmd: cd build && zarf package create ../pkg-deps/gitlab/ --skip-sbom --confirm
+  #     - task: setup:gitlab-runner-namespace
+  #     - cmd: cd build && zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
 
-  - name: all
+  - name: gitlab-runner
+    description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
     actions:
-      - task: setup
-      - task: create
-      - task: deploy
+      - task: setup:gitlab-runner-registration-token
+      - task: setup:gitlab-runner-namespace
+      - task: setup:gitlab-runner-secret
+      - task: create:runner-package
+      - task: deploy:runner-package
+
+
+  - name: cleanup-gitlab-runner
+    description: Remove the gitlab-runner namespace
+    actions:
+      - cmd: kubectl delete namespace gitlab-runner --v=9
+
+  - name: cleaup-cluster
+    description: Delete the k3d cluster
+    actions:
+      - cmd: k3d cluster delete uds

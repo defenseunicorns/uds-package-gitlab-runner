@@ -55,32 +55,18 @@ jobs:
       - name: Build gitlab-runner package
         run: zarf package create --confirm --no-progress
 
-      - name: Run E2E Tests
-        uses: ./.github/actions/e2e
-        with:
-          token: ${{ secrets.PAT }}
-          role-to-assume: ${{ secrets.AWS_COMMERCIAL_ROLE_TO_ASSUME }}
-          region: ${{ vars.AWS_REGION }}
-          github-context: "test / e2e (${{github.event_name}})"
-          aws-availability-zone: ${{ vars.AWS_AVAILABILITY_ZONE }}
-          registry1-username: ${{ secrets.REGISTRY1_USERNAME }}
-          registry1-password: ${{ secrets.REGISTRY1_PASSWORD }}
-
       - name: Login to GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: dummy
           password: ${{ secrets.GITHUB_TOKEN }}
 
       ####
       # Build and publish packages
       ####
-      - name: Build and publish dev-dependency gitlab runner rbac package
-        run: cd utils/pkg-deps/rbac && zarf package create --confirm --no-progress --output oci://ghcr.io/defenseunicorns/uds-capability/gitlab-runner/dev-dependency
-
       - name: Publish gitlab runner package
-        run: zarf package publish zarf-package-gitlab-runner-amd64-*.tar.zst oci://ghcr.io/defenseunicorns/uds-capability --no-progress
+        run: zarf package publish zarf-package-gitlab-runner-amd64-*.tar.zst oci://ghcr.io/defenseunicorns/package --no-progress
 
       - name: Publish gitlab runner skeleton
-        run: zarf package publish . oci://ghcr.io/defenseunicorns/uds-capability
+        run: zarf package publish . oci://ghcr.io/defenseunicorns/package

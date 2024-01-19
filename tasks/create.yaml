@@ -1,5 +1,5 @@
 tasks:
   - name: runner-package
     actions:
-      - description: Create Runner Zarf package for Deployment
+      - description: Create UDS Gitlab Runner Zarf package for Deployment
         cmd: mkdir -p build && cd build && zarf package create ../ --skip-sbom --confirm

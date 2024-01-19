@@ -1,0 +1,22 @@
+global:
+  kas:
+    enabled: false
+  hosts:
+    domain: example.com
+    externalIP: 10.10.10.10
+certmanager-issuer:
+  email: me@example.com
+gitlab-runner:
+  install: false
+certmanager:
+  install: false
+haproxy:
+  install: false
+prometheus:
+  install: false
+traefik:
+  install: false
+gitlab-zoekt:
+  install: false
+nginx-ingress:
+  enabled: false

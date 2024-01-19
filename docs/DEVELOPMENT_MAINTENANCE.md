@@ -1,39 +1,7 @@
-# UDS Capability Gitlab Runner
-
-## How to upgrade this capability
+# UDS Package Gitlab Runner
 
 This package is pulling in the [bigbang gitlab runner chart](https://repo1.dso.mil/big-bang/product/packages/gitlab-runner)
 
-The [gitlab-runner-flux-values.yaml](../gitlab-runner-flux-values.yaml) file contains values used when creating the flux resources for this capability. This includes the version of the chart and the base values used for this capability.
-
-To upgrade
-1) Point `application.ref.tag` to the updated version of the chart.
-1) Update any base values if necessary.
-1) Update the `gitlab-runner` component in the [zarf.yaml](../zarf.yaml) file to pull in the correct images needed for the updated version of the chart.
-
-## How to test this capability
-
-1) With docker running and while connected to an aws account.
-2) Set these env variables.
-```bash
-export REPO_URL=https://github.com/defenseunicorns/uds-capability-gitlab-runner.git
-export GIT_BRANCH=<REPLACE_ME>
-export REGISTRY1_USERNAME=<REPLACE_ME>
-export REGISTRY1_PASSWORD=<REPLACE_ME>
-export AWS_AVAILABILITY_ZONE=a
-```
-
- 3) At the root of this repository, you can run `make test`. This will provision an ec2 instance, build and deploy all dependencies and packages, and run an e2e test to insure the capability is deploying successfully, available and ready.
-
-You can also follow the bread crumbs of the Makefile to manually create the cluster as well as build and deploy all the necessary packages.
-
-## How to manually trigger e2e tests in a github PR
-
-This project uses [slash command dispatch](https://github.com/peter-evans/slash-command-dispatch). To use this, add a comment in your PR that says `/test all`. This will trigger the e2e tests for this repo.
-
-## Auto e2e tests
-
-This project will automatically run e2e tests on pushes to `main`
 
 ## Creating Releases
 
