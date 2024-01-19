@@ -1,6 +1,10 @@
 name: Test package
 
 on:
+
+  # Branch Push Trigger
+  push:
+
   # Manual trigger
   workflow_dispatch:
 
@@ -17,7 +21,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: "uds-ubuntu-big-boy-16-core"
+    runs-on: "ubuntu-latest"
     timeout-minutes: 20
     name: Test
 
