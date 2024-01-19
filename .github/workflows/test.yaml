@@ -35,10 +35,13 @@ jobs:
       - name: Iron Bank Login
         run: zarf tools registry login -u "${{secrets.IRON_BANK_ROBOT_USERNAME}}" -p "${{secrets.IRON_BANK_ROBOT_PASSWORD}}" registry1.dso.mil
 
-      - name: Stand up k3d cluster and deploy gitlab runner
-        run: uds run k3d-cluster-gitlab-runner
+      - name: Standup k3d Cluster and Gitlab Yolo
+        run: uds run gitlab-yolo
 
-      - name: Cleanup
+      - name: Create and Deploy UDS Gitlab Runner
+        run: uds run gitlab-runner
+
+      - name: Cleanup the k3d Cluster
         if: always()
         run: uds run cleanup-cluster
 

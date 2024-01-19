@@ -14,13 +14,14 @@ tasks:
       - task: create:runner-package
       - task: deploy:runner-package
 
-  # - name: gitlab-and-gitlab-runner
-  #   description: Deploy UDS Gitlab Package and UDS Gitlab Runner
-  #   actions:
-  #     - task: setup:k3d-test-cluster
-  #     - cmd: cd build && zarf package create ../pkg-deps/gitlab/ --skip-sbom --confirm
-  #     - task: setup:gitlab-runner-namespace
-  #     - cmd: cd build && zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
+  - name: gitlab-yolo
+    description: Deploy Gitlab Yolo chart for testing purposes
+    actions:
+      - task: setup:k3d-test-cluster
+      - cmd: cd build && zarf package create ../pkg-deps/gitlab/ --skip-sbom --confirm
+      - cmd: kubectl create namespace gitlab
+      - cmd: kubectl label namespace gitlab zarf.dev/agent=ignore
+      - cmd: cd build && zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
 
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
@@ -31,13 +32,12 @@ tasks:
       - task: create:runner-package
       - task: deploy:runner-package
 
-
   - name: cleanup-gitlab-runner
     description: Remove the gitlab-runner namespace
     actions:
       - cmd: kubectl delete namespace gitlab-runner --v=9
 
-  - name: cleaup-cluster
+  - name: cleanup-cluster
     description: Delete the k3d cluster
     actions:
       - cmd: k3d cluster delete uds
