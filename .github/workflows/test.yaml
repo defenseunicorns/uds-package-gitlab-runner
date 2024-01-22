@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: "ubuntu-latest"
+    runs-on: "uds-ubuntu-big-boy-16-core"
     name: Test
 
     steps:
