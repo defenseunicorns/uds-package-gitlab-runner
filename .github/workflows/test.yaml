@@ -23,6 +23,9 @@ jobs:
   test:
     runs-on: "uds-ubuntu-big-boy-8-core"
     name: Test
+    strategy:
+      matrix:
+        flavor: [upstream-ce, registry1]    
 
     steps:
       - name: Checkout
@@ -37,7 +40,7 @@ jobs:
           password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
 
       - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
-        run: uds run cluster-full
+        run: uds run cluster-full --set FLAVOR=${{ matrix.flavor }}
 
       - name: Run Health Check Tests for Gitlab and Gitlab Runner
         run: uds run test-package
