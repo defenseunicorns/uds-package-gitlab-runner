@@ -2,7 +2,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: gitlab-runner-gitlab
-  version: "0.0.2"
+  version: "7.3.0"
   architecture: amd64
   yolo: true
 
