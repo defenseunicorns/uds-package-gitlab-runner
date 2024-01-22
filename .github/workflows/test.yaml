@@ -33,6 +33,9 @@ jobs:
 
       - name: Environment setup
         uses: ./.github/actions/setup
+        with:
+          username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
+          password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
 
       - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
         run: uds run cluster-full
