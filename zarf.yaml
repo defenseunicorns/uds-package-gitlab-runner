@@ -37,3 +37,20 @@ components:
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.5.0
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.5.0
       - registry1.dso.mil/ironbank/redhat/ubi/ubi8:8.7
+
+  - name: gitlab-runner
+    required: true
+    description: "Deploy gitlab-runner"
+    only:
+      flavor: upstream
+    charts:
+      - name: gitlab-runner
+        namespace: gitlab-runner
+        url: https://charts.gitlab.io
+        gitPath: chart
+        version: "0.58.1"
+        valuesFiles:
+          - values/gitlab-runner-values.yaml
+    images:
+      - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.5.0
+      - registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine3.18-x86_64-v16.5.0
