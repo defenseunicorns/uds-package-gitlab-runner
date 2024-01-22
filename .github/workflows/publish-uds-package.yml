@@ -1,7 +1,7 @@
 name: Publish Zarf Package
 strategy:
   matrix:
-    flavor: [upstream-ce, registry1]
+    flavor: [upstream, registry1]
 
 on:
   workflow_call:

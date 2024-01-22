@@ -25,7 +25,7 @@ jobs:
     name: Test
     strategy:
       matrix:
-        flavor: [upstream-ce, registry1]    
+        flavor: [upstream, registry1]    
 
     steps:
       - name: Checkout
