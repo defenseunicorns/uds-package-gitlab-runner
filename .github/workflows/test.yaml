@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: "uds-ubuntu-big-boy-16-core"
+    runs-on: "uds-ubuntu-big-boy-8-core"
     name: Test
 
     steps:
@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
 
       - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
-        run: uds run cluster-full -ltrace
+        run: uds run cluster-full
 
       - name: Run Health Check Tests for Gitlab and Gitlab Runner
         run: uds run test-package

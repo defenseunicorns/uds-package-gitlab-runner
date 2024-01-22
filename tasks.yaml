@@ -21,7 +21,7 @@ tasks:
       - cmd: zarf package create ./pkg-deps/gitlab/ --skip-sbom --confirm
       - cmd: kubectl create namespace gitlab
       - cmd: kubectl label namespace gitlab zarf.dev/agent=ignore
-      - cmd: zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm -ltrace
+      - cmd: zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
 
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
