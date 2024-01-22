@@ -33,6 +33,10 @@ components:
         version: "0.58.1-bb.0"
         valuesFiles:
           - values/gitlab-runner-values.yaml
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: chart
     images:
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.5.0
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.5.0
@@ -51,6 +55,10 @@ components:
         version: "0.58.1"
         valuesFiles:
           - values/gitlab-runner-values.yaml
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: chart
     images:
       - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.5.0
       - registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine3.18-x86_64-v16.5.0

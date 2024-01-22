@@ -1,0 +1,31 @@
+apiVersion: uds.dev/v1alpha1
+kind: Package
+metadata:
+  name: gitlab-runner
+  namespace: {{ .Release.Namespace }}
+spec:
+  network:
+    allow:
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteNamespace: gitlab
+
+      - direction: Ingress
+        remoteGenerated: IntraNamespace
+
+      - direction: Egress
+        remoteGenerated: IntraNamespace
+
+      - direction: Ingress
+        podLabels:
+          app: gitlab-runner
+        remoteNamespace: monitoring
+        remotePodLabels:
+          app: prometheus
+        ports:
+          - 9252
+          - 15020
+
+
+        
