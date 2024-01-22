@@ -1,0 +1,22 @@
+tasks:
+  - name: health-check
+    description: Check the status of Gitlab and Gitlab Runner StatefulSet
+    actions:
+      - description: Check Gitlab StatefulSet
+        wait:
+          cluster:
+            kind: StatefulSet
+            name: gitlab-gitaly
+            namespace: gitlab
+      - description: Check Gitlab Default Webservice Deployment
+        wait:
+          cluster:
+            kind: Deployment
+            name: gitlab-webservice-default
+            namespace: gitlab
+      - description: Check Gitlab Runner Deployment
+        wait:
+          cluster:
+            kind: Deployment
+            name: gitlab-runner
+            namespace: gitlab-runner

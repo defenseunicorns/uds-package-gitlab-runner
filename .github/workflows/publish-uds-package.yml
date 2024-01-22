@@ -1,0 +1,35 @@
+name: Publish Zarf Package
+strategy:
+  matrix:
+    flavor: [registry1]
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-publish-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+        with:
+          username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
+          password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
+          install-k3d: false
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: dummy
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish gitlab runner package
+        run: uds run -f tasks/publish.yaml package --set FLAVOR=${{ matrix.flavor }}

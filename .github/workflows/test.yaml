@@ -27,19 +27,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@4
 
       - name: Environment setup
         uses: ./.github/actions/setup
-      
-      - name: Iron Bank Login
-        run: zarf tools registry login -u "${{secrets.IRON_BANK_ROBOT_USERNAME}}" -p "${{secrets.IRON_BANK_ROBOT_PASSWORD}}" registry1.dso.mil
 
-      - name: Standup k3d Cluster and Gitlab Yolo
-        run: uds run gitlab-yolo
+      - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
+        run: uds run cluster-full
 
-      - name: Create and Deploy UDS Gitlab Runner
-        run: uds run gitlab-runner
+      - name: Run Health Check Tests for Gitlab and Gitlab Runner
+        run: uds run test-package
 
       - name: Cleanup the k3d Cluster
         if: always()

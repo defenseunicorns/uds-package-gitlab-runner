@@ -1,5 +1,9 @@
+variables:
+  - name: FLAVOR
+    default: "registry1"
+
 tasks:
   - name: runner-package
     actions:
       - description: Create UDS Gitlab Runner Zarf package for Deployment
-        cmd: mkdir -p build && cd build && zarf package create ../ --skip-sbom --confirm
+        cmd: zarf package create --confirm --no-progress --architecture=${ZARF_ARCHITECTURE} --flavor ${FLAVOR}
