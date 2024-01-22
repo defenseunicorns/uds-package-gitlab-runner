@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
 
       - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
-        run: uds run cluster-full
+        run: uds run cluster-full -ltrace
 
       - name: Run Health Check Tests for Gitlab and Gitlab Runner
         run: uds run test-package
