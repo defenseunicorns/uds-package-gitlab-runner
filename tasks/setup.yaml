@@ -8,7 +8,9 @@ tasks:
   - name: gitlab-runner-namespace
     actions:
       - description: Create gitlab-runner namespace
-        cmd: kubectl create namespace gitlab-runner
+        cmd: |
+          kubectl create namespace gitlab-runner || true
+          kubectl label ns gitlab-runner istio-injection=enabled
 
   - name: gitlab-runner-secret
     actions:
@@ -17,4 +19,4 @@ tasks:
         setVariables:
           - name: RUNNER_REGISTRATION_TOKEN
       - description: Create gitlab-runner namespace and secret
-        cmd:  kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9
+        cmd:  kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true

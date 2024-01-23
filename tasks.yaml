@@ -17,9 +17,10 @@ tasks:
   - name: gitlab-yolo
     description: Deploy Gitlab Yolo chart for testing purposes
     actions:
-      - task: setup:k3d-test-cluster
+      # - task: setup:k3d-test-cluster
       - cmd: zarf package create ./pkg-deps/gitlab/ --skip-sbom --confirm
-      - cmd: kubectl create namespace gitlab
+      - cmd: kubectl create namespace gitlab || true
+      - cmd: kubectl label ns gitlab istio-injection=enabled
       - cmd: kubectl label namespace gitlab zarf.dev/agent=ignore
       - cmd: zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
 

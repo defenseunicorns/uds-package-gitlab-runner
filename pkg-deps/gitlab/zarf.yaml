@@ -7,6 +7,14 @@ metadata:
   yolo: true
 
 components:
+  - name: peer-auths
+    required: true
+    manifests:
+      - name: peer-auths
+        files:
+          - manifests/postgres-pa.yaml
+          - manifests/redis-pa.yaml
+
   - name: gitlab-yolo
     required: true
     charts:
@@ -16,3 +24,4 @@ components:
         url: https://charts.gitlab.io
         valuesFiles:
           - values.yaml
+    
