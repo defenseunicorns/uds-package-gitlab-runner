@@ -26,6 +26,10 @@ components:
     only:
       flavor: registry1
     charts:
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: chart
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://repo1.dso.mil/big-bang/product/packages/gitlab-runner.git
@@ -33,10 +37,6 @@ components:
         version: "0.58.1-bb.0"
         valuesFiles:
           - values/gitlab-runner-values.yaml
-      - name: uds-gitlab-runner-config
-        namespace: gitlab-runner
-        version: 0.1.0
-        localPath: chart
     images:
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.5.0
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.5.0
