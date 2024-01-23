@@ -8,9 +8,7 @@ tasks:
   - name: gitlab-runner-namespace
     actions:
       - description: Create gitlab-runner namespace
-        cmd: |
-          kubectl create namespace gitlab-runner || true
-          kubectl label ns gitlab-runner istio-injection=enabled
+        cmd: kubectl create namespace gitlab-runner
 
   - name: gitlab-runner-secret
     actions:
