@@ -25,5 +25,3 @@ When changes are merged to the `main` branch, the Release Please will evaluate a
 
 When the auto generated Release Please PR is merged the following steps will automatically happen.
 1) A new release will be created and tagged
-1) An e2e test will be triggered
-1) If e2e passes, a new capability artifact will be published to the OCI registry
