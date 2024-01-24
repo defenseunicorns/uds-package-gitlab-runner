@@ -1,7 +1,4 @@
 name: Publish Zarf Package
-strategy:
-  matrix:
-    flavor: [upstream, registry1]
 
 on:
   workflow_call:
@@ -13,6 +10,9 @@ permissions:
 jobs:
   build-and-publish-package:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        flavor: [upstream, registry1]
 
     steps:
       - name: Checkout
@@ -25,6 +25,7 @@ jobs:
           username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
           install-k3d: false
+          download-init-package: false
 
       - name: Login to GHCR
         uses: docker/login-action@v3
