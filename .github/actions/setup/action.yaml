@@ -11,10 +11,10 @@ inputs:
     required: true
   download-init-package:
     description: "whether to download the zarf init package or not"
-    default: true
+    default: "true"
   install-k3d:
     description: "whether to install k3d or not"
-    default: true
+    default: "true"
 
 runs:
   using: "composite"
