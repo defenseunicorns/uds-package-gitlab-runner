@@ -10,6 +10,9 @@ spec:
         podLabels:
           app: gitlab-runner
         remoteNamespace: gitlab
+        remotePodLabels:
+          app: webservice
+        port: 8081
 
       - direction: Ingress
         remoteGenerated: IntraNamespace
