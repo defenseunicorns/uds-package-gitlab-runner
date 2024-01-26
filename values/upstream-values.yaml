@@ -1,0 +1,30 @@
+    # no longer necessary to directly pass through .Values.monitoring.enabled
+    # the package chart uses: .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" to toggle monitoring
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+
+    # monitoring:
+    #   enabled: true
+
+    unregisterRunners: true
+
+    runners:
+      config: |
+        [[runners]]
+          url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
+          clone_url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
+          cache_dir = "/tmp/gitlab-runner/cache"
+          [runners.kubernetes]
+            namespace = "gitlab-runner-sandbox"
+            helper_image = "gitlab/gitlab-runner-helper:x86_64-latest"
+            image="alpine"
+            image_pull_secrets = ["private-registry"]
+          [runners.kubernetes.pod_labels]
+            "job_id" = "${CI_JOB_ID}"
+            "job_name" = "${CI_JOB_NAME}"
+            "pipeline_id" = "${CI_PIPELINE_ID}"
+      secret: gitlab-gitlab-runner-secret
+      runUntagged: true
+      protected: true

@@ -18,7 +18,8 @@
           cache_dir = "/tmp/gitlab-runner/cache"
           [runners.kubernetes]
             namespace = "gitlab-runner-sandbox"
-            image="alpine"
+            helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
+            image = "alpine"
             image_pull_secrets = ["private-registry"]
           [runners.kubernetes.pod_labels]
             "job_id" = "${CI_JOB_ID}"
