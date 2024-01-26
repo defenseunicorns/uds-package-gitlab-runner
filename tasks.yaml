@@ -1,18 +1,27 @@
 includes:
-  - setup: ./tasks/setup.yaml
   - create: ./tasks/create.yaml
-  - deploy: ./tasks/deploy.yaml
   - test: ./tasks/test.yaml
+  - deploy:  ./tasks/deploy.yaml
+  # todo: monitor deploy:package from uds-common-tasks for future use, currently doesnt work with creation of gitlab and gitlab runner zarf packages
+  # - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/deploy.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/setup.yaml
+  - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/create.yaml
 
 tasks:
+  - name: cluster-full
+    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
+    actions:
+      - task: gitlab-yolo
+      - task: gitlab-runner
+
   - name: k3d-cluster-gitlab-runner
     description: Deploy k3d cluster and UDS Gitlab Runner with no Gitlab
     actions:
       - task: setup:k3d-test-cluster
-      - task: setup:gitlab-runner-namespace
-      - task: setup:gitlab-runner-secret
-      - task: create:runner-package
-      - task: deploy:runner-package
+      - task: create:gitlab-runner-namespace
+      - task: create:gitlab-runner-secret
+      - task: package:package
+      - task: deploy:package
 
   - name: gitlab-yolo
     description: Deploy Gitlab Yolo chart for testing purposes
@@ -26,16 +35,10 @@ tasks:
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
     actions:
-      - task: setup:gitlab-runner-namespace
-      - task: setup:gitlab-runner-secret
-      - task: create:runner-package
-      - task: deploy:runner-package
-
-  - name: cluster-full
-    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
-    actions:
-      - task: gitlab-yolo
-      - task: gitlab-runner
+      - task: create:gitlab-runner-namespace
+      - task: create:gitlab-runner-secret
+      - task: package:package
+      - task: deploy:package
 
   - name: test-package
     description: Test the health of Gitlab and Gitlab Runner deployments

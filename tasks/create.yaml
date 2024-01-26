@@ -1,9 +1,14 @@
-variables:
-  - name: FLAVOR
-    default: "registry1"
-
 tasks:
-  - name: runner-package
+  - name: gitlab-runner-namespace
     actions:
-      - description: Create UDS Gitlab Runner Zarf package for Deployment
-        cmd: zarf package create --confirm --no-progress --architecture=${ZARF_ARCHITECTURE} --flavor ${FLAVOR}
+      - description: Create gitlab-runner namespace
+        cmd: kubectl create namespace gitlab-runner
+
+  - name: gitlab-runner-secret
+    actions:
+      - description: Retrieve Gitlab Package gitlab runner secret registration token
+        cmd: kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
+        setVariables:
+          - name: RUNNER_REGISTRATION_TOKEN
+      - description: Create gitlab-runner secret
+        cmd:  kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
