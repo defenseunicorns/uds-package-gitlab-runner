@@ -1,11 +1,8 @@
 name: Test package
 
 on:
-  # Manual trigger
-  workflow_dispatch:
-
-  # Triggered by pull-request-conditionals.yaml
-  workflow_call:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 # Abort prior jobs in the same workflow / PR
 concurrency:
