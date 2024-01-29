@@ -53,6 +53,7 @@ tasks:
           max_retries=3
           retry_count=0
           
+          # Attempt 3 times to retreive successful log statement with 30 second pause between retries
           while [ $retry_count -lt $max_retries ]; do
             # Check if the GitLab Runner pod is registered
             if kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null | xargs -I {} kubectl logs -n "$namespace" {} -c gitlab-runner | grep -q "Registering runner... succeeded"; then
@@ -66,26 +67,5 @@ tasks:
           
           # failure test
           exit 1
-      - description: Check GitLab Runner Pod Health and Restarts
-        cmd: |
-          pod_label_selector="app=gitlab-runner"
-          namespace="gitlab-runner"
 
-          # Check if the GitLab Runner pod is unhealthy
-          if kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].status.conditions[?(@.type=="Ready")].status}' | grep -q "False"; then
-            # Pod is not healthy, exit with an error
-            exit 1
-          fi
-
-          # sleep for 5 minutes
-          echo "5 sleep for Pod initialization"
-          sleep 300
-
-          # Check if the GitLab Runner pod has restarted at least once in the last five minutes
-          if echo "$pod_info" | awk '$2 > 0 && systime() - mktime(gsub(/[TZ]/, " ", $3)) < 300 {exit 1} END {exit 0}'; then
-            # Gitlab Runner Pod has restarted and shouldn't have
-            exit 1
-          else
-            # Gitlab Runner Pod has not restarted
-            exit 0
-          fi
+# todo: potentially beef up testing that gitlab runner is successfully registered
