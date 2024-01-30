@@ -1,4 +1,10 @@
 tasks:
+  - name: gitlab-runner-sandbox
+    actions:
+      - description: Create Gitlab Runner Sandbox RBAC Dependency
+        cmd: zarf package create ./pkg-deps/rbac/ --skip-sbom --confirm 
+
+# todo: move these into zarf yaml?
   - name: gitlab-runner-namespace
     actions:
       - description: Create gitlab-runner namespace
