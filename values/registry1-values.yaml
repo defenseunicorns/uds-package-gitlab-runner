@@ -25,3 +25,5 @@
             "job_id" = "${CI_JOB_ID}"
             "job_name" = "${CI_JOB_NAME}"
             "pipeline_id" = "${CI_PIPELINE_ID}"
+      rbac:
+        create: false
