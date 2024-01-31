@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: "uds-ubuntu-big-boy-8-core"
+    runs-on: "uds-ubuntu-big-boy-16-core"
     name: Test
     strategy:
       matrix:
