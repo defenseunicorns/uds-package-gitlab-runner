@@ -2,8 +2,6 @@ includes:
   - create: ./tasks/create.yaml
   - test: ./tasks/test.yaml
   - deploy:  ./tasks/deploy.yaml
-  # todo: monitor deploy:package from uds-common-tasks for future use, currently doesnt work with creation of gitlab and gitlab runner zarf packages
-  # - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/deploy.yaml
   - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/setup.yaml
   - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/create.yaml
 
@@ -11,7 +9,7 @@ tasks:
   - name: cluster-full
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
-      - task: gitlab-yolo
+      - task: gitlab
       - task: gitlab-runner
 
   - name: k3d-cluster-gitlab-runner
@@ -23,20 +21,12 @@ tasks:
       - task: package:package
       - task: deploy:gitlab-runner-package
 
-  - name: gitlab-yolo
-    description: Deploy Gitlab Yolo chart for testing purposes
-    actions:
-      - task: setup:k3d-test-cluster
-      - cmd: zarf package create ./pkg-deps/gitlab/ --skip-sbom --confirm
-      - cmd: kubectl create namespace gitlab
-      - cmd: kubectl label namespace gitlab zarf.dev/agent=ignore
-      - cmd: zarf package deploy zarf-package-gitlab-runner-gitlab* --confirm
-
   - name: gitlab
     description: Deploy UDS Package Gitlab from Published Github Packages
     actions:
+      - task: create:gitlab-bundle
       - task: setup:k3d-test-cluster
-      - task: deploy:gitlab-package
+      - task: deploy:gitlab-bundle
 
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
@@ -57,6 +47,7 @@ tasks:
     description: Remove the gitlab-runner namespace
     actions:
       - cmd: kubectl delete namespace gitlab-runner --v=9
+      - cmd: kubectl delete namespace gitlab-runner-sandbox --v=9
 
   - name: cleanup-cluster
     description: Delete the k3d cluster

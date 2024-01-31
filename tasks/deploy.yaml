@@ -1,9 +1,4 @@
 tasks:
-  - name: gitlab-package
-    actions:
-      - descriptions: Deploy UDS Package Gitlab
-        cmd: zarf package deploy oci://ghcr.io/defenseunicorns/packages/uds/gitlab:16.5.1-uds.4-arm64 --confirm
-
   - name: gitlab-runner-package
     actions:
       - description: Deploy the UDS Gitlab Runner Package
@@ -13,3 +8,8 @@ tasks:
     actions:
       - description:
         cmd: zarf package deploy zarf-package-gitlab-runner-rbac* --confirm
+
+  - name: gitlab-bundle
+    description: Deploy UDS Package Gitlab from Bundle with Dependencies
+    actions:
+      - cmd: UDS_CONFIG=pkg-deps/gitlab/bundle/uds-config.yaml uds deploy pkg-deps/gitlab/bundle/uds-bundle-*-${UDS_ARCH}-*.tar.zst --confirm --no-progress

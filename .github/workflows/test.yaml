@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
 
-      - name: Standup k3d Cluster and Gitlab Yolo and Deploy UDS Gitlab Runner
+      - name: Standup k3d Cluster and UDS Package Gitlab and Deploy UDS Gitlab Runner
         run: uds run cluster-full --set FLAVOR=${{ matrix.flavor }}
 
       - name: Run Health Check Tests for Gitlab and Gitlab Runner
