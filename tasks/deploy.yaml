@@ -6,7 +6,7 @@ tasks:
 
   - name: sandbox-rbac
     actions:
-      - description:
+      - description: gitlab-runner rbac into sandbox
         cmd: zarf package deploy zarf-package-gitlab-runner-rbac* --confirm
 
   - name: gitlab-bundle

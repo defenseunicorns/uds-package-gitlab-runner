@@ -7,7 +7,7 @@ tasks:
   - name: gitlab-runner-namespace
     actions:
       - description: Create gitlab-runner namespace
-        cmd: kubectl create namespace gitlab-runner
+        cmd: kubectl create namespace gitlab-runner || true
 
   - name: gitlab-runner-secret
     actions:
