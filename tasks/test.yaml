@@ -21,7 +21,7 @@ tasks:
           cluster:
             kind: StatefulSet
             name: redis-master
-            namespace: gitlab
+            namespace: dev-redis
       - description: Check Gitlab Default Webservice Deployment
         wait:
           cluster:
