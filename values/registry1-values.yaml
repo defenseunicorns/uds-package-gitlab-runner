@@ -10,6 +10,9 @@
 
 unregisterRunners: true
 
+rbac:
+  create: false
+
 runners:
   config: |
     [[runners]]
@@ -29,6 +32,3 @@ runners:
         run_as_non_root = true
         run_as_user = 1001
         run_as_group = 0
-
-rbac:
-  create: false
