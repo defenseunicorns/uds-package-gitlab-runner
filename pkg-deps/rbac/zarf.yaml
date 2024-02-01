@@ -4,8 +4,6 @@ metadata:
   name: gitlab-runner-rbac
   # x-release-please-start-version
   version: "0.1.3"
-  # x-release-please-end
-  architecture: amd64
 
 components:
   - name: gitlab-runner-sandbox-rbac
