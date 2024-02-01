@@ -5,6 +5,7 @@ metadata:
   description: "UDS GitLab Runner Zarf Package"
   # x-release-please-start-version
   version: "0.59.1-uds.1"
+  # x-release-please-end
 
 variables:
   - name: GITLAB_RUNNER_DEPENDS_ON
