@@ -11,6 +11,11 @@ tasks:
     actions:
       - task: gitlab
       - task: gitlab-runner
+  
+  - name: create-package
+    description: Create the Gitlab runner package
+    actions:
+      - task: package:package
 
   - name: k3d-cluster-gitlab-runner
     description: Deploy k3d cluster and UDS Gitlab Runner with no Gitlab

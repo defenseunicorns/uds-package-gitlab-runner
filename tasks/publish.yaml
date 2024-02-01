@@ -18,9 +18,9 @@ tasks:
       - description: Create the packages
         cmd: |
           set -e
-          ZARF_ARCHITECTURE=amd64 uds run -f tasks/create.yaml runner-package --no-progress --set FLAVOR=${FLAVOR}
+          ZARF_ARCHITECTURE=amd64 uds run create-package --no-progress --set FLAVOR=${FLAVOR}
           if [ ${FLAVOR} != "registry1" ]; then
-            ZARF_ARCHITECTURE=arm64 uds run -f tasks/create.yaml runner-package --no-progress --set FLAVOR=${FLAVOR}
+            ZARF_ARCHITECTURE=arm64 uds run create-package --no-progress --set FLAVOR=${FLAVOR}
           fi
       
       - description: Publish the packages
