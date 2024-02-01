@@ -1,6 +1,6 @@
 # uds-package-gitlab-runner
 
-Platform One Gitlab Runner
+UDS Gitlab Runner Package
 
 ## Prerequisites
 
@@ -8,4 +8,4 @@ Platform One Gitlab Runner
 
 - [Gitlab](https://github.com/defenseunicorns/uds-package-gitlab) is deployed and running in the cluster
 
-## Deploy
+- This package can build and deploy without gitlab, however understand that a gitlab-runner does require a Gitlab instance in some fashion. 

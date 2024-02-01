@@ -1,0 +1,98 @@
+component-definition:
+  uuid: 506892e9-a751-40e1-ae41-488beacbda5b
+  metadata:
+    title: UDS Package GitLab Runner
+    last-modified: "2023-11-27T17:09:15Z"
+    version: "20231127"
+    oscal-version: 1.1.1
+    parties:
+      - uuid: f3cf70f8-ba44-4e55-9ea3-389ef24847d3
+        type: organization
+        name: Defense Unicorns
+        links:
+          - href: https://defenseunicorns.com
+            rel: website
+  components:
+    - uuid: c4815d1f-87db-495e-9e70-9e710f17833e
+      type: software
+      title: GitLab
+      description: |
+        GitLab is a web-based DevOps lifecycle tool that provides a Git-repository manager with wiki, issue-tracking, and CI/CD pipeline features. It enables teams to
+         collaborate on code development, from planning and project management to testing and deployment, all within a single platform.
+      purpose: Provides users with secure DevSecOps pipelines, Git operations, issue-tracking, and CI/CD capabilities.
+      responsible-roles:
+        - role-id: provider
+          party-uuids:
+            - f3cf70f8-ba44-4e55-9ea3-389ef24847d3
+      control-implementations:
+        - uuid: d2afb4c4-2cd8-5305-a6cc-d1bc7b388d0c
+          source: https://raw.githubusercontent.com/GSA/fedramp-automation/93ca0e20ff5e54fc04140613476fba80f08e3c7d/dist/content/rev5/baselines/json/FedRAMP_rev5_HIGH-baseline-resolved-profile_catalog.json
+          description: Controls implemented by GitLab Runners for inheritance by applications that adheres to FedRAMP High Baseline and DoD IL 6.
+          implemented-requirements:
+            - uuid: 6f0a9a9a-c8b1-48bf-bf3a-7dfcbbd7254c
+              control-id: au-3
+              description: >-
+                GitLab Runners log type of event, time of the even, location of the event, source of the event, outcome of the event, and subjects/objects involved in the event.
+            - uuid: 6addf097-e991-4415-b1bf-6c5208a645d2
+              control-id: au-8
+              description: >-
+                GitLab Runner event logs contain NIST compliant timestamps.
+            - uuid: bf993771-afb7-4993-a66b-c8e91b281370
+              control-id: cm-3.6
+              description: >-
+                GitLab Runners utilizes the underlying istio for FIPs encryption in transit. GitLab Runners also utilize the RedHat base container image's FIPs modules. GitLab stores data in an encrypted Redis, PostgreSQL, and KMS backed S3 Buckets.
+            - uuid: ca62ff04-a51a-461d-915a-858082c0b2de
+              control-id: cm-7
+              description: >-
+                GitLab Runners are configured to only allow specific ports, services, and functionalities required.
+            - uuid: 9cb2a331-a9a0-4497-a047-e50e737c1b10
+              control-id: sa-3
+              description: >-
+                GitLab Runners help to provide management of the system by incorporating information security and privacy considerations within the software development lifecycle through the use of DevSecOps CI/CD pipelines.
+            - uuid: 034a2d51-c00a-456a-96be-9d8fc83d7906
+              control-id: sa-8
+              description: >-
+                GitLab Runners help to provide secure CI/CD processes by including unit tests, SAST, building images, SBOMS, scanning images, pushing images to secure repositories, and signing images.
+            - uuid: 46bcbe4e-4ab9-4930-bd16-1c39b51482ce
+              control-id: sa-11
+              description: >-
+                GitLab Runners help to provide a secure CI/CD process that includes unit tests, SAST scanning, and scanning of images within the pipelines.
+            - uuid: 89ff10c4-344b-48fc-8e6b-ceacafd0664a
+              control-id: sa-11.1
+              description: >-
+                GitLab Runners help to utilize SonarQube and Gitleaks within the secure pipelines to conduct SAST scanning.
+            - uuid: 0f9a997e-5b23-4d3f-b940-131b091b0102
+              control-id: sa-11.2
+              description: >-
+                GitLab Runners help tp utilize SonarQube and Gitleaks within the secure pipelines to conduct SAST scanning. In addition NueVector is utilized to conduct container image scanning within the pipeline.
+            - uuid: d26bdc9d-767d-4237-9487-64085d8438eb
+              control-id: sc-13
+              description: >-
+                GitLab Runners utilize Istio Network for FIPs encryption in transit. FIPs encryption for data at rest is handled by PostgreSQL, Redis, and AWS S3 backed by KMS. GitLab Runners also leverage the RedHat
+                base container image's FIPs modules.
+            - uuid: 15952f05-46ea-4746-b928-7bb8f2beaaaa
+              control-id: sc-45
+              description: >-
+                GitLab Runners utilize NIST compliant time clock settings.
+            - uuid: 04e10eac-722f-41c8-b23d-3f1b6fb21470
+              control-id: sc-45.1
+              description: >-
+                GitLab Runners utilize NIST compliant time clock settings.
+            - uuid: e6806de4-c39b-48cc-a706-8bcce4c19e3a
+              control-id: si-10
+              description: >-
+                GitLab Runners help to provide secure CI/CD processes by including unit tests, SAST, and including input validation to secure repositories.
+            - uuid: 77b76e61-b9d2-46ec-b7d8-040055b0f8c6
+              control-id: si-16
+              description: >-
+                GitLab Runners help to provide secure CI/CD processes by building from a secure base image with settings configured to help prevent memory leaks.
+            - uuid: 99003bbb-9c55-4f1d-82f5-73b502883f1e
+              control-id: sr-9.1
+              description: >-
+                GitLab Runners help to provide secure CI/CD processes by including unit tests, SAST, building images, SBOMS, scanning images, pushing images to secure repositories, and signing images.
+  back-matter:
+    resources:
+      - uuid: c9602a37-a957-4465-b5df-569a43fc28ce
+        title: UDS Package GitLab Runner
+        rlinks:
+          - href: https://github.com/defenseunicorns/uds-package-gitlab-runner

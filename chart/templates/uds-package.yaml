@@ -1,0 +1,31 @@
+apiVersion: uds.dev/v1alpha1
+kind: Package
+metadata:
+  name: gitlab-runner
+  namespace: {{ .Release.Namespace }}
+spec:
+  network:
+    allow:
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteNamespace: gitlab
+        remotePodLabels:
+          app: webservice
+        port: 8181
+
+      - direction: Ingress
+        remoteGenerated: IntraNamespace
+
+      - direction: Egress
+        remoteGenerated: IntraNamespace
+
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteNamespace: gitlab-runner-sandbox
+
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteGenerated: KubeAPI

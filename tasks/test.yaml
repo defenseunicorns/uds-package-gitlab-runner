@@ -1,0 +1,74 @@
+tasks:
+  - name: health-check
+    description: Check the status of Gitlab and Gitlab Runner StatefulSet
+    actions:
+
+    # UDS Package Gitlab tests
+      - description: Check Gitlab StatefulSet - Gitaly
+        wait:
+          cluster:
+            kind: StatefulSet
+            name: gitlab-gitaly
+            namespace: gitlab
+      - description: Check Gitlab StatefulSet - Postgresql
+        wait:
+          cluster:
+            kind: StatefulSet
+            name: postgresql
+            namespace: dev-postgres
+      - description: Check Gitlab StatefulSet - Redis
+        wait:
+          cluster:
+            kind: StatefulSet
+            name: redis-master
+            namespace: dev-redis
+      - description: Check Gitlab Default Webservice Deployment
+        wait:
+          cluster:
+            kind: Deployment
+            name: gitlab-webservice-default
+            namespace: gitlab
+      - description: Check Gitlab Secret
+        wait:
+          cluster:
+            kind: Secret
+            name: gitlab-gitlab-runner-secret
+            namespace: gitlab
+
+    # UDS Package Gitlab Runner tests
+      - description: Check Gitlab Runner Secret
+        wait:
+          cluster:
+            kind: Secret
+            name: gitlab-gitlab-runner-secret
+            namespace: gitlab-runner
+      - description: Check Gitlab Runner Deployment
+        wait:
+          cluster:
+            kind: Deployment
+            name: gitlab-runner
+            namespace: gitlab-runner
+      - description: Check GitLab Runner Logs for Successful Registration with Retires
+        retries: 3
+        cmd: |
+          pod_label_selector="app=gitlab-runner"
+          namespace="gitlab-runner"
+          max_retries=3
+          retry_count=0
+          
+          # Attempt 3 times to retreive successful log statement with 30 second pause between retries
+          while [ $retry_count -lt $max_retries ]; do
+            # Check if the GitLab Runner pod is registered
+            if kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null | xargs -I {} kubectl logs -n "$namespace" {} -c gitlab-runner | grep -q "Registering runner... succeeded"; then
+              # successful test
+              exit 0
+            fi
+            
+            retry_count=$((retry_count + 1))
+            sleep 30 # extra time for pod to stabilize 
+          done
+          
+          # failure test
+          exit 1
+
+# todo: potentially beef up testing that gitlab runner is successfully registered

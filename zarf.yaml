@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-runner
+  description: "UDS GitLab Runner Zarf Package"
+  # x-release-please-start-version
+  version: "0.59.1-uds.1"
+
+variables:
+  - name: GITLAB_RUNNER_DEPENDS_ON
+    autoIndent: true
+    default: |
+      - name: gitlab
+        namespace: bigbang
+  - name: GITLAB_RUNNER_CREATE_NAMESPACE
+    default: "false"
+  - name: AUTO_REGISTER
+    default: "true"
+
+components:
+  - name: gitlab-runner
+    required: true
+    description: "Deploy gitlab-runner"
+    only:
+      flavor: registry1
+    charts:
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: chart
+      - name: gitlab-runner
+        namespace: gitlab-runner
+        url: https://repo1.dso.mil/big-bang/product/packages/gitlab-runner.git
+        gitPath: chart
+        version: "0.59.1-bb.2"
+        valuesFiles:
+          - values/registry1-values.yaml
+    images:
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.6.0
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.6.0
+      - registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3
+
+  - name: gitlab-runner
+    required: true
+    description: "Deploy gitlab-runner"
+    only:
+      flavor: upstream
+    charts:
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: chart
+      - name: gitlab-runner
+        namespace: gitlab-runner
+        url: https://charts.gitlab.io
+        gitPath: chart
+        version: "0.59.1"
+        valuesFiles:
+          - values/upstream-values.yaml
+    images:
+        # based on appVersion https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/v0.59.1/templates/_helpers.tpl?ref_type=tags#LC57
+      - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.6.0
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.6.0

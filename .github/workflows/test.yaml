@@ -1,0 +1,47 @@
+name: Test package
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Abort prior jobs in the same workflow / PR
+concurrency:
+  group: test-${{ github.ref }}-${{ inputs.package }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: "uds-ubuntu-big-boy-16-core"
+    name: Test
+    strategy:
+      matrix:
+        flavor: [upstream, registry1]    
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Environment setup
+        uses: ./.github/actions/setup
+        with:
+          username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
+          password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
+
+      - name: Standup k3d Cluster and UDS Package Gitlab and Deploy UDS Gitlab Runner
+        run: uds run cluster-full --set FLAVOR=${{ matrix.flavor }}
+
+      - name: Run Health Check Tests for Gitlab and Gitlab Runner
+        run: uds run test-package
+
+      - name: Cleanup the k3d Cluster
+        if: always()
+        run: uds run cleanup-cluster
+
+      - name: Save logs
+        if: always()
+        uses: ./.github/actions/save-logs

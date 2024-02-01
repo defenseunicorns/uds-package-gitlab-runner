@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-runner-rbac
+  # x-release-please-start-version
+  version: "0.1.3"
+
+components:
+  - name: gitlab-runner-sandbox-rbac
+    required: true
+    manifests:
+      - name: gitlab-runner-sandbox-rbac
+        files:
+          - rbac.yaml
+  - name: registry1-creds
+    required: true
+    actions:
+      onDeploy:
+        before:
+          - cmd: kubectl delete secret private-registry -n gitlab-runner-sandbox
+        after:
+          - cmd: kubectl label namespace gitlab-runner-sandbox zarf.dev/agent=ignore istio-injection=enabled
+          - cmd: kubectl create secret generic private-registry --from-file=.dockerconfigjson=$(printf ~/.docker/config.json) --type=kubernetes.io/dockerconfigjson -n gitlab-runner-sandbox
