@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.59.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v0.59.1-uds.0...v0.59.1-uds.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* publish task ([#6](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/6)) ([5910cc2](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/5910cc2f7608194a18af16d739cc54345b007781))
+
 ## [0.59.1-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v0.58.1-uds.1...v0.59.1-uds.0) (2024-02-01)
 
 
