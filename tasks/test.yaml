@@ -2,6 +2,8 @@ tasks:
   - name: health-check
     description: Check the status of Gitlab and Gitlab Runner StatefulSet
     actions:
+
+    # UDS Package Gitlab tests
       - description: Check Gitlab StatefulSet - Gitaly
         wait:
           cluster:
@@ -12,13 +14,13 @@ tasks:
         wait:
           cluster:
             kind: StatefulSet
-            name: gitlab-postgresql
-            namespace: gitlab
+            name: postgresql
+            namespace: dev-postgres
       - description: Check Gitlab StatefulSet - Redis
         wait:
           cluster:
             kind: StatefulSet
-            name: gitlab-redis-master
+            name: redis-master
             namespace: gitlab
       - description: Check Gitlab Default Webservice Deployment
         wait:
@@ -33,6 +35,7 @@ tasks:
             name: gitlab-gitlab-runner-secret
             namespace: gitlab
 
+    # UDS Package Gitlab Runner tests
       - description: Check Gitlab Runner Secret
         wait:
           cluster:
