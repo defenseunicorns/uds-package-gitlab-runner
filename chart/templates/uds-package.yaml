@@ -6,30 +6,26 @@ metadata:
 spec:
   network:
     allow:
-      # - direction: Egress
-      #   podLabels:
-      #     app: gitlab-runner
-      #   remoteNamespace: gitlab
-      #   remotePodLabels:
-      #     app: webservice
-      #   port: 8181
-
-      # - direction: Ingress
-      #   remoteGenerated: IntraNamespace
-
-      # - direction: Egress
-      #   remoteGenerated: IntraNamespace
-
-      # - direction: Ingress
-      #   podLabels:
-      #     app: gitlab-runner
-      #   remoteNamespace: monitoring
-      #   remotePodLabels:
-      #     app: prometheus
-      #   ports:
-      #     - 9252
-      #     - 15020
       - direction: Egress
         podLabels:
           app: gitlab-runner
-        remoteGenerated: Anywhere
+        remoteNamespace: gitlab
+        remotePodLabels:
+          app: webservice
+        port: 8181
+
+      - direction: Ingress
+        remoteGenerated: IntraNamespace
+
+      - direction: Egress
+        remoteGenerated: IntraNamespace
+
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteNamespace: gitlab-runner-sandbox
+
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteGenerated: KubeAPI
