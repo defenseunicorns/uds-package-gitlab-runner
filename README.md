@@ -7,7 +7,7 @@ UDS Gitlab Runner Package
 ## Flavors
 
 Two flavors of this package are produced at this time:
-- `upstream`: This flavor uses the upstream images (except for the helper image because defualt root security context) and is intended for a quick and seamless development experience
+- `upstream`: This flavor uses the upstream images (except for the helper image because default root security context) and is intended for a quick and seamless development experience
 
 - `registry1`: This flavor uses hardened images from [Ironbank](https://p1.dso.mil/services/iron-bank) and is intended for production environments
 
