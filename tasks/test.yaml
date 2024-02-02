@@ -71,4 +71,4 @@ tasks:
           # failure test
           exit 1
 
-# todo: potentially beef up testing that gitlab runner is successfully registered
+# todo: add more tests for checking validity and health of Gitlab Runner

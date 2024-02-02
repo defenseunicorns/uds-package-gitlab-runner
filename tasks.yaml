@@ -17,14 +17,6 @@ tasks:
     actions:
       - task: package:package
 
-  - name: k3d-cluster-gitlab-runner
-    description: Deploy k3d cluster and UDS Gitlab Runner with no Gitlab
-    actions:
-      - task: setup:k3d-test-cluster
-      - task: create:gitlab-runner-namespace
-      - task: package:package
-      - task: deploy:gitlab-runner-package
-
   - name: gitlab
     description: Deploy UDS Package Gitlab from Published Github Packages
     actions:
