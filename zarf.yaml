@@ -8,27 +8,10 @@ metadata:
   # x-release-please-end
 
 variables:
-  - name: GITLAB_RUNNER_DEPENDS_ON
-    autoIndent: true
-    default: |
-      - name: gitlab
-        namespace: bigbang
-  - name: GITLAB_RUNNER_CREATE_NAMESPACE
-    default: "false"
-  - name: AUTO_REGISTER
-    default: "true"
-  - name: RUNNER_REGISTRATION_TOKEN
-    default: ""
+  - name: JOB_RUNNER_NAMESPACE
+    default: gitlab-runner-sandbox
 
 components:
-  - name: gitlab-runner-sandbox
-    required: true
-    description: Create gitlab runner sandbox namespace and RBAC
-    manifests:
-      - name: runner-sandbox
-        namespace: gitlab-runner-sandbox
-        files:
-          - rbac/rbac.yaml
   - name: gitlab-registration
     required: true
     description: Copy runner registration token secret from Gitlab namespace into runner namespace
@@ -40,6 +23,7 @@ components:
               - name: RUNNER_REGISTRATION_TOKEN
           - cmd: kubectl create namespace gitlab-runner || true
           - cmd: kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${ZARF_VAR_RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
+
   - name: gitlab-runner
     required: true
     description: "Deploy gitlab-runner"
@@ -50,6 +34,8 @@ components:
         namespace: gitlab-runner
         version: 0.1.0
         localPath: chart
+        valuesFiles:
+          - values/config-values.yaml
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://repo1.dso.mil/big-bang/product/packages/gitlab-runner.git
@@ -72,6 +58,8 @@ components:
         namespace: gitlab-runner
         version: 0.1.0
         localPath: chart
+        valuesFiles:
+          - values/config-values.yaml
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io

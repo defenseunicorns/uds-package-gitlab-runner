@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: gitlab-runner-sandbox
+  name: {{ .Values.runners.job.namespace }}
+  labels:
+    istio-injection: enabled
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: gitlab-runner-sandbox
+  name: {{ .Values.runners.job.namespace }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps", "pods", "pods/attach", "secrets", "services"]
@@ -18,8 +20,8 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: gitlab-runner-sandbox
-  namespace: gitlab-runner-sandbox
+  name: {{ .Values.runners.job.namespace }}
+  namespace: {{ .Values.runners.job.namespace }}
 subjects:
 - kind: ServiceAccount
   name: default
@@ -27,4 +29,4 @@ subjects:
 roleRef:
   apiGroup: ""
   kind: ClusterRole
-  name: gitlab-runner-sandbox
+  name: {{ .Values.runners.job.namespace }}

@@ -14,13 +14,15 @@ rbac:
   create: false
 
 runners:
+  job:
+    namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
   config: |
     [[runners]]
       url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
       clone_url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
       cache_dir = "/tmp/gitlab-runner/cache"
       [runners.kubernetes]
-        namespace = "gitlab-runner-sandbox"
+        namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
         helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
         image_pull_secrets = ["private-registry"]
