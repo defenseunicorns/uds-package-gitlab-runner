@@ -70,4 +70,5 @@ components:
     images:
         # based on appVersion https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/v0.61.0/templates/_helpers.tpl?ref_type=tags#LC57
       - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0
+      - library/alpine:latest
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0

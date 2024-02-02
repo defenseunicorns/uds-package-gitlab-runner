@@ -26,7 +26,7 @@ runners:
       cache_dir = "/tmp/gitlab-runner/cache"
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
-        helper_image = "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.6.0"
+        helper_image = "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
         image="alpine"
         image_pull_secrets = ["private-registry"]
       [runners.kubernetes.pod_labels]
