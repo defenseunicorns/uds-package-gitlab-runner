@@ -6,7 +6,7 @@ includes:
   - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/create.yaml
 
 tasks:
-  - name: cluster-full
+  - name: default
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
       - task: gitlab
@@ -16,15 +16,6 @@ tasks:
     description: Create the Gitlab runner package
     actions:
       - task: package:package
-
-  - name: k3d-cluster-gitlab-runner
-    description: Deploy k3d cluster and UDS Gitlab Runner with no Gitlab
-    actions:
-      - task: setup:k3d-test-cluster
-      - task: create:gitlab-runner-namespace
-      - task: create:gitlab-runner-secret
-      - task: package:package
-      - task: deploy:gitlab-runner-package
 
   - name: gitlab
     description: Deploy UDS Package Gitlab from Published Github Packages
@@ -36,10 +27,6 @@ tasks:
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
     actions:
-      - task: create:gitlab-runner-sandbox
-      - task: deploy:sandbox-rbac
-      - task: create:gitlab-runner-namespace
-      - task: create:gitlab-runner-secret
       - task: package:package
       - task: deploy:gitlab-runner-package
 
