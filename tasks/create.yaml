@@ -1,22 +1,8 @@
 tasks:
-  - name: gitlab-runner-sandbox
-    actions:
-      - description: Create Gitlab Runner Sandbox RBAC Dependency
-        cmd: zarf package create ./pkg-deps/rbac/ --skip-sbom --confirm 
-
   - name: gitlab-runner-namespace
     actions:
       - description: Create gitlab-runner namespace
         cmd: kubectl create namespace gitlab-runner || true
-
-  - name: gitlab-runner-secret
-    actions:
-      - description: Retrieve Gitlab Package gitlab runner secret registration token
-        cmd: kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
-        setVariables:
-          - name: RUNNER_REGISTRATION_TOKEN
-      - description: Create gitlab-runner secret
-        cmd:  kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
 
   - name: gitlab-bundle
     description: Create Gitlab Bundle with Dependencies

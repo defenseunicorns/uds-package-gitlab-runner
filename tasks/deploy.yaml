@@ -4,11 +4,6 @@ tasks:
       - description: Deploy the UDS Gitlab Runner Package
         cmd: zarf package deploy zarf-package-gitlab-runner-${UDS_ARCH}*.tar.zst --confirm
 
-  - name: sandbox-rbac
-    actions:
-      - description: gitlab-runner rbac into sandbox
-        cmd: zarf package deploy zarf-package-gitlab-runner-rbac* --confirm
-
   - name: gitlab-bundle
     description: Deploy UDS Package Gitlab from Bundle with Dependencies
     actions:

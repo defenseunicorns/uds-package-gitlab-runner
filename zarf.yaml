@@ -28,7 +28,7 @@ components:
       - name: runner-sandbox
         namespace: gitlab-runner-sandbox
         files:
-          - pkg-deps/rbac/rbac.yaml
+          - rbac/rbac.yaml
   - name: gitlab-registration
     required: true
     description: Copy runner registration token secret from Gitlab namespace into runner namespace
