@@ -40,13 +40,13 @@ Utilizes [UDS-CLI task runners](https://github.com/defenseunicorns/uds-cli)
 
 #### Using the UDS CLI targets:
 ```
-uds run cluster-full
+uds run default
 ```
 
 #### Available UDS CLI Targets
 | UDS CLI Target | Description |
 | - | - |
-| [cluster-full](./tasks.yaml#9) | Setup a k3d cluster, deploy `uds-package-gitlab`, deploy Gitlab Runner |
+| [default](./tasks.yaml#9) | Setup a k3d cluster, deploy `uds-package-gitlab`, deploy Gitlab Runner |
 | [create-package](./tasks.yaml#15) |  Create the Gitlab Runner Package based on the [zarf.yaml](./zarf.yaml) which defaults to `upstream` flavor |
 | [gitlab](./tasks.yaml#20) | Setup a k3d cluster and deploy [uds-package-gitlab](https://github.com/defenseunicorns/uds-package-gitlab) |
 | [gitlab-runner](./tasks.yaml#27) | Deploy Gitlab Runner only |
