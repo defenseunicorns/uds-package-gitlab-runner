@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitlab-runner-sandbox
+---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -9,9 +14,7 @@ rules:
   - apiGroups: [""]
     resources: ["pods/exec"]
     verbs: ["create", "patch", "delete"]
-
 ---
-
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:

@@ -36,10 +36,6 @@ tasks:
   - name: gitlab-runner
     description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
     actions:
-      - task: create:gitlab-runner-sandbox
-      - task: deploy:sandbox-rbac
-      - task: create:gitlab-runner-namespace
-      - task: create:gitlab-runner-secret
       - task: package:package
       - task: deploy:gitlab-runner-package
 
