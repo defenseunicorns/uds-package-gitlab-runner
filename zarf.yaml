@@ -36,7 +36,6 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
-      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
@@ -61,7 +60,6 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
-      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
