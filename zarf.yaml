@@ -36,6 +36,7 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
+      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
@@ -44,8 +45,11 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
+      # renovate: datasource=docker versioning=semver
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0
+      # renovate: datasource=docker versioning=semver
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0
+      # renovate: datasource=docker versioning=semver
       - registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3
 
   - name: gitlab-runner
@@ -60,6 +64,7 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
+      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
@@ -68,7 +73,9 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-        # based on appVersion https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/v0.61.0/templates/_helpers.tpl?ref_type=tags#LC57
+      # renovate: datasource=docker versioning=semver
       - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0
+      # renovate: datasource=docker versioning=semver
       - library/alpine:latest
+      # renovate: datasource=docker versioning=semver
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0
