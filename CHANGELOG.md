@@ -1,5 +1,13 @@
 # Changelog
 
+## [16.6.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v0.59.1-uds.1...v16.6.0-uds.0) (2024-02-02)
+
+
+### Miscellaneous
+
+* registration and rbac in zarf.yaml ([#10](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/10)) ([f17a0e7](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/f17a0e79bab8eb7f62f89286f49c8e891e90fab3))
+* release 16.6.0-uds.0 ([#12](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/12)) ([ca2e168](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ca2e168421e84ca218ddaa1515d14ada883260f9))
+
 ## [0.59.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v0.59.1-uds.0...v0.59.1-uds.1) (2024-02-01)
 
 
