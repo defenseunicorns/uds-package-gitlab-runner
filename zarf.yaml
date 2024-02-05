@@ -45,12 +45,9 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      # renovate: datasource=docker versioning=semver
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0
-      # renovate: datasource=docker versioning=semver
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0
-      # renovate: datasource=docker versioning=semver
-      - registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
+      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3"
 
   - name: gitlab-runner
     required: true
@@ -73,9 +70,6 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      # renovate: datasource=docker versioning=semver
-      - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0
-      # renovate: datasource=docker versioning=semver
-      - library/alpine:latest
-      # renovate: datasource=docker versioning=semver
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0"
+      - "library/alpine:latest"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
