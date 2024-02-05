@@ -1,5 +1,21 @@
 # Changelog
 
+## [16.6.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.6.0-uds.0...v16.6.0-uds.1) (2024-02-05)
+
+
+### Bug Fixes
+
+* copy paste error ([b046832](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/b0468320f39da2bfc5eedf1af171930348152b3f))
+* registry1 values and images and renovate ([1c8c40c](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/1c8c40c42c99865a230870d4f2f0157d19f0e315))
+* update registry1 values for upstream chart differences ([e586481](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e586481fd4b6d1e8353c63f45d647053d06e2afe))
+* update renovate ([0dc6fe3](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/0dc6fe34b9c5645c7f4c149fdc8f0237026fd2bd))
+* update renovate comments and images for new renovate.json ([a2a9244](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/a2a9244efe45bc86e1794ffdcc04fe77d8742ac3))
+
+
+### Miscellaneous
+
+* standardize repo to template and update README.md ([#14](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/14)) ([cbda1cc](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/cbda1cc6bd1b020c73aac8f7fee0830f3d3fcf74))
+
 ## [16.6.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v0.59.1-uds.1...v16.6.0-uds.0) (2024-02-02)
 
 
