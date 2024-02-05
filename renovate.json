@@ -100,11 +100,5 @@
       ],
       "datasourceTemplate": "helm"
     }
-  ],
-    "packageRules": [
-    {
-      "matchPackageNames": ["registry1.dso.mil/ironbank/big-bang/base"],
-      "allowedVersions": "!/8.4/"
-    }
   ]
 }
