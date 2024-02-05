@@ -36,17 +36,18 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
+      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
-        url: https://repo1.dso.mil/big-bang/product/packages/gitlab-runner.git
+        url: https://charts.gitlab.io
         gitPath: chart
-        version: "0.59.1-bb.2"
+        version: "0.61.0"
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.6.0
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.6.0
-      - registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
+      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3"
 
   - name: gitlab-runner
     required: true
@@ -60,14 +61,15 @@ components:
         localPath: chart
         valuesFiles:
           - values/config-values.yaml
+      # renovate: datasource=helm
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
         gitPath: chart
-        version: "0.59.1"
+        version: "0.61.0"
         valuesFiles:
           - values/upstream-values.yaml
     images:
-        # based on appVersion https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/v0.59.1/templates/_helpers.tpl?ref_type=tags#LC57
-      - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.6.0
-      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.6.0
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0"
+      - "library/alpine:latest"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"

@@ -38,8 +38,8 @@ tasks:
   - name: cleanup-gitlab-runner
     description: Remove the gitlab-runner namespace
     actions:
-      - cmd: kubectl delete namespace gitlab-runner --v=9
-      - cmd: kubectl delete namespace gitlab-runner-sandbox --v=9
+      - cmd: kubectl delete namespace gitlab-runner-sandbox --v=9 || true
+      - cmd: kubectl delete namespace gitlab-runner --v=9 || true
 
   - name: cleanup-cluster
     description: Delete the k3d cluster

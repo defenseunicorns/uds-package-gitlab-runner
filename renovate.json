@@ -70,7 +70,7 @@
     {
       "fileMatch": [".*\/?zarf\\.ya?ml$"],
       "matchStrings": [
-        "-\\s+['\"]?(?<depName>[^:]+):(?<currentValue>.*)['\"]?"
+        "- [\\'\"]?(?<depName>[^\"\\'\\s]+):(?<currentValue>[^\"\\'\\s]+)[\\'\"]?"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
       "datasourceTemplate": "docker",

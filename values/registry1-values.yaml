@@ -13,9 +13,45 @@ unregisterRunners: true
 rbac:
   create: false
 
+useTini: true
+
+concurrent: 50
+
+securityContext:
+  runAsUser: 1001
+  runAsGroup: 1001
+
+containerSecurityContext:
+  runAsNonRoot: true
+  capabilities:
+    drop: ["ALL"]
+
+resources:
+  limits:
+    memory: 256Mi
+    cpu: 200m
+  requests:
+    memory: 256Mi
+    cpu: 200m
+
+image:
+  registry: "registry1.dso.mil"
+  image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
+  tag: "v16.8.0"
+
 runners:
+  secret: gitlab-gitlab-runner-secret
+  runUntagged: true
+  protected: true
   job:
     namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+    registry: registry1.dso.mil
+    repository: ironbank/redhat/ubi/ubi9
+    tag: "9.3"
+  helper:
+    registry: registry1.dso.mil
+    repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
+    tag: "v16.8.0"
   config: |
     [[runners]]
       url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
