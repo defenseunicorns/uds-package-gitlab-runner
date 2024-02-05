@@ -42,9 +42,9 @@ components:
         gitPath: chart
         version: "0.61.0"
         valuesFiles:
-          - values/upstream-values.yaml
+          - values/registry1-values.yaml
     images:
-      - registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0
+      - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0
       - registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0
       - registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3
 

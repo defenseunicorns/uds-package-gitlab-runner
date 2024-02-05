@@ -14,8 +14,18 @@ rbac:
   create: false
 
 runners:
+  secret: gitlab-gitlab-runner-secret
+  runUntagged: true
+  protected: true
   job:
     namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+    registry: registry1.dso.mil
+    repository: ironbank/redhat/ubi/ubi9
+    tag: "9.3"
+  helper:
+    registry: registry1.dso.mil
+    repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
+    tag: "v16.8.0"
   config: |
     [[runners]]
       url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
