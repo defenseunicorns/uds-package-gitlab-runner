@@ -21,6 +21,10 @@ Gitlab-Runner has one dependency, Gitlab.
 | upstream | Uses upstream images within the package. | `zarf package create . -f upstream` |
 | registry1 | Uses images from registry1.dso.mil within the package. | `zarf package create . -f registry1` |
 
+## Releases
+
+The released packages can be found in [ghcr](https://github.com/defenseunicorns/uds-package-gitlab-runner/pkgs/container/packages%2Fuds%2Fgitlab-runner).
+
 ## General
 
 - `Upstream` flavor is the default
