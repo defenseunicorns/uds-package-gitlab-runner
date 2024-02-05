@@ -15,6 +15,25 @@ rbac:
 
 useTini: true
 
+concurrent: 50
+
+securityContext:
+  runAsUser: 1001
+  runAsGroup: 1001
+
+containerSecurityContext:
+  runAsNonRoot: true
+  capabilities:
+    drop: ["ALL"]
+
+resources:
+  limits:
+    memory: 256Mi
+    cpu: 200m
+  requests:
+    memory: 256Mi
+    cpu: 200m
+
 image:
   registry: "registry1.dso.mil"
   image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
