@@ -1,19 +1,12 @@
-# uds-package-gitlab-runner
+# UDS Gitlab Runner Package
 
-UDS Gitlab Runner Package
+![Latest Release](https://img.shields.io/github/v/release/defenseunicorns/uds-package-gitlab-runner)](https://github.com/defenseunicorns/uds-package-gitlab-runner/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/defenseunicorns/uds-package-gitlab-runner/tag-and-release.yaml)](https://github.com/defenseunicorns/uds-package-gitlab-runner/actions/workflows/tag-and-release.yaml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-gitlab-runner/badge)](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-gitlab-runner)
 
----
+This package is designed for use as part of a [UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory) bundle deployed on [UDS Core](https://github.com/defenseunicorns/uds-core)
 
-## Flavors
-
-Two flavors of this package are produced at this time:
-- `upstream`: This flavor uses the upstream images (except for the helper image because default root security context) and is intended for a quick and seamless development experience
-
-- `registry1`: This flavor uses hardened images from [Ironbank](https://p1.dso.mil/services/iron-bank) and is intended for production environments
-
----
-
-## Dependencies
+## Pre-requisites
 
 Gitlab-Runner has one dependency, Gitlab.
 
@@ -21,7 +14,12 @@ Gitlab-Runner has one dependency, Gitlab.
 
 - If choosing not to use `uds-package-gitlab` be aware that the Gitlab-Runner needs to be connected properly to Gitlab for registering itself and running pipelines as expected. 
 
----
+## Flavors
+
+ Flavor | Description | Example Creation |
+| ------ | ----------- | ---------------- |
+| upstream | Uses upstream images within the package. | `zarf package create . -f upstream` |
+| registry1 | Uses images from registry1.dso.mil within the package. | `zarf package create . -f registry1` |
 
 ## General
 
@@ -39,6 +37,7 @@ Utilizes [UDS-CLI task runners](https://github.com/defenseunicorns/uds-cli)
 - Which means `uds run --list` is available for cli descriptions.
 
 #### Using the UDS CLI targets:
+
 ```
 uds run default
 ```
@@ -53,8 +52,6 @@ uds run default
 | [test-package](./tasks.yaml#37) | Tests the health of a clusters Gitlab and Gitlab Runner |
 | [cleanup-gitlab-runner](./tasks.yaml#42) | Remove Gitlab Runner package only from cluster |
 | [cleanup-cluster](./tasks.yaml#48) | Remove the k3d cluster and everything in it |
-
----
 
 ## Tests
 
@@ -74,4 +71,13 @@ Basic tests have been implemented [here](./tasks/test.yaml).
 | [Runner Deployment](./tasks/test.yaml#45) | Check the health of the Gitlab Runner's Deployment |
 | [Runner Registration](./tasks/test.yaml#51) | Check that Gitlab Runner was able to register with Gitlab |
 
----
+## Values
+
+See: 
+1. [/values/config-values.yaml](/values/config-values.yaml)
+2. [/values/registry1-values.yaml](/values/registry1-values.yaml)
+2. [/values/upstream-values.yaml](/values/upstream-values.yaml)
+
+## Contributing
+
+Please see the [CONTRIBUTING.md](./CONTRIBUTING.md)
