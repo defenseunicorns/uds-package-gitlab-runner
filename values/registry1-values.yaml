@@ -70,3 +70,6 @@ runners:
         run_as_non_root = true
         run_as_user = 1001
         run_as_group = 0
+      [runners.kubernetes.build_container_security_context]
+        run_as_user = 65534
+        run_as_group = 65534
