@@ -30,19 +30,19 @@ components:
     only:
       flavor: registry1
     charts:
-      - name: uds-gitlab-runner-config
-        namespace: gitlab-runner
-        version: 0.1.0
-        localPath: chart
-        valuesFiles:
-          - values/config-values.yaml
-      - name: gitlab-runner
-        namespace: gitlab-runner
-        url: https://charts.gitlab.io
-        gitPath: chart
-        version: "0.61.0"
-        valuesFiles:
-          - values/registry1-values.yaml
+    - name: uds-gitlab-runner-config
+      namespace: gitlab-runner
+      version: 0.1.0
+      localPath: chart
+      valuesFiles:
+        - values/config-values.yaml
+    - name: gitlab-runner
+      namespace: gitlab-runner
+      url: https://charts.gitlab.io
+      gitPath: chart
+      version: "0.61.0"
+      valuesFiles:
+        - values/registry1-values.yaml
     images:
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.8.0"
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
@@ -54,19 +54,19 @@ components:
     only:
       flavor: upstream
     charts:
-      - name: uds-gitlab-runner-config
-        namespace: gitlab-runner
-        version: 0.1.0
-        localPath: chart
-        valuesFiles:
-          - values/config-values.yaml
-      - name: gitlab-runner
-        namespace: gitlab-runner
-        url: https://charts.gitlab.io
-        gitPath: chart
-        version: "0.61.0"
-        valuesFiles:
-          - values/upstream-values.yaml
+    - name: uds-gitlab-runner-config
+      namespace: gitlab-runner
+      version: 0.1.0
+      localPath: chart
+      valuesFiles:
+        - values/config-values.yaml
+    - name: gitlab-runner
+      namespace: gitlab-runner
+      url: https://charts.gitlab.io
+      gitPath: chart
+      version: "0.61.0"
+      valuesFiles:
+        - values/upstream-values.yaml
     images:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.8.0"
       - "library/alpine:latest"
