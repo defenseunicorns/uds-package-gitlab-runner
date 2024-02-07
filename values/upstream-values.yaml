@@ -33,9 +33,8 @@ runners:
         "job_id" = "${CI_JOB_ID}"
         "job_name" = "${CI_JOB_NAME}"
         "pipeline_id" = "${CI_PIPELINE_ID}"
+        "uds/user" = "${UDS_RUN_AS_USER}"
+        "uds/group" = "${UDS_RUN_AS_GROUP}"
       [runners.kubernetes.helper_container_security_context]
         run_as_user = 1001
-        run_as_group = 0
-      [runners.kubernetes.build_container_security_context]
-        run_as_user = 65534
-        run_as_group = 65534      
+        run_as_group = 0   
