@@ -75,13 +75,6 @@ Basic tests have been implemented [here](./tasks/test.yaml).
 | [Runner Deployment](./tasks/test.yaml#45) | Check the health of the Gitlab Runner's Deployment |
 | [Runner Registration](./tasks/test.yaml#51) | Check that Gitlab Runner was able to register with Gitlab |
 
-## Values
-
-See: 
-1. [/values/config-values.yaml](/values/config-values.yaml)
-2. [/values/registry1-values.yaml](/values/registry1-values.yaml)
-2. [/values/upstream-values.yaml](/values/upstream-values.yaml)
-
 ## Contributing
 
 Please see the [CONTRIBUTING.md](./CONTRIBUTING.md)
