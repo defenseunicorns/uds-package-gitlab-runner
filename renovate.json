@@ -20,5 +20,72 @@
         "password": "wcFMA/xDdHCJBTolAQ/6A4VHieAREvIZ35w9tpdLuvCysq3951xcwBD+o5A6QNYz9K5J0X4NDp2NF5FwEeEBgh3CGF7t/jXHdvvFUSo1wnTT0N+XoU4fXta1px9rkZssPWaMmqbmQ+KWXrEo7SMYK4nXBdExtIZ/j8XvjvTZ1apAh+ySW41eAKXbeQC+5I2rjDJegH6hI7kGkQDzmSAoaDX/Nw8seccozzOj9GEGxPbtF1UYJIfG0jZObf0GowXXCtCOEd5QcQQnzILIaiN0tgZgXrQKFehMTboi8rgYLtRI3LIObUjxl7O59q7ZBCkUuyt9nYF14i9PD8IltVdPsTrGpyK/yQMFrjHWkIPGFHZC9dLyjQlhTjMFBYdye9KGfoZHnKR5pXZw7JvCho/PaP3S8y4LXPJa7YHty0wEcP1eWT0b1hapHnsyDEJ22xyCz0hVFeUnXRPj3zSqBzn4+wVPZmxcCwuLNmu28JJ76SNYAf/4hTjlc2+8WasB/C8rNA+ASf+C6SsMMp677JffWXJtfJHgtPGV+gTCBITG7D8pkCVyIdoiGDv503QDiw59YdocEHkIaRw6EzSZ5XFEHz0mbnTZ7HgRYPklsQzVvetEOmctFdZgYZZ1hjVOkWIjiuSR+hDc3IT/TdXEohZxizAZAEmmsli0Q70m2EWJo1tUqxS9soQGKGQc/crIdpHSdgFfBI3gyKZP4ehv1WzYqrWlg1syDgbNllgEJIIBxv+ZI+QMJUF8SdtleMkxE6PYvc1bzpj6nTrM1oahiK8BUKS+cTpXQr1+LneL1mQ/4rSqNQO5ooBweej3Ql0cDNzjahfYc/1AwctQOdjZRpmGUs+RaMezgF8"
       }
     }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [".*\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: datasource=helm\n .*- name: (?<depName>.*?)\n *url: (?<registryUrl>.*?)\n *version: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+    },
+    {
+      "fileMatch": [".*\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*?:\\s*['\"]?(?<currentValue>.*?)['\"]?\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+    },
+    {
+      "fileMatch": [".*\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: zarf-uri datasource=github-tags depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?uri: ['\"]https:\\/\\/github.com\\/defenseunicorns\\/zarf\\/releases\\/download\\/(?<currentValue>.*)\\/zarf_.*_Linux_amd64['\"]",
+        "# renovate: zarf-uri datasource=github-tags depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?uri: ['\"]https:\\/\\/github.com\\/defenseunicorns\\/zarf\\/releases\\/download\\/.*\\/zarf_(?<currentValue>.*)_Linux_amd64['\"]"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": [".*\/?zarf\\.ya?ml$"],
+      "matchStrings": [
+        "- [\\'\"]?(?<depName>[^\"\\'\\s]+):(?<currentValue>[^\"\\'\\s]+)[\\'\"]?"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+      "datasourceTemplate": "docker",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+    },
+    {
+      "fileMatch": [
+        "(^|/)zarf.yaml$"
+      ],
+      "matchStringsStrategy": "recursive",
+      "matchStrings": [
+        "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
+        "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-)",
+        "(?m)name: (?<depName>.+)(.|\\n)*?url: (?<registryUrl>.+)(.|\\n)*?version: (?<currentValue>.+)"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "fileMatch": [
+        "(^|/)zarf.yaml$"
+      ],
+      "matchStringsStrategy": "recursive",
+      "matchStrings": [
+        "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
+        "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-)",
+        "(?m)name: (?<depName>.+)(.|\\n)*?version: (?<currentValue>.+)(.|\\n)*?url: (?<registryUrl>.+)"
+      ],
+      "datasourceTemplate": "helm"
+    },
+        {
+      "fileMatch": ["^\\.github/workflows/commitlint\\.yaml$"],
+      "matchStrings": [
+        "npm install --save-dev (?<depName>@?.*?)@(?<currentValue>.+)"
+      ],
+      "datasourceTemplate": "npm"
+    }
   ]
 }
