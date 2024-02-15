@@ -1,4 +1,4 @@
-# UDS Gitlab Runner Package
+# 🏭 UDS Gitlab Runner Package
 
 ![Latest Release](https://img.shields.io/github/v/release/defenseunicorns/uds-package-gitlab-runner)](https://github.com/defenseunicorns/uds-package-gitlab-runner/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/defenseunicorns/uds-package-gitlab-runner/tag-and-release.yaml)](https://github.com/defenseunicorns/uds-package-gitlab-runner/actions/workflows/tag-and-release.yaml)
@@ -74,13 +74,6 @@ Basic tests have been implemented [here](./tasks/test.yaml).
 | [Runner Secret](./tasks/test.yaml#39) | Check that Gitlab Runner's Runner secret is created |
 | [Runner Deployment](./tasks/test.yaml#45) | Check the health of the Gitlab Runner's Deployment |
 | [Runner Registration](./tasks/test.yaml#51) | Check that Gitlab Runner was able to register with Gitlab |
-
-## Values
-
-See: 
-1. [/values/config-values.yaml](/values/config-values.yaml)
-2. [/values/registry1-values.yaml](/values/registry1-values.yaml)
-2. [/values/upstream-values.yaml](/values/upstream-values.yaml)
 
 ## Contributing
 
