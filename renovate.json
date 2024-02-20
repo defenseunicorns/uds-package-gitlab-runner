@@ -1,15 +1,11 @@
 {
-  "enabled": true,
-  "forkProcessing": "enabled",
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>defenseunicorns/uds-common//config/renovate.json5",
-    ":semanticPrefixFixDepsChoreOthers",
-    "config:base",
-    "group:all",
-    "replacements:all",
-    "workarounds:all"
-  ],
+    "extends": [
+      "github>defenseunicorns/uds-common//config/renovate.json5",
+      ":semanticPrefixFixDepsChoreOthers",
+      "group:all",
+      "replacements:all",
+      "workarounds:all"
+    ],
   "hostRules": [
     {
       "matchHost": "registry1.dso.mil",
@@ -21,71 +17,25 @@
       }
     }
   ],
-  "regexManagers": [
+  "packageRules": [
     {
-      "fileMatch": [".*\\.ya?ml$"],
-      "matchStrings": [
-        "# renovate: datasource=helm\n .*- name: (?<depName>.*?)\n *url: (?<registryUrl>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm",
-      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+      "groupName": "Gitlab Runner Support Dependencies",
+      "labels": ["support-deps"],
+      "commitMessageTopic": "support-deps",
+      "packagePatterns": ["*"]
     },
     {
-      "fileMatch": [".*\\.ya?ml$"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*?:\\s*['\"]?(?<currentValue>.*?)['\"]?\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
-      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+      "groupName": "Gitlab Runner Package Dependencies",
+      "labels": ["package-deps"],
+      "commitMessageTopic": "package-deps",
+      "registryUrls": ["https://registry1.dso.mil"],
+      "matchDatasources": ["docker"]
     },
     {
-      "fileMatch": [".*\\.ya?ml$"],
-      "matchStrings": [
-        "# renovate: zarf-uri datasource=github-tags depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?uri: ['\"]https:\\/\\/github.com\\/defenseunicorns\\/zarf\\/releases\\/download\\/(?<currentValue>.*)\\/zarf_.*_Linux_amd64['\"]",
-        "# renovate: zarf-uri datasource=github-tags depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?uri: ['\"]https:\\/\\/github.com\\/defenseunicorns\\/zarf\\/releases\\/download\\/.*\\/zarf_(?<currentValue>.*)_Linux_amd64['\"]"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "fileMatch": [".*\/?zarf\\.ya?ml$"],
-      "matchStrings": [
-        "- [\\'\"]?(?<depName>[^\"\\'\\s]+):(?<currentValue>[^\"\\'\\s]+)[\\'\"]?"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
-      "datasourceTemplate": "docker",
-      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
-    },
-    {
-      "fileMatch": [
-        "(^|/)zarf.yaml$"
-      ],
-      "matchStringsStrategy": "recursive",
-      "matchStrings": [
-        "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
-        "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-)",
-        "(?m)name: (?<depName>.+)(.|\\n)*?url: (?<registryUrl>.+)(.|\\n)*?version: (?<currentValue>.+)"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "fileMatch": [
-        "(^|/)zarf.yaml$"
-      ],
-      "matchStringsStrategy": "recursive",
-      "matchStrings": [
-        "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
-        "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-)",
-        "(?m)name: (?<depName>.+)(.|\\n)*?version: (?<currentValue>.+)(.|\\n)*?url: (?<registryUrl>.+)"
-      ],
-      "datasourceTemplate": "helm"
-    },
-        {
-      "fileMatch": ["^\\.github/workflows/commitlint\\.yaml$"],
-      "matchStrings": [
-        "npm install --save-dev (?<depName>@?.*?)@(?<currentValue>.+)"
-      ],
-      "datasourceTemplate": "npm"
+      "groupName": "Gitlab Runner Package Dependencies",
+      "labels": ["package-deps"],
+      "commitMessageTopic": "package-deps",
+      "matchDatasources": ["helm"]
     }
   ]
 }
