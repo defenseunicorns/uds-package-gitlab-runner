@@ -2,8 +2,8 @@ includes:
   - create: ./tasks/create.yaml
   - test: ./tasks/test.yaml
   - deploy:  ./tasks/deploy.yaml
-  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/setup.yaml
-  - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.1.1/tasks/create.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.0/tasks/setup.yaml
+  - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.0/tasks/create.yaml
 
 tasks:
   - name: default
