@@ -18,11 +18,11 @@ components:
     actions:
       onDeploy:
         before: 
-          - cmd: kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
+          - cmd: uds zarf tools kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
             setVariables:
               - name: RUNNER_REGISTRATION_TOKEN
-          - cmd: kubectl create namespace gitlab-runner || true
-          - cmd: kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${ZARF_VAR_RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
+          - cmd: uds zarf tools kubectl create namespace gitlab-runner || true
+          - cmd: uds zarf tools kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${ZARF_VAR_RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
 
   - name: gitlab-runner
     required: true
