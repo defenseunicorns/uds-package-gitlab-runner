@@ -2,7 +2,8 @@ name: Test package
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    # milestoned is added here as a workaround for release-please not triggering PR workflows (PRs should be added to a milestone to trigger the workflow).
+    types: [milestoned, opened, reopened, synchronize]
 
 # Abort prior jobs in the same workflow / PR
 concurrency:
