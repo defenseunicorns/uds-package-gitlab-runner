@@ -1,5 +1,23 @@
 # Changelog
 
+## [16.8.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.0...v16.8.0-uds.1) (2024-02-24)
+
+
+### Bug Fixes
+
+* build container security context ([#22](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/22)) ([435d65e](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/435d65e76ccbe1f7312eb4f10aca995a8bf1f0e3))
+* pinning commitlint to avoid breaking change ([#27](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/27)) ([ea7eabe](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ea7eabe15abe1aed49a9e0cb4e085e10c22fcac5))
+* update 'kubectl' commands to 'uds zarf tools kubectl' ([f995554](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/f9955543a6295b345a2303e92c1a96a937ed2f1e))
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner support dependencies ([#35](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/35)) ([56dcfb0](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/56dcfb007ad99a0f299084f60bff442c875a8a31))
+* fix broken link in README ([#29](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/29)) ([668cf25](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/668cf25aace3f4be01de8de6d38b864a8c41d79e))
+* renovate updates ([#30](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/30)) ([7d911ac](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/7d911ac7c189df4b1407fbd1708f6d1f1e2c986c))
+* update contributing guidelines + renovate ([#24](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/24)) ([9025c6b](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/9025c6bf550361ec7c93b1ec623d8c14a74e2c5b))
+* Update README.md ([#25](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/25)) ([9410f23](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/9410f234da49f238469b5bffbace88b46bc78a48))
+
 ## [16.8.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.6.0-uds.0...v16.8.0-uds.0) (2024-02-05)
 
 
