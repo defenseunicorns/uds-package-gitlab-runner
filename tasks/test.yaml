@@ -1,6 +1,6 @@
 tasks:
-  - name: health-check
-    description: Check the status of Gitlab and Gitlab Runner StatefulSet
+  - name: gl-health-check
+    description: Check the status of Gitlab
     actions:
 
     # UDS Package Gitlab tests
@@ -35,7 +35,9 @@ tasks:
             name: gitlab-gitlab-runner-secret
             namespace: gitlab
 
-    # UDS Package Gitlab Runner tests
+  - name: glr-health-check
+    description: Check the status of Gitlab Runner
+    actions:
       - description: Check Gitlab Runner Secret
         wait:
           cluster:

@@ -1,17 +1,11 @@
-# no longer necessary to directly pass through .Values.monitoring.enabled
-# the package chart uses: .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" to toggle monitoring
-# metrics:
-#   enabled: true
-#   serviceMonitor:
-#     enabled: true
-
-# monitoring:
-#   enabled: true
-
 unregisterRunners: true
 
 rbac:
   create: false
+image:
+  registry: "registry.gitlab.com"
+  image: "gitlab-org/gitlab-runner"
+  tag: "alpine-v16.9.1"
 
 runners:
   secret: gitlab-gitlab-runner-secret
@@ -19,6 +13,13 @@ runners:
   protected: true
   job:
     namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+    registry: docker.io
+    repository: library/alpine
+    tag: "latest"
+  helper:
+    registry: registry1.dso.mil
+    repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
+    tag: "v16.9.0"
   config: |
     [[runners]]
       url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
@@ -26,8 +27,8 @@ runners:
       cache_dir = "/tmp/gitlab-runner/cache"
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
-        helper_image = "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.8.0"
-        image="alpine"
+        helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
+        image = "alpine"
         image_pull_secrets = ["private-registry"]
       [runners.kubernetes.pod_labels]
         "job_id" = "${CI_JOB_ID}"
@@ -37,4 +38,4 @@ runners:
         "uds/group" = "${UDS_RUN_AS_GROUP}"
       [runners.kubernetes.helper_container_security_context]
         run_as_user = 1001
-        run_as_group = 0   
+        run_as_group = 0
