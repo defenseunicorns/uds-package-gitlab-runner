@@ -4,7 +4,7 @@ metadata:
   name: gitlab-runner
   description: "UDS GitLab Runner Zarf Package"
   # x-release-please-start-version
-  version: "16.8.0-uds.1"
+  version: "16.9.1-uds.0"
   # x-release-please-end
 
 variables:
@@ -68,6 +68,6 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:v16.9.1"
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.9.1"
       - "library/alpine:latest"
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.9.0"
