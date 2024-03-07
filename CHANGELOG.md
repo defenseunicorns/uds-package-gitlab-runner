@@ -1,5 +1,12 @@
 # Changelog
 
+## [16.9.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.9.1-uds.0...v16.9.1-uds.1) (2024-03-07)
+
+
+### Miscellaneous
+
+* fix unvendored kubectl and zarf, remove --no-progress flag ([#49](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/49)) ([5c44943](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/5c449431cf685922fa6eb46e1bafb12ac433bdbd))
+
 ## [16.9.1-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.1...v16.9.1-uds.0) (2024-03-07)
 
 
