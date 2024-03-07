@@ -7,7 +7,7 @@ tasks:
   - name: gitlab-runner-package
     actions:
       - description: Deploy the UDS Gitlab Runner Package
-        cmd: zarf package deploy zarf-package-gitlab-runner-${UDS_ARCH}*.tar.zst --confirm --set job_runner_namespace=${JOB_RUNNER_NAMESPACE}
+        cmd: uds zarf package deploy zarf-package-gitlab-runner-${UDS_ARCH}*.tar.zst --confirm --set job_runner_namespace=${JOB_RUNNER_NAMESPACE}
 
   - name: gitlab-bundle
     description: Deploy UDS Package Gitlab from Bundle with Dependencies
