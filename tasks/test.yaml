@@ -61,7 +61,7 @@ tasks:
           # Attempt 3 times to retreive successful log statement with 30 second pause between retries
           while [ $retry_count -lt $max_retries ]; do
             # Check if the GitLab Runner pod is registered
-            if kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null | xargs -I {} kubectl logs -n "$namespace" {} -c gitlab-runner | grep -q "Registering runner... succeeded"; then
+            if uds zarf tools kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null | xargs -I {} kubectl logs -n "$namespace" {} -c gitlab-runner | grep -q "Registering runner... succeeded"; then
               # successful test
               exit 0
             fi
