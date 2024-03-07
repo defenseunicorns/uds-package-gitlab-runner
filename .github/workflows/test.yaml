@@ -45,6 +45,6 @@ jobs:
 
       - name: Save logs
         if: always()
-        uses: defenseunicorns/uds-common/.github/actions/save-logs@fc12e3a773580020a1d63e254525eab0f8b99fc8
+        uses: defenseunicorns/uds-common/.github/actions/save-logs@c20015729cd02b33993565fa927b4b34e2ac5a37
         with:
           suffix: '${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}'
