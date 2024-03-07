@@ -1,6 +1,6 @@
 # Changelog
 
-## [16.8.0-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.1...v16.8.0-uds.2) (2024-03-07)
+## [16.9.1-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.1...v16.9.1-uds.0) (2024-03-07)
 
 
 ### Miscellaneous
