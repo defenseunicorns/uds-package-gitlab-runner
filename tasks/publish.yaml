@@ -26,7 +26,7 @@ tasks:
       - description: Publish the packages
         cmd: |
           set -e
-          zarf package publish zarf-package-gitlab-runner-amd64-${VERSION}.tar.zst ${TARGET_REPO}
+          uds zarf package publish zarf-package-gitlab-runner-amd64-${VERSION}.tar.zst ${TARGET_REPO}
           if [ ${FLAVOR} != "registry1" ]; then
-           zarf package publish zarf-package-gitlab-runner-arm64-${VERSION}.tar.zst ${TARGET_REPO}
+           uds zarf package publish zarf-package-gitlab-runner-arm64-${VERSION}.tar.zst ${TARGET_REPO}
           fi
