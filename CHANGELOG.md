@@ -1,5 +1,15 @@
 # Changelog
 
+## [16.8.0-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.1...v16.8.0-uds.2) (2024-03-07)
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner package dependencies ([#34](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/34)) ([4cf733e](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/4cf733e36caff7713cec1a953c0a274f53b6fe58))
+* **deps:** update gitlab runner support dependencies ([#40](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/40)) ([04c88c0](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/04c88c00a1085400a00cb315f61d884fb6ba6e36))
+* **deps:** update gitlab runner support dependencies ([#45](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/45)) ([6f41a63](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6f41a6315a116748727c34ee69399736d9964ff4))
+* fix scorecard issues ([#42](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/42)) ([d9e473f](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/d9e473f688abfaa49301bbe216d0e0efdd508cfc))
+
 ## [16.8.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.8.0-uds.0...v16.8.0-uds.1) (2024-02-24)
 
 
