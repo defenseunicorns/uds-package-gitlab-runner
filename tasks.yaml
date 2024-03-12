@@ -9,9 +9,19 @@ tasks:
   - name: default
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
+      - task: create-test-bundle
+  
+  - name: create-test-bundle
+    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
+    actions:
       - task: gitlab
       - task: gitlab-runner
-  
+
+  - name: setup-test-cluster
+    description: setup the test cluster
+    actions:
+      - task: setup:k3d-test-cluster
+
   - name: create-package
     description: Create the Gitlab runner package
     actions:
@@ -30,7 +40,7 @@ tasks:
       - task: package:package
       - task: deploy:gitlab-runner-package
 
-  - name: create-test-bundle
+  - name: test-package
     description: Test the health of Gitlab and Gitlab Runner deployments
     actions:
       - task: test:gl-health-check
