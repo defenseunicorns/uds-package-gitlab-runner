@@ -30,7 +30,7 @@ tasks:
       - task: package:package
       - task: deploy:gitlab-runner-package
 
-  - name: create-test-package
+  - name: create-test-bundle
     description: Test the health of Gitlab and Gitlab Runner deployments
     actions:
       - task: test:gl-health-check
