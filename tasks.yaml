@@ -11,17 +11,6 @@ tasks:
     actions:
       - task: create-test-bundle
   
-  - name: create-test-bundle
-    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
-    actions:
-      - task: gitlab
-      - task: gitlab-runner
-
-  - name: setup-test-cluster
-    description: setup the test cluster
-    actions:
-      - task: setup:k3d-test-cluster
-
   - name: create-package
     description: Create the Gitlab runner package
     actions:
@@ -56,3 +45,28 @@ tasks:
     description: Delete the k3d cluster
     actions:
       - cmd: k3d cluster delete uds
+
+# The following actions are executed by the uds-common test action and are required to be here with these names
+
+  - name: create-test-bundle
+    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
+    actions:
+      - task: create:gitlab-bundle
+      - task: package:package
+
+  - name: setup-cluster
+    description: setup the test cluster
+    actions:
+      - task: setup:k3d-test-cluster
+
+  - name: deploy-test-bundle
+    description: deploy the test bundle
+    actions:
+      - task: deploy:gitlab-bundle
+      - task: deploy:gitlab-runner-package
+
+  - name: test-package
+    description: Test the health of Gitlab and Gitlab Runner deployments
+    actions:
+      - task: test:gl-health-check
+      - task: test:glr-health-check      
