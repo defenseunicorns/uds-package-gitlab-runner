@@ -46,7 +46,7 @@ tasks:
     actions:
       - cmd: k3d cluster delete uds
 
-# The following actions are executed by the uds-common test action and are required to be here with these names
+# CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
 
   - name: create-test-bundle
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
