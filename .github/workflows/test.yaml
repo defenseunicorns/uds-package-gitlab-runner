@@ -22,29 +22,22 @@ jobs:
         flavor: [upstream, registry1]    
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        with:
-          fetch-depth: 0
 
       - name: Environment setup
-        uses: ./.github/actions/setup
+        uses: defenseunicorns/uds-common/.github/actions/setup@442bae718050ea9a47254851a45632aabeb13b17
         with:
-          username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
-          password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
+          username: ${{secrets.IRON_BANK_ROBOT_USERNAME}}
+          password: ${{secrets.IRON_BANK_ROBOT_PASSWORD}}
 
-      - name: Standup k3d Cluster and UDS Package Gitlab and Deploy UDS Gitlab Runner
-        run: uds run default --set FLAVOR=${{ matrix.flavor }}
-
-      - name: Run Health Check Tests for Gitlab and Gitlab Runner
-        run: uds run test-package
-
-      - name: Cleanup the k3d Cluster
-        if: always()
-        run: uds run cleanup-cluster
+      - name: Test
+        uses: defenseunicorns/uds-common/.github/actions/test@442bae718050ea9a47254851a45632aabeb13b17
+        with:
+          flavor: ${{ matrix.flavor }}
 
       - name: Save logs
         if: always()
-        uses: defenseunicorns/uds-common/.github/actions/save-logs@c20015729cd02b33993565fa927b4b34e2ac5a37
+        uses: defenseunicorns/uds-common/.github/actions/save-logs@442bae718050ea9a47254851a45632aabeb13b17
         with:
-          suffix: '${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}'
+          suffix: ${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}
