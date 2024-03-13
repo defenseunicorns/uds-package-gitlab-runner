@@ -1,4 +1,4 @@
-name: Test package
+name: Test
 
 on:
   pull_request:
@@ -21,6 +21,7 @@ on:
       - "LICENSE"
       - "CONTRIBUTING.md"
       - "SECURITY.md"  
+
 
 # Abort prior jobs in the same workflow / PR
 concurrency:
