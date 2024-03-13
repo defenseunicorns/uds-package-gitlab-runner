@@ -1,5 +1,18 @@
 # Changelog
 
+## [16.9.1-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.9.1-uds.1...v16.9.1-uds.2) (2024-03-13)
+
+
+### Bug Fixes
+
+* architecture issues in nested uds-cli publish ([#53](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/53)) ([2d44ae7](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/2d44ae71db143b63ec7293f1e844cb086168b22c))
+
+
+### Miscellaneous
+
+* change to use uds-common test action ([#55](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/55)) ([b0f4906](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/b0f49067d675eb3dae0bb722886e3dddf70df735))
+* included ci docs shim ([#54](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/54)) ([c689c11](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/c689c118b4a2e2449f7b236e512de8703fed2d56))
+
 ## [16.9.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.9.1-uds.0...v16.9.1-uds.1) (2024-03-07)
 
 
