@@ -34,7 +34,7 @@ permissions:
 jobs:
   test:
     name: Create and Deploy Flavor ${{ matrix.flavor }}
-    runs-on: "uds-ubuntu-big-boy-16-core"
+    runs-on: "uds-ubuntu-big-boy-8-core"
     strategy:
       matrix:
         flavor: [upstream, registry1]    
