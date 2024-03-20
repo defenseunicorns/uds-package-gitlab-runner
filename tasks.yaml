@@ -1,72 +1,38 @@
 includes:
-  - create: ./tasks/create.yaml
   - test: ./tasks/test.yaml
-  - deploy:  ./tasks/deploy.yaml
-  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.1/tasks/setup.yaml
-  - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.1/tasks/create.yaml
+  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/create.yaml
+  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/lint.yaml
+  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/pull.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/deploy.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.3.2/tasks/setup.yaml
 
 tasks:
   - name: default
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
-      - task: create-test-bundle
+      - task: create-glr-test-bundle
+      - task: setup:k3d-test-cluster
+      - task: deploy:test-bundle
   
-  - name: create-package
+  - name: create-glr-package
     description: Create the Gitlab runner package
     actions:
-      - task: package:package
+      - task: create:package
+        with:
+          options: "--skip-sbom"
 
-  - name: gitlab
-    description: Deploy UDS Package Gitlab from Published Github Packages
+  - name: create-glr-test-bundle
+    description: Create a local UDS Gitlab Runner bundle with dependencies
     actions:
       - task: create:gitlab-bundle
-      - task: setup:k3d-test-cluster
-      - task: deploy:gitlab-bundle
-
-  - name: gitlab-runner
-    description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
-    actions:
       - task: package:package
-      - task: deploy:gitlab-runner-package
-
-  - name: test-package
-    description: Test the health of Gitlab and Gitlab Runner deployments
-    actions:
-      - task: test:gl-health-check
-      - task: test:glr-health-check
-      
-  - name: cleanup-gitlab-runner
-    description: Remove the gitlab-runner namespace
-    actions:
-      - cmd: uds zarf tools kubectl delete namespace gitlab-runner-sandbox --v=9 || true
-      - cmd: uds zarf tools kubectl delete namespace gitlab-runner --v=9 || true
-
-  - name: cleanup-cluster
-    description: Delete the k3d cluster
-    actions:
-      - cmd: k3d cluster delete uds
 
 # CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
 
-  - name: create-test-bundle
-    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
-    actions:
-      - task: create:gitlab-bundle
-      - task: package:package
-
-  - name: setup-cluster
-    description: setup the test cluster
-    actions:
-      - task: setup:k3d-test-cluster
-
-  - name: deploy-test-bundle
-    description: deploy the test bundle
-    actions:
-      - task: deploy:gitlab-bundle
-      - task: deploy:gitlab-runner-package
-
   - name: test-package
     description: Test the health of Gitlab and Gitlab Runner deployments
     actions:
-      - task: test:gl-health-check
-      - task: test:glr-health-check      
+      - task: create-glr-test-bundle
+      - task: setup:k3d-test-cluster
+      - task: deploy:test-bundle
+      - task: test:glr-health-check

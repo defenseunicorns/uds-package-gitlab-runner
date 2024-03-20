@@ -1,40 +1,4 @@
 tasks:
-  - name: gl-health-check
-    description: Check the status of Gitlab
-    actions:
-
-    # UDS Package Gitlab tests
-      - description: Check Gitlab StatefulSet - Gitaly
-        wait:
-          cluster:
-            kind: StatefulSet
-            name: gitlab-gitaly
-            namespace: gitlab
-      - description: Check Gitlab StatefulSet - Postgresql
-        wait:
-          cluster:
-            kind: StatefulSet
-            name: postgresql
-            namespace: dev-postgres
-      - description: Check Gitlab StatefulSet - Redis
-        wait:
-          cluster:
-            kind: StatefulSet
-            name: redis-master
-            namespace: dev-redis
-      - description: Check Gitlab Default Webservice Deployment
-        wait:
-          cluster:
-            kind: Deployment
-            name: gitlab-webservice-default
-            namespace: gitlab
-      - description: Check Gitlab Secret
-        wait:
-          cluster:
-            kind: Secret
-            name: gitlab-gitlab-runner-secret
-            namespace: gitlab
-
   - name: glr-health-check
     description: Check the status of Gitlab Runner
     actions:
@@ -50,8 +14,9 @@ tasks:
             kind: Deployment
             name: gitlab-runner
             namespace: gitlab-runner
+            condition: Available
       - description: Check GitLab Runner Logs for Successful Registration with Retires
-        retries: 3
+        maxRetries: 3
         cmd: |
           pod_label_selector="app=gitlab-runner"
           namespace="gitlab-runner"

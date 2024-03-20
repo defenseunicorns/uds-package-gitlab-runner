@@ -40,40 +40,11 @@ The released packages can be found in [ghcr](https://github.com/defenseunicorns/
 Utilizes [UDS-CLI task runners](https://github.com/defenseunicorns/uds-cli)
 - Which means `uds run --list` is available for cli descriptions.
 
-#### Using the UDS CLI targets:
+## UDS Tasks (for local dev and CI)
 
-```
-uds run default
-```
+*For local dev, this requires you install [uds-cli](https://github.com/defenseunicorns/uds-cli?tab=readme-ov-file#install)
 
-#### Available UDS CLI Targets
-| UDS CLI Target | Description |
-| - | - |
-| [default](./tasks.yaml#9) | Setup a k3d cluster, deploy `uds-package-gitlab`, deploy Gitlab Runner |
-| [create-package](./tasks.yaml#15) |  Create the Gitlab Runner Package based on the [zarf.yaml](./zarf.yaml) which defaults to `upstream` flavor |
-| [gitlab](./tasks.yaml#20) | Setup a k3d cluster and deploy [uds-package-gitlab](https://github.com/defenseunicorns/uds-package-gitlab) |
-| [gitlab-runner](./tasks.yaml#27) | Deploy Gitlab Runner only |
-| [test-package](./tasks.yaml#37) | Tests the health of a clusters Gitlab and Gitlab Runner |
-| [cleanup-gitlab-runner](./tasks.yaml#42) | Remove Gitlab Runner package only from cluster |
-| [cleanup-cluster](./tasks.yaml#48) | Remove the k3d cluster and everything in it |
-
-## Tests
-
-Basic tests have been implemented [here](./tasks/test.yaml). 
-
-#### Gitlab Specific Tests
-| Test Link | Test Description |
-| [Gitlab Gitaly](./tasks/test.yaml#7) | Check the health of Gitlab - Gitaly StatefulSet |
-| [Gitlab Postgres](./tasks/test.yaml#13) | Check the health of Gitlab - Postgres StatefulSet |
-| [Gitlab Redis](./tasks/test.yaml#19) | Check the health of Gitlab - Redis StatefulSet |
-| [Gitlab Webservice](./tasks/test.yaml#25) | Check the health of Gitlab - Webserivce Deployment|
-| [Gitlab Secret](./tasks/test.yaml#31) | Check that Gitlab's Runner Secret is created |
-
-#### Gitlab Runner Specific Tests
-| Test Link | Test Description |
-| [Runner Secret](./tasks/test.yaml#39) | Check that Gitlab Runner's Runner secret is created |
-| [Runner Deployment](./tasks/test.yaml#45) | Check the health of the Gitlab Runner's Deployment |
-| [Runner Registration](./tasks/test.yaml#51) | Check that Gitlab Runner was able to register with Gitlab |
+> :white_check_mark: **Tip:** To get a list of tasks to run you can use `uds run --list`!
 
 ## Contributing
 

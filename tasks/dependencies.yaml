@@ -1,0 +1,16 @@
+variables:
+  - name: FLAVOR
+    default: upstream
+
+tasks:
+  - name: deploy
+    description: Deploy the latest version of the dev GitLab bundle to use with the runner in tests
+    actions:
+      - description: Get latest tag version from OCI
+        cmd: uds zarf tools registry ls ghcr.io/defenseunicorns/packages/uds/bundles/gitlab-test | grep ${FLAVOR} | sort -V | tail -1
+        setVariables:
+          - name: LATEST_VERSION
+      - description: thingy
+        cmd: https://raw.githubusercontent.com/defenseunicorns/uds-package-gitlab/main/bundle/uds-config.yaml
+      - description: Pull the latest package release
+        cmd: uds deploy oci://ghcr.io/defenseunicorns/packages/uds/bundles/gitlab-test:${LATEST_VERSION} --no-progress
