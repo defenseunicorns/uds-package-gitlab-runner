@@ -17,7 +17,7 @@ components:
     description: Copy runner registration token secret from Gitlab namespace into runner namespace
     actions:
       onDeploy:
-        before: 
+        before:
           - cmd: uds zarf tools kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
             setVariables:
               - name: RUNNER_REGISTRATION_TOKEN

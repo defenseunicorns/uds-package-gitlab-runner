@@ -1,72 +1,66 @@
 includes:
-  - create: ./tasks/create.yaml
+  - dependencies: ./tasks/dependencies.yaml
   - test: ./tasks/test.yaml
-  - deploy:  ./tasks/deploy.yaml
-  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.1/tasks/setup.yaml
-  - package: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.2.1/tasks/create.yaml
+  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/create.yaml
+  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/lint.yaml
+  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/pull.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/deploy.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.3.3/tasks/setup.yaml
 
 tasks:
   - name: default
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
-      - task: create-test-bundle
-  
-  - name: create-package
+      - task: create-glr-test-bundle
+      - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
+      - task: deploy:test-bundle
+
+  - name: create-glr-package
     description: Create the Gitlab runner package
     actions:
-      - task: package:package
+      - task: create:package
+        with:
+          options: "--skip-sbom"
 
-  - name: gitlab
-    description: Deploy UDS Package Gitlab from Published Github Packages
+  - name: create-glr-test-bundle
+    description: Create a local UDS Gitlab Runner bundle
     actions:
-      - task: create:gitlab-bundle
-      - task: setup:k3d-test-cluster
-      - task: deploy:gitlab-bundle
+      - task: create-glr-package
+      - task: create:test-bundle
 
-  - name: gitlab-runner
-    description: Deploy UDS Gitlab-Runner on an existing cluster with existing Gitlab
+  - name: create-glr-latest-release-bundle
+    description: Create UDS Gitlab Runner bundle based on the latest release
     actions:
-      - task: package:package
-      - task: deploy:gitlab-runner-package
-
-  - name: test-package
-    description: Test the health of Gitlab and Gitlab Runner deployments
-    actions:
-      - task: test:gl-health-check
-      - task: test:glr-health-check
-      
-  - name: cleanup-gitlab-runner
-    description: Remove the gitlab-runner namespace
-    actions:
-      - cmd: uds zarf tools kubectl delete namespace gitlab-runner-sandbox --v=9 || true
-      - cmd: uds zarf tools kubectl delete namespace gitlab-runner --v=9 || true
-
-  - name: cleanup-cluster
-    description: Delete the k3d cluster
-    actions:
-      - cmd: k3d cluster delete uds
+      - task: pull:latest-package-release
+      # TODO (@WSTARR): This is currently needed to get around the chicken+egg condition when release please updates the version in GH
+      - description: Get the current Zarf package name
+        cmd: cat zarf.yaml | yq .metadata.version
+        setVariables:
+          - name: CURRENT_VERSION
+      - description: Move the latest to the current (needed to make this work on release-please PRs)
+        cmd: test -f zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst || mv zarf-package-gitlab-runner-${UDS_ARCH}-*.tar.zst zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst
+      - task: dependencies:create
+      - task: create:test-bundle
 
 # CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
 
-  - name: create-test-bundle
-    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
-    actions:
-      - task: create:gitlab-bundle
-      - task: package:package
-
-  - name: setup-cluster
-    description: setup the test cluster
-    actions:
-      - task: setup:k3d-test-cluster
-
-  - name: deploy-test-bundle
-    description: deploy the test bundle
-    actions:
-      - task: deploy:gitlab-bundle
-      - task: deploy:gitlab-runner-package
-
   - name: test-package
     description: Test the health of Gitlab and Gitlab Runner deployments
     actions:
-      - task: test:gl-health-check
-      - task: test:glr-health-check      
+      - task: create-glr-test-bundle
+      - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
+      - task: deploy:test-bundle
+      - task: test:glr-health-check
+
+  - name: test-upgrade
+    description: Test an upgrade from the latest released package to the current branch
+    actions:
+      - task: create-glr-latest-release-bundle
+      - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
+      - task: deploy:test-bundle
+      - task: create-glr-test-bundle
+      - task: deploy:test-bundle
+      - task: test:glr-health-check
