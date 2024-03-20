@@ -3,7 +3,7 @@ name: Test
 on:
   pull_request:
     branches: [main]
-    types: [milestoned, opened, synchronize]  
+    types: [milestoned, opened, synchronize]
     paths-ignore:
       - "**.md"
       - "**.jpg"
@@ -20,7 +20,7 @@ on:
       - "CODEOWNERS"
       - "LICENSE"
       - "CONTRIBUTING.md"
-      - "SECURITY.md"  
+      - "SECURITY.md"
 
 
 # Abort prior jobs in the same workflow / PR
@@ -37,8 +37,8 @@ jobs:
     runs-on: "uds-ubuntu-big-boy-8-core"
     strategy:
       matrix:
-        flavor: [upstream, registry1]   
-        type: [install, upgrade] 
+        flavor: [upstream, registry1]
+        type: [install, upgrade]
 
     steps:
       - name: Checkout repository

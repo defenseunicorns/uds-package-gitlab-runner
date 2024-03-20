@@ -22,7 +22,7 @@ tasks:
           namespace="gitlab-runner"
           max_retries=3
           retry_count=0
-          
+
           # Attempt 3 times to retreive successful log statement with 30 second pause between retries
           while [ $retry_count -lt $max_retries ]; do
             # Check if the GitLab Runner pod is registered
@@ -30,11 +30,11 @@ tasks:
               # successful test
               exit 0
             fi
-            
+
             retry_count=$((retry_count + 1))
-            sleep 30 # extra time for pod to stabilize 
+            sleep 30 # extra time for pod to stabilize
           done
-          
+
           # failure test
           exit 1
 
