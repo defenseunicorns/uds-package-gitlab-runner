@@ -13,6 +13,7 @@ tasks:
     actions:
       - task: create-glr-test-bundle
       - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
       - task: deploy:test-bundle
 
   - name: create-glr-package
