@@ -1,0 +1,14 @@
+kind: UDSBundle
+metadata:
+  name: gitlab-test
+  description: A UDS bundle for deploying Gitlab Runner on a development cluster (req's GitLab to be installed first)
+  # x-release-please-start-version
+  version: 16.8.1-uds.2
+  # x-release-please-end
+
+packages:
+  - name: gitlab-runner
+    repository: ../
+    # x-release-please-start-version
+    ref: "16.9.1-uds.1-upstream"
+    # x-release-please-end
