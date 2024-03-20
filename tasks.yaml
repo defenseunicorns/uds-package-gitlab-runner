@@ -23,9 +23,23 @@ tasks:
           options: "--skip-sbom"
 
   - name: create-glr-test-bundle
-    description: Create a local UDS Gitlab Runner bundle with dependencies
+    description: Create a local UDS Gitlab Runner bundle
     actions:
       - task: create-glr-package
+      - task: create:test-bundle
+
+  - name: create-glr-latest-release-bundle
+    description: Create UDS Gitlab Runner bundle based on the latest release
+    actions:
+      - task: pull:latest-package-release
+      # TODO (@WSTARR): This is currently needed to get around the chicken+egg condition when release please updates the version in GH
+      - description: Get the current Zarf package name
+        cmd: cat zarf.yaml | yq .metadata.version
+        setVariables:
+          - name: CURRENT_VERSION
+      - description: Move the latest to the current (needed to make this work on release-please PRs)
+        cmd: test -f zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst || mv zarf-package-gitlab-runner-${UDS_ARCH}-*.tar.zst zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst
+      - task: dependencies:create
       - task: create:test-bundle
 
 # CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
@@ -42,4 +56,10 @@ tasks:
   - name: test-upgrade
     description: Test an upgrade from the latest released package to the current branch
     actions:
-      - cmd: echo "nothing yet"
+      - task: create-glr-latest-release-bundle
+      - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
+      - task: deploy:test-bundle
+      - task: create-glr-test-bundle
+      - task: deploy:test-bundle
+      - task: test:glr-health-check
