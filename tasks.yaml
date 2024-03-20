@@ -1,4 +1,5 @@
 includes:
+  - dependencies: ./tasks/dependencies.yaml
   - test: ./tasks/test.yaml
   - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/create.yaml
   - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/lint.yaml
@@ -34,5 +35,6 @@ tasks:
     actions:
       - task: create-glr-test-bundle
       - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
       - task: deploy:test-bundle
       - task: test:glr-health-check
