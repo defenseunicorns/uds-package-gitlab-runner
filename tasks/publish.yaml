@@ -1,6 +1,6 @@
 includes:
-  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/create.yaml
-  - publish: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.2/tasks/publish.yaml
+  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/create.yaml
+  - publish: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/publish.yaml
 
 tasks:
   - name: package
@@ -9,12 +9,12 @@ tasks:
       - description: Create the AMD64 package
         task: create:package
         with:
-          options: -a amd64
+          architecture: amd64
 
       - description: Create the ARM64 package
         task: create:package
         with:
-          options: -a arm64
+          architecture: arm64
 
       - description: Publish the packages
         task: publish:package
