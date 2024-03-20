@@ -2,10 +2,6 @@ yaml-files:
   - '**/*.y*ml'
   - '.yamllint'
 
-# Ignore files from upstream
-ignore:
-  - '**/charts/**/templates**'
-
 rules:
   anchors: enable
   braces: enable
