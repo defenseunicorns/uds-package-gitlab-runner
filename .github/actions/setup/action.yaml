@@ -30,7 +30,7 @@ runs:
       uses: defenseunicorns/setup-zarf@main
       with:
         # renovate: datasource=github-tags depName=defenseunicorns/zarf versioning=semver
-        version: v0.32.4
+        version: v0.32.5
         download-init-package: ${{ inputs.download-init-package }}
 
     - name: Install k3d
@@ -44,4 +44,4 @@ runs:
     - name: Install UDS CLI
       shell: bash
       # renovate: datasource=github-tags depName=defenseunicorns/uds-cli versioning=semver
-      run: brew install defenseunicorns/tap/uds@0.9.3
+      run: brew install defenseunicorns/tap/uds@0.9.4
