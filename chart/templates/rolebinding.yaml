@@ -4,9 +4,9 @@ metadata:
   name: {{.Values.runners.job.namespace}}
   namespace: {{.Values.runners.job.namespace}}
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: gitlab-runner
+  - kind: ServiceAccount
+    name: default
+    namespace: gitlab-runner
 roleRef:
   apiGroup: ""
   kind: ClusterRole

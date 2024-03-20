@@ -4,8 +4,8 @@ metadata:
   name: {{.Values.runners.job.namespace}}
 rules:
   - apiGroups: [""]
-    resources: ["configmaps","pods","pods/attach","secrets","services"]
-    verbs: ["get","list","watch","create","patch","update","delete"]
+    resources: ["configmaps", "pods", "pods/attach", "secrets", "services"]
+    verbs: ["get", "list", "watch", "create", "patch", "update", "delete"]
   - apiGroups: [""]
     resources: ["pods/exec"]
-    verbs: ["create","patch","delete"]
+    verbs: ["create", "patch", "delete"]
