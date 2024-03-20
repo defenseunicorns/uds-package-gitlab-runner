@@ -27,3 +27,6 @@ test/tf/public-ec2-instance/.terraform
 terraform.tfstate
 terraform.tfstate.backup
 .terraform.lock.hcl
+
+# Dependency files
+uds-config-gitlab.yaml

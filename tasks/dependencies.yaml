@@ -11,6 +11,6 @@ tasks:
         setVariables:
           - name: LATEST_VERSION
       - description: thingy
-        cmd: https://raw.githubusercontent.com/defenseunicorns/uds-package-gitlab/main/bundle/uds-config.yaml
+        cmd: curl -o uds-config-gitlab.yaml https://raw.githubusercontent.com/defenseunicorns/uds-package-gitlab/${LATEST_VERSION}/bundle/uds-config.yaml
       - description: Pull the latest package release
-        cmd: uds deploy oci://ghcr.io/defenseunicorns/packages/uds/bundles/gitlab-test:${LATEST_VERSION} --no-progress
+        cmd: UDS_CONFIG=uds-config-gitlab.yaml uds deploy oci://ghcr.io/defenseunicorns/packages/uds/bundles/gitlab-test:${LATEST_VERSION} --no-progress
