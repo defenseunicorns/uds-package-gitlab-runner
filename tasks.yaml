@@ -25,8 +25,8 @@ tasks:
   - name: create-glr-test-bundle
     description: Create a local UDS Gitlab Runner bundle with dependencies
     actions:
-      - task: create:gitlab-bundle
-      - task: package:package
+      - task: create-glr-package
+      - task: create:test-bundle
 
 # CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
 
