@@ -40,7 +40,6 @@ tasks:
           - name: CURRENT_VERSION
       - description: Move the latest to the current (needed to make this work on release-please PRs)
         cmd: test -f zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst || mv zarf-package-gitlab-runner-${UDS_ARCH}-*.tar.zst zarf-package-gitlab-runner-${UDS_ARCH}-${CURRENT_VERSION}.tar.zst
-      - task: dependencies:create
       - task: create:test-bundle
 
 # CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
