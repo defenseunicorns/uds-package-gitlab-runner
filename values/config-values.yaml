@@ -1,3 +1,0 @@
-runners:
-  job:
-    namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
