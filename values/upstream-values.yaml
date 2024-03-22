@@ -1,14 +1,14 @@
 image:
-  registry: "registry.gitlab.com"
-  image: "gitlab-org/gitlab-runner"
-  tag: "alpine-v16.9.1"
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+  tag: alpine-v16.9.1
 
 runners:
   job:
     registry: docker.io
     repository: library/alpine
-    tag: "latest"
+    tag: 3.19.1
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
-    tag: "v16.9.0"
+    tag: v16.9.0

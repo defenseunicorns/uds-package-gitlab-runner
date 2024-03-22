@@ -40,6 +40,6 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.9.1"
-      - "library/alpine:latest"
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.9.1" # renovate: extractVersion=^alpine-(?<version>.*)$
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.9.0"
+      - "library/alpine:3.19.1"

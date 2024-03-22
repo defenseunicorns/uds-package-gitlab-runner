@@ -18,7 +18,6 @@ components:
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
-        gitPath: chart
         version: "0.62.1"
         valuesFiles:
           - ../values/common-values.yaml
