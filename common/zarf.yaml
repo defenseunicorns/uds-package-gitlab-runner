@@ -6,7 +6,6 @@ metadata:
 
 components:
   - name: gitlab-runner
-    required: true
     description: "Deploy gitlab-runner"
     charts:
       - name: uds-gitlab-runner-config
