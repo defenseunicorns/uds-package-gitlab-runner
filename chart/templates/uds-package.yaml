@@ -23,7 +23,7 @@ spec:
       - direction: Egress
         podLabels:
           app: gitlab-runner
-        remoteNamespace: {{ .Values.runners.job.namespace }}
+        remoteNamespace: {{ .Values.runnerNamespace }}
 
       - direction: Egress
         podLabels:

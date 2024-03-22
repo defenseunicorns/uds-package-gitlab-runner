@@ -1,8 +1,8 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.runners.job.namespace }}
-  namespace: {{ .Values.runners.job.namespace }}
+  name: {{ .Values.runnerNamespace }}
+  namespace: {{ .Values.runnerNamespace }}
 subjects:
   - kind: ServiceAccount
     name: default
@@ -10,4 +10,4 @@ subjects:
 roleRef:
   apiGroup: ""
   kind: ClusterRole
-  name: {{ .Values.runners.job.namespace }}
+  name: {{ .Values.runnerNamespace }}

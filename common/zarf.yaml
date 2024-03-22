@@ -13,7 +13,7 @@ components:
         version: 0.1.0
         localPath: ../chart
         valuesFiles:
-          - ../values/common-values.yaml
+          - ../values/config-values.yaml
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
