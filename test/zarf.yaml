@@ -7,5 +7,5 @@ metadata:
 components:
   - name: full-repo
     repos:
-      # The following performs a full Git Repo Mirror with `go-git` (internal to Zarf)
+      # TODO (@WSTARR): Make this reference a repository with a .gitlab-ci.yml file in it
       - https://github.com/defenseunicorns/zarf-public-test.git
