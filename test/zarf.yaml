@@ -1,0 +1,11 @@
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-runner-test
+  version: 0.0.1
+  description: A test package with a git repo containing a gitlab runner config
+
+components:
+  - name: full-repo
+    repos:
+      # The following performs a full Git Repo Mirror with `go-git` (internal to Zarf)
+      - https://github.com/defenseunicorns/zarf-public-test.git

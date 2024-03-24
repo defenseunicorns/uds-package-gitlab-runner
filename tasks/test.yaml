@@ -38,4 +38,13 @@ tasks:
           # failure test
           exit 1
 
-# todo: add more tests for checking validity and health of Gitlab Runner
+  - name: glr-run-check
+    description: Check that a GitLab repository can trigger a gitlab runner to run
+    actions:
+      - cmd: |
+          ROOT_PASSWORD=$(zarf tools kubectl get secret -n gitlab gitlab-gitlab-initial-root-password  -o jsonpath={.data.password} | base64 -d)
+          zarf package create test --confirm
+          zarf package mirror-resources zarf-package-gitlab-runner-test-amd64-0.0.1.tar.zst \
+            --git-url https://gitlab.uds.dev/ --git-push-username root --git-push-password ${ROOT_PASSWORD} --confirm
+        
+        # TODO (@WSTARR): Check that this kicks off a glr run
