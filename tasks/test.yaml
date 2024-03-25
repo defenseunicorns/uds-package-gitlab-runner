@@ -58,6 +58,10 @@ tasks:
           RUNNER_ID=$(curl -s --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/runners/all" | yq .0.id)
           curl --request PUT --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/runners/${RUNNER_ID}" --form "access_level=not_protected"
 
-          # Check that the pipeline actually ran successfully
+      - description: Check that the pipeline actually ran successfully
+        maxRetries: 3
+        cmd: |
+          sleep 10
+
           LATEST_JOB_ID=$(curl --globoff --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/projects/1/jobs?scope[]=success" | yq .0.id)
           curl --location --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/projects/1/jobs/${LATEST_JOB_ID}/trace" | grep "Hello Kitteh"
