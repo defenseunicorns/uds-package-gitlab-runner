@@ -10,6 +10,9 @@ defense-unicorns-distro/preflight.sh
 tmp
 zarf-sbom
 
+**node_modules
+**coverage
+
 .cache/
 .idea/
 build/
