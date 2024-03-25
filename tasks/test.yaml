@@ -41,10 +41,23 @@ tasks:
   - name: glr-run-check
     description: Check that a GitLab repository can trigger a gitlab runner to run
     actions:
-      - cmd: |
+      - description: Setup a repository and trigger a pipeline job
+        cmd: |
+          # Get the root password and create a version of this repository in GitLab
           ROOT_PASSWORD=$(uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-initial-root-password  -o jsonpath={.data.password} | base64 -d)
           uds zarf package create test --confirm
           uds zarf package mirror-resources zarf-package-gitlab-runner-test-amd64-0.0.1.tar.zst \
             --git-url https://gitlab.uds.dev/ --git-push-username root --git-push-password ${ROOT_PASSWORD} --confirm
 
-        # TODO (@WSTARR): Check that this kicks off a glr run
+          # Get the toolbox pod and add a specific token to the root user
+          TOOLBOX_POD_NAME=$(uds zarf tools kubectl --namespace gitlab get pods -lapp=toolbox -o name)
+          uds zarf tools kubectl --namespace gitlab exec -i ${TOOLBOX_POD_NAME} -- \
+            gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('if-you-see-me-in-production-something-is-horribly-wrong'); token.save!" || true
+
+          # Unprotect the runner so that it picks up jobs from the `zarf-` branches
+          RUNNER_ID=$(curl -s --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/runners/all" | yq .0.id)
+          curl --request PUT --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/runners/${RUNNER_ID}" --form "access_level=not_protected"
+
+          # Check that the pipeline actually ran successfully
+          LATEST_JOB_ID=$(curl --globoff --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/projects/1/jobs?scope[]=success" | yq .0.id)
+          curl --location --header "PRIVATE-TOKEN: if-you-see-me-in-production-something-is-horribly-wrong" "https://gitlab.uds.dev/api/v4/projects/1/jobs/${LATEST_JOB_ID}/trace" | grep "Hello Kitteh"

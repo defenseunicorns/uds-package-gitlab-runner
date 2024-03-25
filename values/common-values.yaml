@@ -48,3 +48,11 @@ resources:
   requests:
     memory: 256Mi
     cpu: 200m
+
+volumes:
+  - emptyDir: {}
+    name: gitlab-runner
+
+volumeMounts:
+  - name: gitlab-runner
+    mountPath: /.gitlab-runner

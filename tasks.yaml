@@ -52,6 +52,7 @@ tasks:
       - task: dependencies:deploy
       - task: deploy:test-bundle
       - task: test:glr-health-check
+      - task: test:glr-run-check
 
   - name: test-upgrade
     description: Test an upgrade from the latest released package to the current branch
@@ -63,3 +64,4 @@ tasks:
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
       - task: test:glr-health-check
+      - task: test:glr-run-check

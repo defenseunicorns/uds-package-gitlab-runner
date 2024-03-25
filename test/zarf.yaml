@@ -7,5 +7,5 @@ metadata:
 components:
   - name: full-repo
     repos:
-      # TODO (@WSTARR): Make this reference a repository with a .gitlab-ci.yml file in it
-      - https://github.com/defenseunicorns/zarf-public-test.git
+      # This references a commit that has a .gitlab-ci.yml in it - to update this push a PR and a new commit.
+      - https://github.com/defenseunicorns/uds-package-gitlab-runner.git@112875cfd0b05ca7c0486258afa40f5fe80d4bdf
