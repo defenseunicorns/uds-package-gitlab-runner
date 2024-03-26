@@ -2,7 +2,7 @@
   "name": "glr-tests",
   "description": "Tests for the UDS GitLab Runner package",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.1",

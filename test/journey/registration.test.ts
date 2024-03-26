@@ -19,4 +19,4 @@ test('test registration of the runner succeeded', async () => {
         }
     }
     expect(foundRegistrationSuccess).toBe(true)
-}, 30000);
+});

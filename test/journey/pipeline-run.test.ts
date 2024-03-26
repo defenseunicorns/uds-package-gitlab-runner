@@ -65,4 +65,4 @@ test('test kicking off a pipeline run', async () => {
     }
     expect(foundTheKitteh).toBe(true)
 
-}, 30000);
+});
