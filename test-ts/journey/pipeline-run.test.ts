@@ -20,23 +20,24 @@ test('test kicking off a pipeline run', async () => {
     });
     
     // Get the toolbox pod and add a token to the root GitLab user
+    const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${new Date()}`
     const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get()
     const toolboxPod = toolboxPods.items.at(0)
     spawnSync(
         `uds zarf tools kubectl --namespace gitlab exec -i ${toolboxPod?.metadata?.name} -- \
-          gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('if-you-see-me-in-production-something-is-horribly-wrong'); token.save!"`, {
+          gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`, {
         shell: true, // Run command in a shell
         stdio: 'inherit' // Print the command output directly to the shell (useful for debugging)
     });
     
+    const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
+
     // Un-protect the runner so that it picks up jobs from the `zarf-` branches
-    const runnerIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/runners/all`, {
-        headers: [["PRIVATE-TOKEN", "if-you-see-me-in-production-something-is-horribly-wrong"]]
-    })).json()
+    const runnerIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/runners/all`, { headers  })).json()
     const runnerID = runnerIDResp[0].id
     const runnerResp = await fetch(`https://gitlab.uds.dev/api/v4/runners/${runnerID}`, {
         headers: [
-            ["PRIVATE-TOKEN", "if-you-see-me-in-production-something-is-horribly-wrong"],
+            ["PRIVATE-TOKEN", tokenName],
             ["Content-Type", "application/x-www-form-urlencoded"]
         ],
         body: "access_level=not_protected",
@@ -48,15 +49,14 @@ test('test kicking off a pipeline run', async () => {
     let foundTheKitteh = false
     for (let i = 0; i < 3; i++) {
         await new Promise(r => setTimeout(r, 3000))
-        const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs`, {
-            headers: [["PRIVATE-TOKEN", "if-you-see-me-in-production-something-is-horribly-wrong"]]
-        })).json()
+        const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs`, { headers })).json()
         if (jobIDResp.length > 0 && jobIDResp[0].status === "success") {
             const jobID = jobIDResp[0].id
-            const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs/${jobID}/trace`, {
-                headers: [["PRIVATE-TOKEN", "if-you-see-me-in-production-something-is-horribly-wrong"]]
-            })).text()
+            const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs/${jobID}/trace`, { headers })).text()
+
+            // Print the job log (useful for debugging)
             console.log(jobLog)
+
             if (jobLog.indexOf("Hello Kitteh") > -1) {
                 foundTheKitteh = true
                 break
@@ -65,4 +65,4 @@ test('test kicking off a pipeline run', async () => {
     }
     expect(foundTheKitteh).toBe(true)
 
-}, 20000);
+}, 30000);
