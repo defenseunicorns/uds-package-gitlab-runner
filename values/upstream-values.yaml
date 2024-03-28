@@ -7,7 +7,7 @@ runners:
   job:
     registry: docker.io
     repository: library/alpine
-    tag: 3.19.1
+    tag: "3.19.1"
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper

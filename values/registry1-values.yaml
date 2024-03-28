@@ -10,7 +10,7 @@ runners:
   job:
     registry: registry1.dso.mil
     repository: ironbank/redhat/ubi/ubi9
-    tag: 9.3
+    tag: "9.3"
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
