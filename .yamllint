@@ -4,6 +4,7 @@ yaml-files:
 
 ignore:
   - 'chart/templates**'
+  - '**node_modules'
 
 rules:
   anchors: enable

@@ -12,35 +12,15 @@ variables:
     default: gitlab-runner-sandbox
 
 components:
-  - name: gitlab-registration
-    required: true
-    description: Copy runner registration token secret from Gitlab namespace into runner namespace
-    actions:
-      onDeploy:
-        before:
-          - cmd: uds zarf tools kubectl get secret gitlab-gitlab-runner-secret -n gitlab -o=jsonpath={.data.runner-registration-token} | base64 -d
-            setVariables:
-              - name: RUNNER_REGISTRATION_TOKEN
-          - cmd: uds zarf tools kubectl create namespace gitlab-runner || true
-          - cmd: uds zarf tools kubectl create secret generic gitlab-gitlab-runner-secret --namespace=gitlab-runner --from-literal=runner-registration-token="${ZARF_VAR_RUNNER_REGISTRATION_TOKEN}" --from-literal=runner-token="" --v=9 || true
-
   - name: gitlab-runner
     required: true
     description: "Deploy gitlab-runner"
+    import:
+      path: common
     only:
       flavor: registry1
     charts:
-      - name: uds-gitlab-runner-config
-        namespace: gitlab-runner
-        version: 0.1.0
-        localPath: chart
-        valuesFiles:
-          - values/config-values.yaml
       - name: gitlab-runner
-        namespace: gitlab-runner
-        url: https://charts.gitlab.io
-        gitPath: chart
-        version: "0.62.1"
         valuesFiles:
           - values/registry1-values.yaml
     images:
@@ -51,23 +31,15 @@ components:
   - name: gitlab-runner
     required: true
     description: "Deploy gitlab-runner"
+    import:
+      path: common
     only:
       flavor: upstream
     charts:
-      - name: uds-gitlab-runner-config
-        namespace: gitlab-runner
-        version: 0.1.0
-        localPath: chart
-        valuesFiles:
-          - values/config-values.yaml
       - name: gitlab-runner
-        namespace: gitlab-runner
-        url: https://charts.gitlab.io
-        gitPath: chart
-        version: "0.62.1"
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.9.1"
-      - "library/alpine:latest"
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.9.1" # renovate: extractVersion=^alpine-(?<version>.*)$
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.9.0"
+      - "library/alpine:3.19.1"

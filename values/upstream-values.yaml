@@ -1,41 +1,14 @@
-unregisterRunners: true
-
-rbac:
-  create: false
 image:
-  registry: "registry.gitlab.com"
-  image: "gitlab-org/gitlab-runner"
-  tag: "alpine-v16.9.1"
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+  tag: alpine-v16.9.1
 
 runners:
-  secret: gitlab-gitlab-runner-secret
-  runUntagged: true
-  protected: true
   job:
-    namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
     registry: docker.io
     repository: library/alpine
-    tag: "latest"
+    tag: "3.19.1"
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
-    tag: "v16.9.0"
-  config: |
-    [[runners]]
-      url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
-      clone_url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
-      cache_dir = "/tmp/gitlab-runner/cache"
-      [runners.kubernetes]
-        namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
-        helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
-        image = "alpine"
-        image_pull_secrets = ["private-registry"]
-      [runners.kubernetes.pod_labels]
-        "job_id" = "${CI_JOB_ID}"
-        "job_name" = "${CI_JOB_NAME}"
-        "pipeline_id" = "${CI_PIPELINE_ID}"
-        "uds/user" = "${UDS_RUN_AS_USER}"
-        "uds/group" = "${UDS_RUN_AS_GROUP}"
-      [runners.kubernetes.helper_container_security_context]
-        run_as_user = 1001
-        run_as_group = 0
+    tag: v16.9.0

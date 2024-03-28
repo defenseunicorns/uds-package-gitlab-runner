@@ -15,27 +15,13 @@ tasks:
             name: gitlab-runner
             namespace: gitlab-runner
             condition: Available
-      - description: Check GitLab Runner Logs for Successful Registration with Retires
-        maxRetries: 3
-        cmd: |
-          pod_label_selector="app=gitlab-runner"
-          namespace="gitlab-runner"
-          max_retries=3
-          retry_count=0
+      - description: Check GitLab Runner Logs for Successful Registration
+        dir: test
+        cmd: npm test -- journey/registration.test.ts
 
-          # Attempt 3 times to retreive successful log statement with 30 second pause between retries
-          while [ $retry_count -lt $max_retries ]; do
-            # Check if the GitLab Runner pod is registered
-            if uds zarf tools kubectl get pod -n "$namespace" -l "$pod_label_selector" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null | xargs -I {} kubectl logs -n "$namespace" {} -c gitlab-runner | grep -q "Registering runner... succeeded"; then
-              # successful test
-              exit 0
-            fi
-
-            retry_count=$((retry_count + 1))
-            sleep 30 # extra time for pod to stabilize
-          done
-
-          # failure test
-          exit 1
-
-# todo: add more tests for checking validity and health of Gitlab Runner
+  - name: glr-run-check
+    description: Check that a GitLab repository can trigger a gitlab runner to run
+    actions:
+      - description: Setup a repository and trigger a pipeline job
+        dir: test
+        cmd: npm test -- journey/pipeline-run.test.ts
