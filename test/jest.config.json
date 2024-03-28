@@ -4,5 +4,5 @@
     "collectCoverage": true,
     "coverageReporters": ["json", "lcov", "text", "clover"],
     "forceExit": true,
-    "testTimeout": 60000
+    "testTimeout": 30000
 }

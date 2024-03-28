@@ -48,7 +48,7 @@ test('test kicking off a pipeline run', async () => {
     // Check that the pipeline actually ran successfully
     let foundTheKitteh = false
     for (let i = 0; i < 7; i++) {
-        await new Promise(r => setTimeout(r, 3000))
+        await new Promise(r => setTimeout(r, 7000))
         const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs`, { headers })).json()
 
         // Print the job response (useful for debugging)
@@ -69,4 +69,4 @@ test('test kicking off a pipeline run', async () => {
     }
     expect(foundTheKitteh).toBe(true)
 
-});
+}, 90000);
