@@ -47,9 +47,13 @@ test('test kicking off a pipeline run', async () => {
 
     // Check that the pipeline actually ran successfully
     let foundTheKitteh = false
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 7; i++) {
         await new Promise(r => setTimeout(r, 3000))
         const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs`, { headers })).json()
+
+        // Print the job response (useful for debugging)
+        console.log(jobIDResp)
+
         if (jobIDResp.length > 0 && jobIDResp[0].status === "success") {
             const jobID = jobIDResp[0].id
             const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs/${jobID}/trace`, { headers })).text()
