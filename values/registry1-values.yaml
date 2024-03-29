@@ -4,7 +4,7 @@ useTini: true
 image:
   registry: "registry1.dso.mil"
   image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
-  tag: v16.9.0
+  tag: v16.10.0
 
 runners:
   job:
@@ -14,4 +14,4 @@ runners:
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
-    tag: v16.9.0
+    tag: v16.10.0
