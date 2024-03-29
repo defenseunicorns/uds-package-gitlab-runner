@@ -1,5 +1,20 @@
 # Changelog
 
+## [16.10.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.9.1-uds.2...v16.10.0-uds.0) (2024-03-29)
+
+
+### Miscellaneous
+
+* add a renovate schedule to reduce paid runner churn ([#67](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/67)) ([0e08dfe](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/0e08dfe8a58b8f712c1682a3277c24d3a9177198))
+* add upgrade tests to gitlab-runner ([#60](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/60)) ([df343fe](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/df343fe6cc71a9f0ba3601e8cd34218aec5118be))
+* **deps:** update gitlab runner package dependencies ([#63](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/63)) ([ad21fa7](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ad21fa7fbed7175132499e49d28157778b93841c))
+* **deps:** update gitlab runner support dependencies ([#52](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/52)) ([345a28f](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/345a28f55b880fc8cf1c09c37fd6e4725c57e394))
+* **deps:** update gitlab runner support dependencies ([#62](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/62)) ([6264f7a](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6264f7a3d31c91fccc6e54a9d25c6859374f651f))
+* hotfix upgrade test action ([#61](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/61)) ([040ab3a](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/040ab3a70a0ebcbf0905d8d908ea05b0a03ed8e0))
+* release v16.10.0-uds.0 ([#68](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/68)) ([8f13492](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/8f134922ea3e1eec8b4669e8e4886b8ae9c3250e))
+* update CODEOWNERS to new style/group ([#58](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/58)) ([422e776](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/422e7769719ba5c31741c97891a12b472be06dca))
+* update gitlab-runner to be simpler and more in line with patterns ([#65](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/65)) ([4064d7e](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/4064d7ef63d39aeaab02c395460d9cedb4ed5499))
+
 ## [16.9.1-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.9.1-uds.1...v16.9.1-uds.2) (2024-03-13)
 
 
