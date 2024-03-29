@@ -1,11 +1,11 @@
 includes:
   - dependencies: ./tasks/dependencies.yaml
   - test: ./tasks/test.yaml
-  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/create.yaml
-  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/lint.yaml
-  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/pull.yaml
-  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.3/tasks/deploy.yaml
-  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common-tasks/v0.3.3/tasks/setup.yaml
+  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.9/tasks/create.yaml
+  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.9/tasks/lint.yaml
+  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.9/tasks/pull.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.9/tasks/deploy.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.3.9/tasks/setup.yaml
 
 tasks:
   - name: default
@@ -52,6 +52,7 @@ tasks:
       - task: dependencies:deploy
       - task: deploy:test-bundle
       - task: test:glr-health-check
+      - task: test:glr-run-check
 
   - name: test-upgrade
     description: Test an upgrade from the latest released package to the current branch
@@ -63,3 +64,4 @@ tasks:
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
       - task: test:glr-health-check
+      - task: test:glr-run-check

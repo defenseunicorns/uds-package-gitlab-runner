@@ -2,7 +2,7 @@ apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
   name: gitlab-runner
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Release.Namespace }}
 spec:
   network:
     allow:
@@ -23,7 +23,7 @@ spec:
       - direction: Egress
         podLabels:
           app: gitlab-runner
-        remoteNamespace: {{.Values.runners.job.namespace}}
+        remoteNamespace: {{ .Values.runnerNamespace }}
 
       - direction: Egress
         podLabels:

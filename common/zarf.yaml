@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-runner
+  description: "UDS GitLab Runner Common Package"
+
+components:
+  - name: gitlab-runner
+    description: "Deploy gitlab-runner"
+    charts:
+      - name: uds-gitlab-runner-config
+        namespace: gitlab-runner
+        version: 0.1.0
+        localPath: ../chart
+        valuesFiles:
+          - ../values/config-values.yaml
+      - name: gitlab-runner
+        namespace: gitlab-runner
+        url: https://charts.gitlab.io
+        version: "0.62.1"
+        valuesFiles:
+          - ../values/common-values.yaml
+    actions:
+      onDeploy:
+        before:
+          - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
+          - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
+          - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
