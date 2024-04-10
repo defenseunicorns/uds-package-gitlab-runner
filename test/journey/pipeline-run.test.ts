@@ -1,6 +1,6 @@
 import { expect, test} from '@jest/globals';
 import { K8s, kind } from "kubernetes-fluent-client";
-import { spawnSync } from "child_process";
+import { zarfExec, retry } from "../common";
 
 test('test kicking off a pipeline run', async () => {
     // Get the root password for GitLab
@@ -8,27 +8,30 @@ test('test kicking off a pipeline run', async () => {
     const rootPassword = atob(rootPasswordSecret.data!.password)
 
     // Create a test repository in GitLab using Zarf
-    spawnSync(`uds zarf package create package --confirm`, {
-        shell: true, // Run command in a shell
-        stdio: 'inherit' // Print the command output directly to the shell (useful for debugging)
-    });
-    spawnSync(
-        `uds zarf package mirror-resources zarf-package-gitlab-runner-test-amd64-0.0.1.tar.zst \
-          --git-url https://gitlab.uds.dev/ --git-push-username root --git-push-password ${rootPassword} --confirm`, {
-        shell: true, // Run command in a shell
-        stdio: 'inherit' // Print the command output directly to the shell (useful for debugging)
-    });
+    zarfExec(["package", "create", "package", "--confirm"]);
+    zarfExec([
+        "package",
+        "mirror-resources",
+        "zarf-package-gitlab-runner-test-amd64-0.0.1.tar.zst",
+        "--git-url", "https://gitlab.uds.dev/",
+        "--git-push-username", "root",
+        "--git-push-password", rootPassword,
+        "--confirm"
+    ]);
     
     // Get the toolbox pod and add a token to the root GitLab user
     const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${new Date()}`
     const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get()
     const toolboxPod = toolboxPods.items.at(0)
-    spawnSync(
-        `uds zarf tools kubectl --namespace gitlab exec -i ${toolboxPod?.metadata?.name} -- \
-          gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`, {
-        shell: true, // Run command in a shell
-        stdio: 'inherit' // Print the command output directly to the shell (useful for debugging)
-    });
+    zarfExec(["tools",
+        "kubectl",
+        "--namespace", "gitlab",
+        "exec",
+        "-i",
+        toolboxPod?.metadata?.name!,
+        "--",
+        `gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`
+     ]);
     
     const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
 
@@ -46,9 +49,7 @@ test('test kicking off a pipeline run', async () => {
     expect(runnerResp.status).toBe(200)
 
     // Check that the pipeline actually ran successfully
-    let foundTheKitteh = false
-    for (let i = 0; i < 7; i++) {
-        await new Promise(r => setTimeout(r, 7000))
+    let foundTheKitteh = await retry(async () => {
         const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/1/jobs`, { headers })).json()
 
         // Print the job response (useful for debugging)
@@ -62,11 +63,11 @@ test('test kicking off a pipeline run', async () => {
             console.log(jobLog)
 
             if (jobLog.indexOf("Hello Kitteh") > -1) {
-                foundTheKitteh = true
-                break
+                return true
             }
         }
-    }
+        return false
+    }, 7, 7000);
     expect(foundTheKitteh).toBe(true)
 
 }, 90000);
