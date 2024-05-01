@@ -24,9 +24,9 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.10.0"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.10.0"
-      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.3"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v16.11.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.11.0"
+      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.4"
 
   - name: gitlab-runner
     required: true
@@ -41,5 +41,5 @@ components:
           - values/upstream-values.yaml
     images:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.10.0" # renovate: versioning=regex:^alpine-v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.10.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.11.0"
       - "library/alpine:3.19.1" # renovate: versioning=regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$
