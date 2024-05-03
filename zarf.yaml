@@ -40,6 +40,6 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.10.0" # renovate: versioning=regex:^alpine-v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v16.11.0" # renovate: versioning=regex:^alpine-v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v16.11.0"
       - "library/alpine:3.19.1" # renovate: versioning=regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$

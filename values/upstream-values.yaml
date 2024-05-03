@@ -1,7 +1,7 @@
 image:
   registry: registry.gitlab.com
   image: gitlab-org/gitlab-runner
-  tag: alpine-v16.10.0
+  tag: alpine-v16.11.0
 
 runners:
   job:
@@ -11,4 +11,4 @@ runners:
   helper:
     registry: registry1.dso.mil
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
-    tag: v16.10.0
+    tag: v16.11.0
