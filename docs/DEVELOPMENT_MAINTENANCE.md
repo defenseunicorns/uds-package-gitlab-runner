@@ -24,4 +24,5 @@ When changes are merged to the `main` branch, the Release Please will evaluate a
 > TIP: Merging a PR should be done via a branch **"Squash and merge"**; this means that the commit message seen on this PR merge is what Release Please will use to determine a version bump.
 
 When the auto generated Release Please PR is merged the following steps will automatically happen.
+
 1) A new release will be created and tagged

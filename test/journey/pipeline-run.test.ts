@@ -6,13 +6,13 @@ test('test kicking off a pipeline run', async () => {
     // Get the root password for GitLab
     const rootPasswordSecret = await K8s(kind.Secret).InNamespace("gitlab").Get("gitlab-gitlab-initial-root-password")
     const rootPassword = atob(rootPasswordSecret.data!.password)
-
+    const arch = process.env.UDS_ARCH
     // Create a test repository in GitLab using Zarf
     zarfExec(["package", "create", "package", "--confirm"]);
     zarfExec([
         "package",
         "mirror-resources",
-        "zarf-package-gitlab-runner-test-*-0.0.1.tar.zst",
+        `zarf-package-gitlab-runner-test-${arch}-0.0.1.tar.zst`,
         "--git-url", "https://gitlab.uds.dev/",
         "--git-push-username", "root",
         "--git-push-password", rootPassword,

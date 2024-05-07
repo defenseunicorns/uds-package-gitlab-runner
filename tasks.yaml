@@ -37,22 +37,12 @@ tasks:
           spoof_release: "true"
       - task: create:test-bundle
 
-  - name: test
-    description: Just test the health of Gitlab and Gitlab Runner deployments
-    actions:
-      - task: test:glr-run-check
-
   - name: dev
     description: Deploy gitlab-runner on existing cluster with existing gitlab
     actions:
       - task: create-glr-package
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
-
-  - name: create-user
-    description: create doug user
-    actions:
-      - task: setup:create-doug-user
 
   - name: doug-admin
     description: Promote Doug to admin (requires running create-user and logging into gitlab ui first)
