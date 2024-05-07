@@ -32,14 +32,17 @@ runners:
 
 concurrent: 50
 
-securityContext:
-  runAsUser: 1001
-  runAsGroup: 1001
+podSecurityContext:
+  runAsUser: 100
+  fsGroup: 65534
 
-containerSecurityContext:
+securityContext:
+  allowPrivilegeEscalation: false
   runAsNonRoot: true
+  privileged: false
   capabilities:
     drop: ["ALL"]
+
 
 resources:
   limits:
