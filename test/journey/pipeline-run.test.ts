@@ -12,7 +12,7 @@ test('test kicking off a pipeline run', async () => {
     zarfExec([
         "package",
         "mirror-resources",
-        "zarf-package-gitlab-runner-test-amd64-0.0.1.tar.zst",
+        "zarf-package-gitlab-runner-test-*-0.0.1.tar.zst",
         "--git-url", "https://gitlab.uds.dev/",
         "--git-push-username", "root",
         "--git-push-password", rootPassword,
