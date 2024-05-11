@@ -1,1 +1,9 @@
 runnerNamespace: "gitlab-runner-sandbox"
+custom: []
+  # - direction: Egress
+  #   remoteGenerated: Anywhere
+  #   description: "Egress from to external GitLab"
+customSandbox: []
+  # - direction: Egress
+  #   remoteGenerated: Anywhere
+  #   description: "Egress from to external GitLab"

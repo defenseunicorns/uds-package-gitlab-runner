@@ -1,23 +1,14 @@
 apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
-  name: gitlab-runner
-  namespace: {{ .Release.Namespace }}
+  name: gitlab-runner-sandbox
+  namespace: {{ .Values.runnerNamespace }}
 spec:
-  monitor:
-    - selector:
-        app: gitlab-runner 
-      targetPort: 9252
-      portName: metrics
-      description: Metrics
-
   network:
     allow:
       - direction: Egress
-        selector:
-          app: gitlab-runner
         remoteNamespace: gitlab
-        remoteSelector:
+        remotePodLabels:
           app: webservice
         port: 8181
 
@@ -28,12 +19,16 @@ spec:
         remoteGenerated: IntraNamespace
 
       - direction: Egress
-        selector:
+        remoteNamespace: gitlab-runner
+        remoteSelector:
           app: gitlab-runner
-        remoteNamespace: {{ .Values.runnerNamespace }}
-        
-      # Custom rules for unanticipated scenarios
-    {{- range .Values.custom }}
+
+      - direction: Ingress
+        remoteNamespace: gitlab-runner
+        remoteSelector:
+          app: gitlab-runner
+
+    {{- range .Values.customSandbox }}
       - direction: {{ .direction }}
         selector:
           {{ .selector | toYaml | nindent 10 }}
