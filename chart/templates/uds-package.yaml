@@ -28,6 +28,11 @@ spec:
         remoteGenerated: IntraNamespace
 
       - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteGenerated: KubeAPI
+
+      - direction: Egress
         selector:
           app: gitlab-runner
         remoteNamespace: {{ .Values.runnerNamespace }}
