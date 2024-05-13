@@ -28,6 +28,9 @@ spec:
         remoteSelector:
           app: gitlab-runner
 
+      - direction: Egress
+        remoteGenerated: KubeAPI
+
     {{- range .Values.customSandbox }}
       - direction: {{ .direction }}
         selector:
