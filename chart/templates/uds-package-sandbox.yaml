@@ -8,7 +8,7 @@ spec:
     allow:
       - direction: Egress
         remoteNamespace: gitlab
-        remotePodLabels:
+        remoteSelector:
           app: webservice
         port: 8181
 
