@@ -1,4 +1,4 @@
-runnerNamespace: "gitlab-runner-sandbox"
+sandboxNamespace: "gitlab-runner-sandbox"
 custom: []
   # - direction: Egress
   #   remoteGenerated: Anywhere

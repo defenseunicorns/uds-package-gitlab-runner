@@ -25,6 +25,8 @@ runners:
         "pipeline_id" = "${CI_PIPELINE_ID}"
         "uds/user" = "${UDS_RUN_AS_USER}"
         "uds/group" = "${UDS_RUN_AS_GROUP}"
+        "uds/group" = "${UDS_RUN_AS_GROUP}"
+        "uds/network-access-gitlab" = "true"
       [runners.kubernetes.helper_container_security_context]
         run_as_non_root = true
         run_as_user = 1001

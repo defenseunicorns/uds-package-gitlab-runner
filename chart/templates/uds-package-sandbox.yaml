@@ -2,28 +2,21 @@ apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
   name: gitlab-runner-sandbox
-  namespace: {{ .Values.runnerNamespace }}
+  namespace: {{ .Values.sandboxNamespace }}
 spec:
   network:
     allow:
       - direction: Egress
+        selector:
+          uds/network-access-gitlab: true
         remoteNamespace: gitlab
         remoteSelector:
           app: webservice
         port: 8181
 
       - direction: Ingress
-        remoteGenerated: IntraNamespace
-
-      - direction: Egress
-        remoteGenerated: IntraNamespace
-
-      - direction: Egress
-        remoteNamespace: gitlab-runner
-        remoteSelector:
-          app: gitlab-runner
-
-      - direction: Ingress
+        selector: 
+          uds/network-access-gitlab: true
         remoteNamespace: gitlab-runner
         remoteSelector:
           app: gitlab-runner
