@@ -1,4 +1,5 @@
 sandboxNamespace: "gitlab-runner-sandbox"
+serviceAccountName: "gitlab-runner"
 custom: []
   # - direction: Egress
   #   remoteGenerated: Anywhere

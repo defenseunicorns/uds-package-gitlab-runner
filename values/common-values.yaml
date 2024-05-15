@@ -1,7 +1,18 @@
 unregisterRunners: true
 
+
+# Create a non-default service account with the name gitlab-runner with minimal permissions
 rbac:
-  create: false
+  create: true
+  generatedServiceAccountName: gitlab-runner
+  rules:
+    - resources: [""]
+    - apiGroups: [""]
+      resources: [""]
+      verbs: ["*"]
+    - apiGroups: [""]
+      resources: [""]
+      verbs: [""]
 
 runners:
   secret: gitlab-gitlab-runner-secret
@@ -25,7 +36,6 @@ runners:
         "pipeline_id" = "${CI_PIPELINE_ID}"
         "uds/user" = "${UDS_RUN_AS_USER}"
         "uds/group" = "${UDS_RUN_AS_GROUP}"
-        "uds/group" = "${UDS_RUN_AS_GROUP}"
         "uds/network-access-gitlab" = "true"
       [runners.kubernetes.helper_container_security_context]
         run_as_non_root = true
@@ -44,6 +54,11 @@ securityContext:
   privileged: false
   capabilities:
     drop: ["ALL"]
+
+service:
+  enabled: true
+metrics:
+  enabled: true
 
 
 resources:
