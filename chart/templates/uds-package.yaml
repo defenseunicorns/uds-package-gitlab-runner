@@ -31,7 +31,7 @@ spec:
           app: gitlab-runner
         remoteNamespace: {{ .Values.sandboxNamespace }}
         remoteSelector:
-          uds/network-access-gitlab: true
+          uds/network-access-gitlab: "true"
         
       # Custom rules for unanticipated scenarios
     {{- range .Values.custom }}

@@ -8,7 +8,7 @@ spec:
     allow:
       - direction: Egress
         selector:
-          uds/network-access-gitlab: true
+          uds/network-access-gitlab: "true"
         remoteNamespace: gitlab
         remoteSelector:
           app: webservice
@@ -16,7 +16,7 @@ spec:
 
       - direction: Ingress
         selector: 
-          uds/network-access-gitlab: true
+          uds/network-access-gitlab: "true"
         remoteNamespace: gitlab-runner
         remoteSelector:
           app: gitlab-runner
