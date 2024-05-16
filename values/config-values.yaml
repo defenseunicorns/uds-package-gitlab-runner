@@ -1,1 +1,2 @@
-runnerNamespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+sandboxNamespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+serviceAccountName: "gitlab-runner"

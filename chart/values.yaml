@@ -1,1 +1,10 @@
-runnerNamespace: "gitlab-runner-sandbox"
+sandboxNamespace: "gitlab-runner-sandbox"
+serviceAccountName: "gitlab-runner"
+custom: []
+  # - direction: Egress
+  #   remoteGenerated: Anywhere
+  #   description: "Egress from to external GitLab"
+customSandbox: []
+  # - direction: Egress
+  #   remoteGenerated: Anywhere
+  #   description: "Egress from to external GitLab"

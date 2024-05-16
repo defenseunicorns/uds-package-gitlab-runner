@@ -1,40 +1,27 @@
 apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
-  name: gitlab-runner
-  namespace: {{ .Release.Namespace }}
+  name: gitlab-runner-sandbox
+  namespace: {{ .Values.sandboxNamespace }}
 spec:
-  monitor:
-    - selector:
-        app: gitlab-runner 
-      targetPort: 9252
-      portName: metrics
-      description: Metrics
-
   network:
     allow:
       - direction: Egress
         selector:
-          app: gitlab-runner
+          uds/network-access-gitlab: "true"
         remoteNamespace: gitlab
         remoteSelector:
           app: webservice
         port: 8181
 
-      - direction: Egress
-        podLabels:
-          app: gitlab-runner
-        remoteGenerated: KubeAPI
-
-      - direction: Egress
-        selector:
-          app: gitlab-runner
-        remoteNamespace: {{ .Values.sandboxNamespace }}
-        remoteSelector:
+      - direction: Ingress
+        selector: 
           uds/network-access-gitlab: "true"
-        
-      # Custom rules for unanticipated scenarios
-    {{- range .Values.custom }}
+        remoteNamespace: gitlab-runner
+        remoteSelector:
+          app: gitlab-runner
+
+    {{- range .Values.customSandbox }}
       - direction: {{ .direction }}
         selector:
           {{ .selector | toYaml | nindent 10 }}
