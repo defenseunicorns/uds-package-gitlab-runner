@@ -6,10 +6,6 @@ rbac:
   create: true
   generatedServiceAccountName: gitlab-runner
   rules:
-    - resources: [""]
-    - apiGroups: [""]
-      resources: [""]
-      verbs: ["*"]
     - apiGroups: [""]
       resources: [""]
       verbs: [""]
