@@ -1,5 +1,22 @@
 # Changelog
 
+## [17.0.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.11.0-uds.0...v17.0.0-uds.0) (2024-05-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* add netpols and monitoring ([#81](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/81))
+
+### Features
+
+* add netpols and monitoring ([#81](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/81)) ([71c40fb](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/71c40fb034c78bdfb1247f749f9b620a2b013408))
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner package dependencies ([#80](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/80)) ([8393282](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/83932820933c7c17d405984cf0f4656712e01f6f))
+* **deps:** update gitlab runner support dependencies ([#78](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/78)) ([a203bac](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/a203baca75cb7ec99b9a4bd0d210044802aa3790))
+
 ## [16.11.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.10.0-uds.0...v16.11.0-uds.0) (2024-05-07)
 
 
