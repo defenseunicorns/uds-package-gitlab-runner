@@ -2,3 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ .Values.sandboxNamespace }}
+  {{- if .Values.sandboxZarfIgnore }}
+  labels:
+    zarf.dev/agent: ignore
+  {{- end }}

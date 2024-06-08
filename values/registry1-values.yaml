@@ -8,10 +8,10 @@ image:
 
 runners:
   job:
-    registry: registry1.dso.mil
+    registry: "###ZARF_REGISTRY###"
     repository: ironbank/redhat/ubi/ubi9
     tag: "9.4"
   helper:
-    registry: registry1.dso.mil
+    registry: "###ZARF_REGISTRY###"
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     tag: v17.0.0
