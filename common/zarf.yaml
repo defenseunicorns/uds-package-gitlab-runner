@@ -26,3 +26,20 @@ components:
           - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
+        after:
+          - description: Validate GitLab Runner Package
+            maxTotalSeconds: 300
+            wait:
+              cluster:
+                kind: Packages
+                name: gitlab-runner
+                namespace: gitlab-runner
+                condition: "'{.status.phase}'=Ready"
+          - description: Validate GitLab Runner Sandbox Package
+            maxTotalSeconds: 300
+            wait:
+              cluster:
+                kind: Packages
+                name: gitlab-runner-sandbox
+                namespace: gitlab-runner-sandbox
+                condition: "'{.status.phase}'=Ready"
