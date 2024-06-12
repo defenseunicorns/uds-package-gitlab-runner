@@ -1,4 +1,4 @@
-sandboxNamespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+sandboxNamespace: "gitlab-runner-sandbox"
 
 # whether to have the Zarf Agent ignore the sandbox namespace
 sandboxZarfIgnore: true

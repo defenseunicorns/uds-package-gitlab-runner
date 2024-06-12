@@ -15,7 +15,7 @@ runners:
   runUntagged: true
   protected: true
   job:
-    namespace: "###ZARF_VAR_JOB_RUNNER_NAMESPACE###"
+    namespace: gitlab-runner-sandbox
   config: |
     [[runners]]
       url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"

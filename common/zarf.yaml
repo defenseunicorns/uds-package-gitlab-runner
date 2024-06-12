@@ -12,8 +12,6 @@ components:
         namespace: gitlab-runner
         version: 0.1.0
         localPath: ../chart
-        valuesFiles:
-          - ../values/config-values.yaml
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
