@@ -5,10 +5,10 @@ image:
 
 runners:
   job:
-    registry: docker.io
+    registry: "###ZARF_REGISTRY###"
     repository: library/alpine
     tag: "3.19.1"
   helper:
-    registry: registry1.dso.mil
+    registry: "###ZARF_REGISTRY###"
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     tag: v17.0.0

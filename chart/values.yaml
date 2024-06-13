@@ -1,5 +1,10 @@
 sandboxNamespace: "gitlab-runner-sandbox"
+
+# whether to have the Zarf Agent ignore the sandbox namespace
+sandboxZarfIgnore: true
+
 serviceAccountName: "gitlab-runner"
+
 custom: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
