@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Environment setup
-        uses: defenseunicorns/uds-common/.github/actions/setup@11e591f2ec7d158923d973c85097ce28a5f55db4 # v0.4.5
+        uses: defenseunicorns/uds-common/.github/actions/setup@d50b4ebe3712fea4114289db0c36da61a5f60eb5 # v0.5.1
         with:
           registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
@@ -55,17 +55,17 @@ jobs:
         run: cd test && npm ci
 
       - name: Test
-        uses: defenseunicorns/uds-common/.github/actions/test@11e591f2ec7d158923d973c85097ce28a5f55db4 # v0.4.5
+        uses: defenseunicorns/uds-common/.github/actions/test@d50b4ebe3712fea4114289db0c36da61a5f60eb5 # v0.5.1
         with:
           flavor: ${{ matrix.flavor }}
           type: ${{ matrix.type }}
 
       - name: Debug Output
         if: ${{ always() }}
-        uses: defenseunicorns/uds-common/.github/actions/debug-output@11e591f2ec7d158923d973c85097ce28a5f55db4 # v0.4.5
+        uses: defenseunicorns/uds-common/.github/actions/debug-output@d50b4ebe3712fea4114289db0c36da61a5f60eb5 # v0.5.1
 
       - name: Save logs
         if: always()
-        uses: defenseunicorns/uds-common/.github/actions/save-logs@11e591f2ec7d158923d973c85097ce28a5f55db4 # v0.4.5
+        uses: defenseunicorns/uds-common/.github/actions/save-logs@d50b4ebe3712fea4114289db0c36da61a5f60eb5 # v0.5.1
         with:
           suffix: ${{ matrix.type }}-${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}
