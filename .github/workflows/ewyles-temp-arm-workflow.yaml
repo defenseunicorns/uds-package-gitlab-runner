@@ -12,7 +12,6 @@ permissions:
 jobs:
   publish-package:
     runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-4-core' || 'ubuntu-latest' }}
-    name: Publish ${{ matrix.flavor }}
     strategy:
       matrix:
         flavor: [upstream, registry1]

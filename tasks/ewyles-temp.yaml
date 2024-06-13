@@ -17,5 +17,3 @@ tasks:
       - task: deploy:test-bundle
       - task: test:glr-health-check
       - task: test:glr-run-check
-
-
