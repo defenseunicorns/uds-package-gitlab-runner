@@ -11,11 +11,11 @@ permissions:
 
 jobs:
   publish-package:
-    runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-4-core' || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-big-boy-8-core' || 'ubuntu-latest' }}
     strategy:
       matrix:
         flavor: [upstream, registry1]
-        architecture: [amd64]
+        architecture: [arm64]
         exclude:
           - flavor: registry1
             architecture: arm64
