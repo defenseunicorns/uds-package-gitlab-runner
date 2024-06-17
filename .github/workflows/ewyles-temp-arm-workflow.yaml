@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-8-core' || 'uds-ubuntu-big-boy-8-core' }}
     strategy:
       matrix:
-        flavor: [upstream, registry1]
+        flavor: [upstream]
         architecture: [amd64]
         exclude:
           - flavor: registry1
@@ -38,6 +38,9 @@ jobs:
       - name: Set up QEMU
         if: ${{ runner.arch == 'ARM64' }}
         uses: docker/setup-qemu-action@v3
+
+      - name: NPM setup
+        run: cd test && npm ci
 
       - name: Publish Package
         run: UDS_ARCHITECTURE=${{ matrix.architecture }} uds run -f tasks/ewyles-temp.yaml package --set FLAVOR=${{ matrix.flavor }}
