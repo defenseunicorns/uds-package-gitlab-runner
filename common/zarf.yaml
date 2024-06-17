@@ -29,7 +29,7 @@ components:
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
           - cmd: |
-              test -z "${RUNNER_AUTH_TOKEN}" && echo "${RUNNER_AUTH_TOKEN}" || true
+              test -n "${RUNNER_AUTH_TOKEN}" && echo "${RUNNER_AUTH_TOKEN}" || true
               RUNNER_REGISTRATION_TOKEN=$(./zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
               WEBSERVICE_POD=$(./zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
               ./zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" | ./zarf tools yq .token
