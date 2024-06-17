@@ -24,12 +24,10 @@ components:
           - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
-          - cmd: ./zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d
-            mute: true
-            setVariables:
-              - name: RUNNER_REGISTRATION_TOKEN
-                sensitive: true
-          - cmd: curl -s --request POST "https://gitlab.${ZARF_VAR_DOMAIN}/api/v4/runners" --form "token=${ZARF_VAR_RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" | ./zarf tools yq .token
+          - cmd: |
+              RUNNER_REGISTRATION_TOKEN=$(./zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
+              WEBSERVICE_POD=$(./zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
+              ./zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" | ./zarf tools yq .token
             mute: true
             setVariables:
               - name: RUNNER_AUTH_TOKEN
