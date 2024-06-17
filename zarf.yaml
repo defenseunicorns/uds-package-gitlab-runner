@@ -7,6 +7,10 @@ metadata:
   version: "17.0.0-uds.0"
   # x-release-please-end
 
+variables:
+  - name: DOMAIN
+    default: "uds.dev"
+
 components:
   - name: gitlab-runner
     required: true
