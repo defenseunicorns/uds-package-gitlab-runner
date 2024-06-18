@@ -12,7 +12,7 @@ tasks:
       - task: glr-remove
       # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
       - description: Get the current UDS Bundle name
-        cmd: cat bundle/uds-bundle.yaml | yq .metadata.name
+        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
         setVariables:
           - name: BUNDLE_NAME
       - description: Get the current UDS Bundle version
