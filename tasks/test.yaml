@@ -6,6 +6,7 @@ tasks:
       - task: glr-run-check
       - task: glr-remove
       - task: glr-create-runner-token
+      - task: glr-backup-registration-secret
       - description: Get the current UDS Bundle name
         cmd: cat bundle/uds-bundle.yaml | yq .metadata.name
         setVariables:
@@ -16,6 +17,7 @@ tasks:
           - name: BUNDLE_VERSION
       - description: Deploys the current GitLab runner package
         cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN}
+      - task: glr-restore-registration-secret
       - task: glr-health-check
 
   - name: glr-health-check
@@ -73,3 +75,15 @@ tasks:
         mute: true
         setVariables:
           - name: RUNNER_AUTH_TOKEN
+
+  - name: glr-backup-registration-secret
+    description: Backup the registration secret and remove the original (to ensure it cannot be used by the package)
+    actions:
+      - cmd: ./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret --export -o yaml | kubectl apply --namespace=default -f -
+      - cmd: ./uds zarf tools kubectl delete secret -n gitlab gitlab-gitlab-runner-secret
+
+  - name: glr-restore-registration-secret
+    description: Restore the registration secret and remove the backup (to make it available to the package again)
+    actions:
+      - cmd: ./uds zarf tools kubectl get secret -n default gitlab-gitlab-runner-secret --export -o yaml | kubectl apply --namespace=gitlab -f -
+      - cmd: ./uds zarf tools kubectl delete secret -n default gitlab-gitlab-runner-secret
