@@ -26,7 +26,7 @@ test('test kicking off a pipeline run', async () => {
         `zarf-package-gitlab-runner-test-${arch}-0.0.1.tar.zst`,
         "--git-url", "https://gitlab.uds.dev/",
         "--git-push-username", "root",
-        "--git-push-password", tokenName,
+        "--git-push-password", `"${tokenName}"`,
         "--confirm"
     ]);
     
