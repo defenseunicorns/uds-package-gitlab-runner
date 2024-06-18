@@ -1,4 +1,23 @@
 tasks:
+  - name: all
+    description: Run all of the GitLab Runner Tests
+    actions:
+      - task: glr-health-check
+      - task: glr-run-check
+      - task: glr-remove
+      - task: glr-create-runner-token
+      - description: Get the current UDS Bundle name
+        cmd: cat bundle/uds-bundle.yaml | yq .metadata.name
+        setVariables:
+          - name: BUNDLE_NAME
+      - description: Get the current UDS Bundle version
+        cmd: cat bundle/uds-bundle.yaml | yq .metadata.version
+        setVariables:
+          - name: BUNDLE_VERSION
+      - description: Deploys the current GitLab runner package
+        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN}
+      - task: glr-health-check
+
   - name: glr-health-check
     description: Check the status of Gitlab Runner
     actions:
@@ -25,3 +44,32 @@ tasks:
       - description: Setup a repository and trigger a pipeline job
         dir: test
         cmd: npm test -- journey/pipeline-run.test.ts
+
+  - name: glr-remove
+    description: Remove the GitLab runner package
+    actions:
+      - description: Get the current UDS Bundle name
+        cmd: cat bundle/uds-bundle.yaml | yq .metadata.name
+        setVariables:
+          - name: BUNDLE_NAME
+      - description: Get the current UDS Bundle version
+        cmd: cat bundle/uds-bundle.yaml | yq .metadata.version
+        setVariables:
+          - name: BUNDLE_VERSION
+      - description: Removes the current GitLab runner package
+        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds remove bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress
+
+  - name: glr-create-runner-token
+    description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN
+    actions:
+      - cmd: |
+          RUNNER_REGISTRATION_TOKEN=$(./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
+          WEBSERVICE_POD=$(./uds zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./uds zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
+
+          ./uds zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
+            curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
+            --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
+            | ./uds zarf tools yq .token
+        mute: true
+        setVariables:
+          - name: RUNNER_AUTH_TOKEN
