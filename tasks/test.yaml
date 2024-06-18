@@ -1,3 +1,6 @@
+includes:
+  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.6.0/tasks/remove.yaml
+
 tasks:
   - name: all
     description: Run all of the GitLab Runner Tests
@@ -9,7 +12,7 @@ tasks:
       - task: glr-create-runner-token
       - task: glr-backup-registration-secret
       # Remove the GLR package and redeploy with the manual token
-      - task: glr-remove
+      - task: remove:test-bundle
       # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
       - description: Get the current UDS Bundle name
         cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
@@ -51,20 +54,6 @@ tasks:
       - description: Setup a repository and trigger a pipeline job
         dir: test
         cmd: npm test -- journey/pipeline-run.test.ts
-
-  - name: glr-remove
-    description: Remove the GitLab runner package
-    actions:
-      - description: Get the current UDS Bundle name
-        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
-        setVariables:
-          - name: BUNDLE_NAME
-      - description: Get the current UDS Bundle version
-        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
-        setVariables:
-          - name: BUNDLE_VERSION
-      - description: Removes the current GitLab runner package
-        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds remove bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress
 
   - name: glr-create-runner-token
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN
