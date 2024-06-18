@@ -16,7 +16,7 @@ tasks:
         setVariables:
           - name: BUNDLE_NAME
       - description: Get the current UDS Bundle version
-        cmd: cat bundle/uds-bundle.yaml | yq .metadata.version
+        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
         setVariables:
           - name: BUNDLE_VERSION
       - description: Deploys the current GitLab runner package
