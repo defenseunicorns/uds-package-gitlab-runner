@@ -2,23 +2,7 @@ import { expect, test} from '@jest/globals';
 import { K8s, kind } from "kubernetes-fluent-client";
 import { zarfExec, retry } from "../common";
 
-test('test kicking off a pipeline run', async () => {
-    // Get the root password for GitLab
-    const rootPasswordSecret = await K8s(kind.Secret).InNamespace("gitlab").Get("gitlab-gitlab-initial-root-password")
-    const rootPassword = atob(rootPasswordSecret.data!.password)
-    const arch = process.env.UDS_ARCH
-    // Create a test repository in GitLab using Zarf
-    zarfExec(["package", "create", "package", "--confirm"]);
-    zarfExec([
-        "package",
-        "mirror-resources",
-        `zarf-package-gitlab-runner-test-${arch}-0.0.1.tar.zst`,
-        "--git-url", "https://gitlab.uds.dev/",
-        "--git-push-username", "root",
-        "--git-push-password", rootPassword,
-        "--confirm"
-    ]);
-    
+test('test kicking off a pipeline run', async () => {    
     // Get the toolbox pod and add a token to the root GitLab user
     const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${new Date()}`
     const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get()
@@ -30,8 +14,21 @@ test('test kicking off a pipeline run', async () => {
         "-i",
         toolboxPod?.metadata?.name!,
         "--",
-        `gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`
+        `gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode', 'read_repository', 'write_repository'], name: 'Root Test Token', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`
      ]);
+
+    const arch = process.env.UDS_ARCH
+    // Create a test repository in GitLab using Zarf
+    zarfExec(["package", "create", "package", "--confirm"]);
+    zarfExec([
+        "package",
+        "mirror-resources",
+        `zarf-package-gitlab-runner-test-${arch}-0.0.1.tar.zst`,
+        "--git-url", "https://gitlab.uds.dev/",
+        "--git-push-username", "root",
+        "--git-push-password", tokenName,
+        "--confirm"
+    ]);
     
     const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
 
