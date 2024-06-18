@@ -2,11 +2,15 @@ tasks:
   - name: all
     description: Run all of the GitLab Runner Tests
     actions:
+      # Run checks on initial deployment
       - task: glr-health-check
       - task: glr-run-check
-      - task: glr-remove
+      # Create a runner token and hide the secret from the GLR package
       - task: glr-create-runner-token
       - task: glr-backup-registration-secret
+      # Remove the GLR package and redeploy with the manual token
+      - task: glr-remove
+      # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
       - description: Get the current UDS Bundle name
         cmd: cat bundle/uds-bundle.yaml | yq .metadata.name
         setVariables:
@@ -17,8 +21,9 @@ tasks:
           - name: BUNDLE_VERSION
       - description: Deploys the current GitLab runner package
         cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN}
-      - task: glr-restore-registration-secret
+      # Check that the runner registered and restore the secret
       - task: glr-health-check
+      - task: glr-restore-registration-secret
 
   - name: glr-health-check
     description: Check the status of Gitlab Runner
@@ -79,11 +84,11 @@ tasks:
   - name: glr-backup-registration-secret
     description: Backup the registration secret and remove the original (to ensure it cannot be used by the package)
     actions:
-      - cmd: ./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret --export -o yaml | kubectl apply --namespace=default -f -
+      - cmd: ./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o yaml | kubectl apply --namespace=default -f -
       - cmd: ./uds zarf tools kubectl delete secret -n gitlab gitlab-gitlab-runner-secret
 
   - name: glr-restore-registration-secret
     description: Restore the registration secret and remove the backup (to make it available to the package again)
     actions:
-      - cmd: ./uds zarf tools kubectl get secret -n default gitlab-gitlab-runner-secret --export -o yaml | kubectl apply --namespace=gitlab -f -
+      - cmd: ./uds zarf tools kubectl get secret -n default gitlab-gitlab-runner-secret -o yaml | kubectl apply --namespace=gitlab -f -
       - cmd: ./uds zarf tools kubectl delete secret -n default gitlab-gitlab-runner-secret
