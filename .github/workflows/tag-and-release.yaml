@@ -25,12 +25,16 @@ jobs:
   publish-package:
     needs: tag-new-version
     if: ${{ needs.tag-new-version.outputs.release_created == 'true' }}
-    runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-8-core' || 'uds-ubuntu-big-boy-8-core' }}
-    name: Publish ${{ matrix.flavor }}
+    # TODO: (@WSTARR) since we don't run the tests on arm currently we don't need to use the 8 core
+    runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-4-core' || 'uds-ubuntu-big-boy-8-core' }}
+    name: Publish ${{ matrix.flavor }} ${{ matrix.architecture }}
     strategy:
       matrix:
         flavor: [upstream, registry1]
         architecture: [amd64, arm64]
+        exclude:
+          - flavor: registry1
+            architecture: arm64
 
     permissions:
       contents: read
