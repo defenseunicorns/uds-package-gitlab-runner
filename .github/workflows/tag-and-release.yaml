@@ -13,7 +13,7 @@ jobs:
   tag-new-version:
     name: Tag New Version
     permissions: write-all
-    runs-on: ${{ matrix.architecture == 'arm64' && 'uds-ubuntu-arm64-4-core' || 'uds-ubuntu-big-boy-8-core' }}
+    runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release-flag.outputs.release_created }}
     steps:
