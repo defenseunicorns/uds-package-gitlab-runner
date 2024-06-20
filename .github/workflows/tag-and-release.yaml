@@ -1,4 +1,4 @@
-name: Tag and Publish UDS Capability
+name: Publish UDS Package GitLab Runner
 
 on:
   push:
