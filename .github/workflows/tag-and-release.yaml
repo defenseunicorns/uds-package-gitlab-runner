@@ -64,6 +64,10 @@ jobs:
       - name: Publish Package
         run: uds run -f tasks/publish.yaml publish-package --set FLAVOR=${{ matrix.flavor }}
 
+      - name: Debug Output
+        if: ${{ always() }}
+        uses: defenseunicorns/uds-common/.github/actions/debug-output@61450a210fd16cf14157ee417f9682a4664c05e5 # v0.6.0
+
       - name: Save logs
         if: always()
         uses: defenseunicorns/uds-common/.github/actions/save-logs@61450a210fd16cf14157ee417f9682a4664c05e5 # v0.6.0
