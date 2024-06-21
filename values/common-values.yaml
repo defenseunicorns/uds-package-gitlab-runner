@@ -18,8 +18,8 @@ runners:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
   config: |
     [[runners]]
-      url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
-      clone_url = "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181"
+      url = "https://gitlab.###ZARF_VAR_DOMAIN###"
+      clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       cache_dir = "/tmp/gitlab-runner/cache"
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"

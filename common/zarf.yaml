@@ -5,6 +5,8 @@ metadata:
   description: "UDS GitLab Runner Common Package"
 
 variables:
+  - name: DOMAIN
+    default: "uds.dev"
   - name: RUNNER_AUTH_TOKEN
     description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
   - name: RUNNER_SANDBOX_NAMESPACE
