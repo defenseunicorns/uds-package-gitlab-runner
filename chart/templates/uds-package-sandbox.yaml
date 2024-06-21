@@ -20,6 +20,16 @@ spec:
         remoteNamespace: gitlab-runner
         remoteSelector:
           app: gitlab-runner
+      
+      # Allow access to other UDS services (i.e. sonarqube.<domain>) from the runner
+      - direction: Egress
+        remoteNamespace: istio-tenant-gateway
+        remoteSelector:
+          app: tenant-ingressgateway
+        selector: 
+          uds/network-access-gitlab: "true"
+        port: 443
+        description: "UDS Tenant Gateway Services"
 
     {{- range .Values.customSandbox }}
       - direction: {{ .direction }}
