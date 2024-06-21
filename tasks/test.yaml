@@ -5,6 +5,8 @@ tasks:
   - name: all
     description: Run all of the GitLab Runner Tests
     actions:
+      # Ensure all GL services are up
+      - task: gitlab-ingress
       # Run checks on initial deployment
       - task: glr-health-check
       - task: glr-run-check
@@ -27,6 +29,21 @@ tasks:
       # Check that the runner registered and restore the secret
       - task: glr-health-check
       - task: glr-restore-registration-secret
+
+  - name: gitlab-ingress
+    actions:
+      # `/-/readiness` endpoint returns 503 if any checks fail.
+      # When `?all=1` is specified, dependent services are also checked.
+      # https://docs.gitlab.com/ee/administration/monitoring/health_check.html#readiness
+      - description: GitLab Readiness Check
+        maxRetries: 30
+        cmd: |
+          STATUS=$(curl -s -o /dev/null --write-out '%{http_code}' 'https://gitlab.uds.dev/-/readiness?all=1')
+          echo "GitLab readiness status: ${STATUS}"
+          if [ $STATUS != "200" ]; then
+            sleep 10
+            exit 1
+          fi
 
   - name: glr-health-check
     description: Check the status of Gitlab Runner
