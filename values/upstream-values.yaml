@@ -10,5 +10,5 @@ runners:
     tag: "3.19.1"
   helper:
     registry: "###ZARF_REGISTRY###"
-    repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
+    repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     tag: v17.0.0

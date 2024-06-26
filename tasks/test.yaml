@@ -1,4 +1,50 @@
+includes:
+  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.6.0/tasks/remove.yaml
+
 tasks:
+  - name: all
+    description: Run all of the GitLab Runner Tests
+    actions:
+      # Ensure all GL services are up
+      - task: gitlab-ingress
+      # Run checks on initial deployment
+      - task: glr-health-check
+      - task: glr-run-check
+      # Create a runner token and hide the secret from the GLR package
+      - task: glr-create-runner-token
+      - task: glr-backup-registration-secret
+      # Remove the GLR package and redeploy with the manual token
+      - task: remove:test-bundle
+      # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
+      - description: Get the current UDS Bundle name
+        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
+        setVariables:
+          - name: BUNDLE_NAME
+      - description: Get the current UDS Bundle version
+        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
+        setVariables:
+          - name: BUNDLE_VERSION
+      - description: Deploys the current GitLab runner package
+        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN}
+      # Check that the runner registered and restore the secret
+      - task: glr-health-check
+      - task: glr-restore-registration-secret
+
+  - name: gitlab-ingress
+    actions:
+      # `/-/readiness` endpoint returns 503 if any checks fail.
+      # When `?all=1` is specified, dependent services are also checked.
+      # https://docs.gitlab.com/ee/administration/monitoring/health_check.html#readiness
+      - description: GitLab Readiness Check
+        maxRetries: 30
+        cmd: |
+          STATUS=$(curl -s -o /dev/null --write-out '%{http_code}' 'https://gitlab.uds.dev/-/readiness?all=1')
+          echo "GitLab readiness status: ${STATUS}"
+          if [ $STATUS != "200" ]; then
+            sleep 10
+            exit 1
+          fi
+
   - name: glr-health-check
     description: Check the status of Gitlab Runner
     actions:
@@ -25,3 +71,30 @@ tasks:
       - description: Setup a repository and trigger a pipeline job
         dir: test
         cmd: npm test -- journey/pipeline-run.test.ts
+
+  - name: glr-create-runner-token
+    description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN
+    actions:
+      - cmd: |
+          RUNNER_REGISTRATION_TOKEN=$(./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
+          WEBSERVICE_POD=$(./uds zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./uds zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
+
+          ./uds zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
+            curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
+            --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
+            | ./uds zarf tools yq .token
+        mute: true
+        setVariables:
+          - name: RUNNER_AUTH_TOKEN
+
+  - name: glr-backup-registration-secret
+    description: Backup the registration secret and remove the original (to ensure it cannot be used by the package)
+    actions:
+      - cmd: ./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o yaml | ./uds zarf tools yq 'del(.metadata.namespace,.metadata.resourceVersion,.metadata.uid) | .metadata.creationTimestamp=null' | ./uds zarf tools kubectl apply --namespace=default -f -
+      - cmd: ./uds zarf tools kubectl delete secret -n gitlab gitlab-gitlab-runner-secret
+
+  - name: glr-restore-registration-secret
+    description: Restore the registration secret and remove the backup (to make it available to the package again)
+    actions:
+      - cmd: ./uds zarf tools kubectl get secret -n default gitlab-gitlab-runner-secret -o yaml | ./uds zarf tools yq 'del(.metadata.namespace,.metadata.resourceVersion,.metadata.uid) | .metadata.creationTimestamp=null' | ./uds zarf tools kubectl apply --namespace=gitlab -f -
+      - cmd: ./uds zarf tools kubectl delete secret -n default gitlab-gitlab-runner-secret

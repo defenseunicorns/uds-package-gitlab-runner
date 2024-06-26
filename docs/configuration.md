@@ -15,7 +15,17 @@ Additional runner configuration can be achieved by setting the following Zarf va
 
 ### Change Sandbox Namespace
 
-The sandbox namespace name that jobs run within can be configured to be a different name by overriding the `sandboxNamespace` value in the `uds-gitlab-runner-config` chart along with the `runners.job.namespace` value in the `gitlab-runner` chart.
+The sandbox namespace name that jobs run within can be configured to be a different name by setting the `RUNNER_SANDBOX_NAMESPACE` variable in the package.
+
+> [!CAUTION]
+> Do not use chart overrides to set the namespace, there is a Zarf wait action that needs to know the namespace to wait for UDS Package reconciliation.
+
+### Set Runner Authentication Token
+
+If you would like to setup a different kind of runner or add your own information to the runner deployed via this package you can create one manually via the GitLab API or UI and then set the `RUNNER_AUTH_TOKEN` variable in the package to wire it up.
+
+> [!NOTE]
+> You can only deploy one runner package to one cluster today - you can however use this to configure the runner in another cluster that is linked back to your primary cluster to have multiple runner kinds deployed via this package.
 
 ### Allow Zarf Mutation in Sandbox
 
