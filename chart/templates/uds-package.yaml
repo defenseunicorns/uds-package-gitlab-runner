@@ -13,13 +13,15 @@ spec:
 
   network:
     allow:
+      # Allow access to other UDS services (i.e. gitlab.<domain>, sonarqube.<domain>) from the runner
       - direction: Egress
+        remoteNamespace: istio-tenant-gateway
+        remoteSelector:
+          app: tenant-ingressgateway
         selector:
           app: gitlab-runner
-        remoteNamespace: gitlab
-        remoteSelector:
-          app: webservice
-        port: 8181
+        port: 443
+        description: "UDS Tenant Gateway Services"
 
       - direction: Egress
         podLabels:

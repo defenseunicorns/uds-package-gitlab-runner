@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Environment setup
-        uses: defenseunicorns/uds-common/.github/actions/setup@11e591f2ec7d158923d973c85097ce28a5f55db4 # v0.4.5
+        uses: defenseunicorns/uds-common/.github/actions/setup@61450a210fd16cf14157ee417f9682a4664c05e5 # v0.6.0
         with:
           registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
@@ -28,8 +28,9 @@ jobs:
 
       - name: Install lint deps
         run: |
-          uds run lint:deps
+          uds run lint:deps --no-progress
 
       - name: Lint the repository
         run: |
-          uds run lint:yaml
+          uds run lint:yaml --no-progress
+          uds run lint:oscal --no-progress --set OSCALFILES=./oscal-component.yaml
