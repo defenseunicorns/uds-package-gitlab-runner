@@ -31,7 +31,7 @@ The released packages can be found in [ghcr](https://github.com/defenseunicorns/
   - To set a different flavor, use the following flag:
     - `--set FLAVOR=registry1`
 
-- For proper registration of a Gitlab-Runner with a Gitlab instance, a secret is created in the `gitlab-runner` namespace called `gitlab-gitlab-runner-secret` which copies the `runner-registration-token` field from the `gitlab` namespace secret called `gitlab-gitlab-runner-secret`. This is done [here](./tasks/create.yaml#12)
+- For proper registration of a Gitlab-Runner with a Gitlab instance, a secret is created in the `gitlab-runner` namespace called `gitlab-gitlab-runner-secret` which uses the `runner-registration-token` field from the `gitlab` namespace secret called `gitlab-gitlab-runner-secret` to register a runner with a returned [runner authentication token](https://docs.gitlab.com/ee/api/runners.html#create-an-instance-runner).
 
 ---
 
