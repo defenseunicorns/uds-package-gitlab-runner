@@ -8,7 +8,7 @@ test('test registration of the runner succeeded', async () => {
         if (runnerPods.items.at(0)?.status?.phase === "Running") {
             const podName = runnerPods.items.at(0)?.metadata?.name!
             const runnerLogs = zarfExec(["tools", "kubectl", "logs", "-n", "gitlab-runner", podName, "-c", "gitlab-runner"], true);
-            if (runnerLogs.stdout.indexOf("Registering runner... succeeded") > -1) {
+            if (runnerLogs.stdout.indexOf("Runner registered successfully") > -1) {
                 return true
             }
         }

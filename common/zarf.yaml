@@ -4,6 +4,14 @@ metadata:
   name: gitlab-runner
   description: "UDS GitLab Runner Common Package"
 
+variables:
+  - name: DOMAIN
+    default: "uds.dev"
+  - name: RUNNER_AUTH_TOKEN
+    description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
+  - name: RUNNER_SANDBOX_NAMESPACE
+    default: gitlab-runner-sandbox
+
 components:
   - name: gitlab-runner
     description: "Deploy gitlab-runner"
@@ -12,8 +20,6 @@ components:
         namespace: gitlab-runner
         version: 0.1.0
         localPath: ../chart
-        valuesFiles:
-          - ../values/config-values.yaml
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
@@ -26,6 +32,20 @@ components:
           - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
           - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
+          - cmd: |
+              test -n "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && echo "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && exit 0 || true
+
+              RUNNER_REGISTRATION_TOKEN=$(./zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
+              WEBSERVICE_POD=$(./zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
+
+              ./zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
+                curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
+                --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
+                | ./zarf tools yq .token
+            mute: true
+            setVariables:
+              - name: RUNNER_AUTH_TOKEN
+                sensitive: true
         after:
           - description: Validate GitLab Runner Package
             maxTotalSeconds: 300
@@ -41,5 +61,5 @@ components:
               cluster:
                 kind: Packages
                 name: gitlab-runner-sandbox
-                namespace: gitlab-runner-sandbox
+                namespace: ${ZARF_VAR_RUNNER_SANDBOX_NAMESPACE}
                 condition: "'{.status.phase}'=Ready"
