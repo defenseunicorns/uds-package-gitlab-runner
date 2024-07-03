@@ -4,6 +4,7 @@ zarf-sbom/**/*.tfstate
 *.tar.gz
 *.tar.zst
 ~/
+.vscode/
 .DS_Store
 defense-unicorns-distro/preflight.sh
 .terraform
