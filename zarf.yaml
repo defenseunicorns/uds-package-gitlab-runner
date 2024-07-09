@@ -7,6 +7,14 @@ metadata:
   version: "17.0.0-uds.0"
   # x-release-please-end
 
+variables:
+  - name: DOMAIN
+    default: "uds.dev"
+  - name: RUNNER_AUTH_TOKEN
+    description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
+  - name: RUNNER_SANDBOX_NAMESPACE
+    default: gitlab-runner-sandbox
+
 components:
   - name: gitlab-runner
     required: true
