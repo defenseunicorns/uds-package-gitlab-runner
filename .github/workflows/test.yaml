@@ -35,7 +35,7 @@ jobs:
   test:
     name: ${{ matrix.type }} ${{ matrix.flavor }}
     timeout-minutes: 25
-    runs-on: "uds-ubuntu-big-boy-8-core"
+    runs-on: "uds-swf-ubuntu-big-boy-8-core"
     strategy:
       matrix:
         flavor: [upstream, registry1]
