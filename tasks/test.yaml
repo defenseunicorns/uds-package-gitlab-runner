@@ -1,5 +1,5 @@
 includes:
-  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.7.1/tasks/remove.yaml
+  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.8.0/tasks/remove.yaml
 
 tasks:
   - name: all
