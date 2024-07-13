@@ -1,5 +1,37 @@
 # Changelog
 
+## [17.0.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.0.0-uds.0...v17.0.0-uds.1) (2024-07-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to the new runner registration system ([#93](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/93))
+* allow for configurability to zarf ignore the sandbox ([#90](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/90))
+
+### Features
+
+* add wait for GLR package CR readiness ([#88](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/88)) ([1067019](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/10670191ad7472591771b42087f4f3b737302e0c))
+* allow for configurability to zarf ignore the sandbox ([#90](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/90)) ([3da0e53](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/3da0e539b0441b836c9c4e8a64019286b320d492))
+
+
+### Bug Fixes
+
+* update to the new runner registration system ([#93](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/93)) ([6a4c5e0](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6a4c5e092db7fbf48d67d9d600b36d6951f833b0))
+
+
+### Miscellaneous
+
+* add an ADR for the GitLab runner sandbox Zarf agent ignore setting ([#100](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/100)) ([6f13ee1](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6f13ee1973e4b64d18733a524f45ac83734dbe50))
+* add pre release testing ([#95](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/95)) ([a412c82](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/a412c82312314e6412a1668815888c77ff58ca96))
+* **deps-dev:** bump braces from 3.0.2 to 3.0.3 in /test ([#97](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/97)) ([5eedf1a](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/5eedf1a4a0541c66dcf0623897d7df5be4a98620))
+* **deps-dev:** bump ws from 8.16.0 to 8.17.1 in /test ([#94](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/94)) ([545c583](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/545c58338f93a7418b3b6cfe50ce1b9cc7c1aa10))
+* **deps:** update gitlab runner support dependencies ([#103](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/103)) ([a0439e7](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/a0439e7f37fa530bc670654ee1241875a4c4823b))
+* **deps:** update gitlab runner support dependencies ([#85](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/85)) ([ace6a61](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ace6a619ca2d773306014fdd878a6fcf9815c283))
+* **deps:** update gitlab runner support dependencies ([#91](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/91)) ([ccc1f1a](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ccc1f1a1a931989b7d1019d9ed362d987887e3fd))
+* fix renovate config for gitlab runner sandbox images ([#98](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/98)) ([18028e4](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/18028e4d6e0b92ec4b239b1c2116a38252cdd3f6))
+* move the variables from common to root for discoverability ([#102](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/102)) ([78e17f4](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/78e17f4424993cf630de1bcd025e92ec51728fdd))
+* update license ([#92](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/92)) ([5c7b0fe](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/5c7b0feecd513cba4a8f5a6eb4cb66f76a75b32c))
+
 ## [17.0.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v16.11.0-uds.0...v17.0.0-uds.0) (2024-05-29)
 
 
