@@ -16,4 +16,4 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
-    tag: v17.0.0
+    tag: v17.1.0
