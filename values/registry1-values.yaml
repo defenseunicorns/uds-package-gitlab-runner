@@ -4,7 +4,7 @@ useTini: true
 image:
   registry: "registry1.dso.mil"
   image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
-  # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner versioning=semver 
+  # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner versioning=semver
   tag: v17.1.0
 
 runners:
