@@ -1,7 +1,8 @@
 image:
   registry: registry.gitlab.com
   image: gitlab-org/gitlab-runner
-  tag: alpine-v17.0.0
+  # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/gitlab-runner versioning=semver extractVersion=^alpine-(?<version>.*)$
+  tag: alpine-v17.1.0
 
 runners:
   job:
@@ -13,4 +14,4 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
-    tag: v17.2.0
+    tag: v17.1.0
