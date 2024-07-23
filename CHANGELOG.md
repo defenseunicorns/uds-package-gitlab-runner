@@ -1,5 +1,13 @@
 # Changelog
 
+## [17.1.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.0.0-uds.1...v17.1.0-uds.0) (2024-07-23)
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner package dependencies ([#84](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/84)) ([313b471](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/313b471aec8b1422826e4e7eb4855eff7d5b7dfd))
+* **deps:** update gitlab runner support dependencies ([#105](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/105)) ([bd43d5c](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/bd43d5cb3e4482c3d806807cc61fc49f60289109))
+
 ## [17.0.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.0.0-uds.0...v17.0.0-uds.1) (2024-07-13)
 
 
