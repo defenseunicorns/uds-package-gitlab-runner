@@ -55,7 +55,8 @@ service:
   enabled: true
 metrics:
   enabled: true
-
+  serviceMonitor:
+    enabled: true
 
 resources:
   limits:
