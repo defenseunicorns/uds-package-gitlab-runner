@@ -27,6 +27,8 @@ components:
           - cmd: |
               test -n "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && echo "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && exit 0 || true
 
+              ./zarf tools kubectl wait pod --for=condition=Ready -n gitlab -l "app=webservice" > /dev/null
+
               RUNNER_REGISTRATION_TOKEN=$(./zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
               WEBSERVICE_POD=$(./zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
 
@@ -55,3 +57,10 @@ components:
                 name: gitlab-runner-sandbox
                 namespace: ${ZARF_VAR_RUNNER_SANDBOX_NAMESPACE}
                 condition: "'{.status.phase}'=Ready"
+          - description: Gitlab Runner to be Healthy
+            wait:
+              cluster:
+                kind: Deployment
+                name: gitlab-runner
+                namespace: gitlab-runner
+                condition: Available

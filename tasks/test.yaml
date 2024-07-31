@@ -54,13 +54,6 @@ tasks:
             kind: Secret
             name: gitlab-gitlab-runner-secret
             namespace: gitlab-runner
-      - description: Check Gitlab Runner Deployment
-        wait:
-          cluster:
-            kind: Deployment
-            name: gitlab-runner
-            namespace: gitlab-runner
-            condition: Available
       - description: Check GitLab Runner Logs for Successful Registration
         dir: test
         cmd: npm test -- journey/registration.test.ts
