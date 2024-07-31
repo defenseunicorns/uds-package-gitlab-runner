@@ -55,8 +55,7 @@ service:
   enabled: true
 metrics:
   enabled: true
-  serviceMonitor:
-    enabled: true
+  portName: http-metrics
 
 resources:
   limits:
