@@ -12,7 +12,7 @@ tasks:
     description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
     actions:
       - task: create-glr-test-bundle
-      - task: setup:k3d-full-cluster
+      - task: setup:k3d-test-cluster
       - task: dependencies:deploy
       - task: deploy:test-bundle
 

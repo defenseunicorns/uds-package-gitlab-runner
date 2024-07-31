@@ -35,15 +35,6 @@ spec:
         remoteSelector:
           uds/network-access-gitlab: "true"
 
-      # - direction: Ingress
-      #   remoteNamespace: monitoring
-      #   remoteSelector:
-      #     app: prometheus
-      #   selector:
-      #     app: gitlab-runner
-      #   port: 9252
-      #   description: "Monitoring Exporter"
-
       # Custom rules for unanticipated scenarios
     {{- range .Values.custom }}
       - direction: {{ .direction }}
