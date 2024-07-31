@@ -8,7 +8,7 @@ spec:
     - selector:
         app: gitlab-runner 
       targetPort: 9252
-      portName: metrics
+      portName: http-metrics
       description: Metrics
 
   network:
