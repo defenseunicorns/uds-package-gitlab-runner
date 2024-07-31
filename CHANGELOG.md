@@ -1,5 +1,18 @@
 # Changelog
 
+## [17.1.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.0...v17.1.0-uds.1) (2024-07-31)
+
+
+### Features
+
+* enable prometheus metrics to be Made for UDS ([#111](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/111)) ([27001f1](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/27001f1bea898bc4cbca7cbd45f90c7ac3dfad26))
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner support dependencies ([#110](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/110)) ([087aefc](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/087aefcc31f0ac2804659c0d02e41b106246491e))
+* **deps:** update support-deps to v3.25.15 ([#107](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/107)) ([dafe6b2](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/dafe6b2b13a7464782b5885d2099aa84b20ebf7f))
+
 ## [17.1.0-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.0.0-uds.1...v17.1.0-uds.0) (2024-07-23)
 
 
