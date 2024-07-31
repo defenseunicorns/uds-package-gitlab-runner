@@ -57,3 +57,10 @@ components:
                 name: gitlab-runner-sandbox
                 namespace: ${ZARF_VAR_RUNNER_SANDBOX_NAMESPACE}
                 condition: "'{.status.phase}'=Ready"
+          - description: Check Gitlab Runner Deployment
+            wait:
+              cluster:
+                kind: Deployment
+                name: gitlab-runner
+                namespace: gitlab-runner
+                condition: Available
