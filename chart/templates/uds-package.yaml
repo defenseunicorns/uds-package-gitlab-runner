@@ -8,7 +8,7 @@ spec:
     - selector:
         app: gitlab-runner 
       targetPort: 9252
-      portName: metrics
+      portName: http-metrics
       description: Metrics
 
   network:
@@ -34,7 +34,7 @@ spec:
         remoteNamespace: {{ .Values.sandboxNamespace }}
         remoteSelector:
           uds/network-access-gitlab: "true"
-        
+
       # Custom rules for unanticipated scenarios
     {{- range .Values.custom }}
       - direction: {{ .direction }}
