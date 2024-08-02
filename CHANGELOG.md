@@ -1,5 +1,12 @@
 # Changelog
 
+## [17.1.0-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.1...v17.1.0-uds.2) (2024-08-02)
+
+
+### Miscellaneous
+
+* cleanup tests to match pattern in other repos ([#112](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/112)) ([e7c2d33](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e7c2d33249bd9ba0dd188d53c22ebc4ebcbab966))
+
 ## [17.1.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.0...v17.1.0-uds.1) (2024-07-31)
 
 
