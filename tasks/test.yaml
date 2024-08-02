@@ -55,14 +55,14 @@ tasks:
             name: gitlab-gitlab-runner-secret
             namespace: gitlab-runner
       - description: Check GitLab Runner Logs for Successful Registration
-        dir: test
+        dir: tests
         cmd: npm test -- journey/registration.test.ts
 
   - name: glr-run-check
     description: Check that a GitLab repository can trigger a gitlab runner to run
     actions:
       - description: Setup a repository and trigger a pipeline job
-        dir: test
+        dir: tests
         cmd: npm test -- journey/pipeline-run.test.ts
 
   - name: glr-create-runner-token
