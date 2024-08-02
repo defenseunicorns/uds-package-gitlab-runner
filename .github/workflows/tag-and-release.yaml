@@ -52,7 +52,7 @@ jobs:
           ghToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: NPM setup
-        run: cd test && npm ci
+        run: cd tests && npm ci
 
       - name: Build Package
         run: uds run -f tasks/publish.yaml build-package --set FLAVOR=${{ matrix.flavor }} --no-progress

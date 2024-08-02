@@ -53,7 +53,7 @@ jobs:
           ghToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: NPM setup
-        run: cd test && npm ci
+        run: cd tests && npm ci
 
       - name: Test
         uses: defenseunicorns/uds-common/.github/actions/test@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0

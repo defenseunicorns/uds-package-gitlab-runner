@@ -2,7 +2,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: gitlab-runner
-  description: "UDS GitLab Runner Zarf Package"
+  description: "UDS GitLab Runner Package"
   # x-release-please-start-version
   version: "17.1.0-uds.1"
   # x-release-please-end

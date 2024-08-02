@@ -1,13 +1,9 @@
 build/
-zarf-sbom/**/*.tfstate
-**/*.tfstate.backup
 *.tar.gz
 *.tar.zst
 ~/
 .vscode/
 .DS_Store
-defense-unicorns-distro/preflight.sh
-.terraform
 tmp
 zarf-sbom
 
@@ -19,18 +15,10 @@ zarf-sbom
 build/
 .DS_Store
 *.tar.zst
-test/tf/public-ec2-instance/.tool-versions
 zarf-sbom
 tmp/
 values-*.yaml
 overlay-values-*
-
-# Terraform
-test/tf/public-ec2-instance/.test-data
-test/tf/public-ec2-instance/.terraform
-terraform.tfstate
-terraform.tfstate.backup
-.terraform.lock.hcl
 
 # Dependency files
 uds-config-gitlab.yaml
