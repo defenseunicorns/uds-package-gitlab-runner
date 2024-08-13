@@ -47,3 +47,19 @@ components:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.1.0" # renovate: extractVersion=^alpine-(?<version>.*)$
       - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.1.0"
       - "library/alpine:3.20.2"
+
+  - name: gitlab-runner
+    required: true
+    description: "Deploy gitlab-runner"
+    import:
+      path: common
+    only:
+      flavor: unicorn
+    charts:
+      - name: gitlab-runner
+        valuesFiles:
+          - values/unicorn-values.yaml
+    images:
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.1.1"
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.1.1"
+      - "cgr.dev/du-uds-defenseunicorns/busybox-fips:1.36"
