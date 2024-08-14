@@ -37,6 +37,8 @@ runners:
         run_as_non_root = true
         run_as_user = 1001
         run_as_group = 0
+      [runners.kubernetes.build_container_security_context]
+        cap_add = ["CAP_SETUID"]
 
 concurrent: 50
 
@@ -50,7 +52,6 @@ securityContext:
   privileged: false
   capabilities:
     drop: ["ALL"]
-    add: ["SETUID"]
 
 service:
   enabled: true
