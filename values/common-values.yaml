@@ -10,7 +10,7 @@ rbac:
       resources: [""]
       verbs: [""]
 
-disableRestrictCapabilitiesExemption: "###ZARF_VAR_DISABLE_RESTRICTCAPABILITIES_EXEMPTION###"
+disableRestrictCapabilitiesExemption: ###ZARF_VAR_DISABLE_RESTRICTCAPABILITIES_EXEMPTION###
 
 runners:
   secret: gitlab-gitlab-runner-secret
