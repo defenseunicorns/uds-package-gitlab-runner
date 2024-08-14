@@ -50,6 +50,7 @@ securityContext:
   privileged: false
   capabilities:
     drop: ["ALL"]
+    add: ["SETUID"]
 
 service:
   enabled: true
