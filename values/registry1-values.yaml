@@ -18,3 +18,5 @@ runners:
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
     tag: v17.1.0
+  fleeting:
+    # TODO: (@WSTARR) figure this out - registry1 does not have the fleeting plugins

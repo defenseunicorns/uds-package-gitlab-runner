@@ -15,3 +15,7 @@ runners:
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
     tag: v17.1.0
+  fleeting:
+    registry: "###ZARF_REGISTRY###"
+    repository: gitlab-org/fleeting/plugins/aws
+    tag: v1.0.0

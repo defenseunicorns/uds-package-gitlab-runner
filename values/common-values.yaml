@@ -10,17 +10,39 @@ rbac:
       resources: [""]
       verbs: [""]
 
+
 runners:
   secret: gitlab-gitlab-runner-secret
   runUntagged: true
   protected: true
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
+  fleeting:
+    enabled: false
+    maxInstances: 10
+    pluginConfig: {}
+    connectorConfig: {}
+    policy: {}
   config: |
     [[runners]]
       url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       cache_dir = "/tmp/gitlab-runner/cache"
+    {{- if .Values.runners.fleeting }}
+      executor = "instance"
+      [runners.autoscaler]
+        plugin = "{{ printf "%s/%s:%s" .Values.runners.fleeting.registry .Values.runners.fleeting.repository .Values.runners.fleeting.tag }}"
+
+        capacity_per_instance = 1
+        max_use_count = 1
+        max_instances = {{ .Values.fleeting.maxInstances }}
+        [runners.autoscaler.plugin_config]
+          {{ toToml .Values.fleeting.pluginConfig | nindent 10 }}
+        [runners.autoscaler.connector_config]
+          {{ toToml .Values.fleeting.connectorConfig | nindent 10 }}
+        [[runners.autoscaler.policy]]
+          {{ toToml .Values.fleeting.policy | nindent 10 }}
+    {{- else }}
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
         helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
@@ -37,6 +59,7 @@ runners:
         run_as_non_root = true
         run_as_user = 1001
         run_as_group = 0
+    {{- end }}
 
 concurrent: 50
 
