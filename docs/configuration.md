@@ -5,7 +5,7 @@ GitLab Runners in this package are configured through the upstream [GitLab Runne
 ## Node Configuration
 
 > [!IMPORTANT]
-> Any kubernetes node that will run GitLab Runner pods must set the sysctl `user.max_user_namespaces` value to nonzero. This is required to run builds inside Linux Containers from the runner pods. 
+> Any kubernetes node that will run GitLab Runner pods must set the sysctl `user.max_user_namespaces` value to nonzero. This is required to run builds inside Linux containers from the runner pods.
 >
 > This is a [STIG finding](https://www.stigviewer.com/stig/red_hat_enterprise_linux_9/2023-09-13/finding/V-257816) but is `Not Applicable` when running Linux containers.
 
