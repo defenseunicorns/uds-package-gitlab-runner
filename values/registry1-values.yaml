@@ -19,4 +19,6 @@ runners:
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
     tag: v17.1.0
   fleeting:
-    # TODO: (@WSTARR) figure this out - registry1 does not have the fleeting plugins
+    registry: "###ZARF_REGISTRY###"
+    repository: gitlab-org/fleeting/plugins/aws
+    tag: "1.0.0"

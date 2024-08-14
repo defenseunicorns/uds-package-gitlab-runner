@@ -40,3 +40,7 @@ By default the sandbox is excluded from being mutated by Zarf to allow external 
 ### Change the Runner Service Account
 
 By default the chart will create a service account named `gitlab-runner`.  You can change the name of this service account by by overriding the `serviceAccountName` value in the `uds-gitlab-runner-config` chart along with the `rbac.generatedServiceAccountName` value in the `gitlab-runner` chart.
+
+### Change the Runner Executor
+
+<!-- TODO: (@WSTARR) fill this in -->
