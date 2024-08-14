@@ -10,7 +10,6 @@ rbac:
       resources: [""]
       verbs: [""]
 
-
 runners:
   secret: gitlab-gitlab-runner-secret
   runUntagged: true
