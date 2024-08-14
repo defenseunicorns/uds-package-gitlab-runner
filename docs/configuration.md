@@ -2,6 +2,16 @@
 
 GitLab Runners in this package are configured through the upstream [GitLab Runner chart](https://docs.gitlab.com/runner/install/kubernetes.html) as well as a UDS configuration chart that supports the following:
 
+## Node Configuration
+
+> [!IMPORTANT]
+> Any kubernetes node that will be executing gitlab runners must set the sysctl `user.max_user_namespaces` value to nonzero. This is required to run builds inside Linux Containers from the runner pods. This is a [STIG finding](https://www.stigviewer.com/stig/red_hat_enterprise_linux_9/2023-09-13/finding/V-257816) but is `Not Applicable` when running Linux containers.
+
+Example:
+```
+sysctl -w user.max_user_namespaces=30110
+```
+
 ## Networking
 
 Network policies are controlled via the `uds-gitlab-runner-config` chart in accordance with the [common patterns for networking within UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory/blob/main/docs/networking.md).  Because GitLab runners do not interact with external resources like databases or object storage they only implement `custom` networking for both the runner namespace and the runner sandbox namespace:
