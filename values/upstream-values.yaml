@@ -18,4 +18,4 @@ runners:
   fleeting:
     registry: "###ZARF_REGISTRY###"
     repository: gitlab-org/fleeting/plugins/aws
-    tag: v1.0.0
+    tag: "1.0.0"
