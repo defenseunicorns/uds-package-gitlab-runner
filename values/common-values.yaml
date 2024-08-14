@@ -34,13 +34,13 @@ runners:
 
         capacity_per_instance = 1
         max_use_count = 1
-        max_instances = {{ .Values.fleeting.maxInstances }}
+        max_instances = {{ .Values.runners.fleeting.maxInstances }}
         [runners.autoscaler.plugin_config]
-          {{ toToml .Values.fleeting.pluginConfig | nindent 10 }}
+          {{ toToml .Values.runners.fleeting.pluginConfig | nindent 10 }}
         [runners.autoscaler.connector_config]
-          {{ toToml .Values.fleeting.connectorConfig | nindent 10 }}
+          {{ toToml .Values.runners.fleeting.connectorConfig | nindent 10 }}
         [[runners.autoscaler.policy]]
-          {{ toToml .Values.fleeting.policy | nindent 10 }}
+          {{ toToml .Values.runners.fleeting.policy | nindent 10 }}
     {{- else }}
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
