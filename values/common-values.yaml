@@ -10,6 +10,8 @@ rbac:
       resources: [""]
       verbs: [""]
 
+disableRestrictCapabilitiesExemption: "###ZARF_VAR_DISABLE_RESTRICTCAPABILITIES_EXEMPTION###"
+
 runners:
   secret: gitlab-gitlab-runner-secret
   runUntagged: true
@@ -39,7 +41,11 @@ runners:
         run_as_group = 0
       [runners.kubernetes.build_container_security_context]
         cap_add = ["CAP_SETUID"]
-
+      {{- if not .Values.disableRestrictCapabilitiesExemption }}
+      [runners.kubernetes.build_container_security_context]
+        [runners.kubernetes.build_container_security_context.capabilities]
+          add = ["SETUID", "SETGID"]
+      {{- end }}
 concurrent: 50
 
 podSecurityContext:

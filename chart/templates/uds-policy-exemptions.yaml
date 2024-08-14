@@ -1,0 +1,16 @@
+{{- if not .Values.disableRestrictCapabilitiesExemption }}
+apiVersion: uds.dev/v1alpha1
+kind: Exemption
+metadata:
+  name: gitlab-runner-container-building
+  namespace: uds-policy-exemptions
+spec:
+  exemptions:
+    - description: Allow more capabilities for container build tools (Buildah) to be able to map user and group IDs
+      policies:
+        - RestrictCapabilities
+      title: "gitlab-runner-container-building"
+      matcher:
+        namespace: gitlab-runner-sandbox
+        name: "^runner-.*"
+{{- end }}
