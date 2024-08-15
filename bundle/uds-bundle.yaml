@@ -18,5 +18,5 @@ packages:
     #       values:
     #         - path: preEntrypointScript
     #           value: gitlab-runner fleeting install
-    #         - path: runners.fleeting
-    #           value: enabled
+    #         - path: runners.fleeting.enabled
+    #           value: true

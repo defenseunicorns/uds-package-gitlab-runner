@@ -18,15 +18,20 @@ runners:
   fleeting:
     enabled: false
     maxInstances: 10
-    pluginConfig: {}
-    connectorConfig: {}
-    policy: {}
+    pluginConfig:
+      name: "my-linux-asg"                            # AWS Autoscaling Group name
+    connectorConfig:
+      username: "ec2-user"
+      use_external_addr: true
+    policy:
+      idle_count: 5
+      idle_time: "20m0s"
   config: |
     [[runners]]
       url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       cache_dir = "/tmp/gitlab-runner/cache"
-    {{- if .Values.runners.fleeting }}
+    {{- if .Values.runners.fleeting.enabled }}
       executor = "instance"
       [runners.autoscaler]
         plugin = "{{ printf "%s/%s:%s" .Values.runners.fleeting.registry .Values.runners.fleeting.repository .Values.runners.fleeting.tag }}"
@@ -35,11 +40,12 @@ runners:
         max_use_count = 1
         max_instances = {{ .Values.runners.fleeting.maxInstances }}
         [runners.autoscaler.plugin_config]
-          {{ toToml .Values.runners.fleeting.pluginConfig | nindent 10 }}
+          {{- toToml .Values.runners.fleeting.pluginConfig | nindent 10 }}
         [runners.autoscaler.connector_config]
-          {{ toToml .Values.runners.fleeting.connectorConfig | nindent 10 }}
+          {{- toToml .Values.runners.fleeting.connectorConfig | nindent 10 }}
         [[runners.autoscaler.policy]]
-          {{ toToml .Values.runners.fleeting.policy | nindent 10 }}
+          idle_count = {{ .Values.runners.fleeting.policy.idle_count }}
+          idle_time = {{ .Values.runners.fleeting.policy.idle_time | quote }}
     {{- else }}
       [runners.kubernetes]
         namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
