@@ -1,5 +1,4 @@
-unregisterRunners: true
-
+unregisterRunners: false
 
 # Create a non-default service account with the name gitlab-runner with minimal permissions
 rbac:
