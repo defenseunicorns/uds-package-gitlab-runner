@@ -10,7 +10,7 @@ rbac:
       resources: [""]
       verbs: [""]
 
-disableRestrictCapabilitiesExemption: ###ZARF_VAR_DISABLE_RESTRICTCAPABILITIES_EXEMPTION###
+enableRestrictCapabilitiesExemption: true
 
 runners:
   secret: gitlab-gitlab-runner-secret
@@ -35,17 +35,16 @@ runners:
         "uds/user" = "${UDS_RUN_AS_USER}"
         "uds/group" = "${UDS_RUN_AS_GROUP}"
         "uds/network-access-gitlab" = "true"
-      [runners.kubernetes.helper_container_security_context]
-        run_as_non_root = true
-        run_as_user = 1001
-        run_as_group = 0
-      [runners.kubernetes.build_container_security_context]
-        cap_add = ["CAP_SETUID"]
-      {{- if not .Values.disableRestrictCapabilitiesExemption }}
+      {{- if .Values.enableRestrictCapabilitiesExemption }}
       [runners.kubernetes.build_container_security_context]
         [runners.kubernetes.build_container_security_context.capabilities]
           add = ["SETUID", "SETGID"]
       {{- end }}
+      [runners.kubernetes.helper_container_security_context]
+        run_as_non_root = true
+        run_as_user = 1001
+        run_as_group = 0
+
 concurrent: 50
 
 podSecurityContext:
