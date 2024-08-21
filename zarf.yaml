@@ -15,7 +15,7 @@ variables:
   - name: RUNNER_SANDBOX_NAMESPACE
     default: gitlab-runner-sandbox
   - name: ENABLE_SECURITY_CAPABILITIES
-    default: "true"
+    default: "false"
 
 components:
   - name: gitlab-runner
