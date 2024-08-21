@@ -1,4 +1,4 @@
-{{- if .Values.enableRestrictCapabilitiesExemption }}
+{{- if .Values.enableSecurityCapabilities }}
 apiVersion: uds.dev/v1alpha1
 kind: Exemption
 metadata:

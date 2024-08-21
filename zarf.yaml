@@ -14,9 +14,8 @@ variables:
     description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
   - name: RUNNER_SANDBOX_NAMESPACE
     default: gitlab-runner-sandbox
-  - name: DISABLE_RESTRICTCAPABILITIES_EXEMPTION
-    description: Set this to true to disable UDS policy exemption for RestrictCapabilities. This will also disable the "SETUID", "SETGID" capabilities on the runner security context since they will not be allowed by pepr.
-    default: false
+  - name: ENABLE_SECURITY_CAPABILITIES
+    default: "true"
 
 components:
   - name: gitlab-runner

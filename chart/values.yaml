@@ -7,7 +7,7 @@ serviceAccountName: "gitlab-runner"
 
 runnerAuthToken: "###ZARF_VAR_RUNNER_AUTH_TOKEN###"
 
-enableRestrictCapabilitiesExemption: true
+enableSecurityCapabilities: true
 
 custom: []
   # - direction: Egress
