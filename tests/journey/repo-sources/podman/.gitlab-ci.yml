@@ -3,4 +3,3 @@ build-image-podman:
   image: quay.io/podman/stable:latest
   script: |
     podman build .
-  
