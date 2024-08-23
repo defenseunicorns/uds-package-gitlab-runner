@@ -1,5 +1,5 @@
-import { expect, test} from '@jest/globals';
-import {zarfExec, retry} from "../common";
+import { expect, test } from '@jest/globals';
+import { zarfExec, retry } from "../common";
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { K8s, kind } from "kubernetes-fluent-client";
