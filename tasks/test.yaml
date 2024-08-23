@@ -18,6 +18,8 @@ tasks:
         cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
         setVariables:
           - name: BUNDLE_VERSION
+      # Remove the GLR package and redeploy with additional capabilities enabled
+      - task: remove:test-bundle
       - description: Deploy GitLab runner with SETUID and SETGID capabilities
         cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set ENABLE_SECURITY_CAPABILITIES=true
       - task: glr-run-check-elevated-security-capabilities
@@ -67,8 +69,8 @@ tasks:
       - description: Setup a repository and trigger a pipeline job
         dir: tests
         cmd: |
-          npm test -- journey/pipeline-run-kitteh.test.ts
-          npm test -- journey/pipeline-run-podman-fail.test.ts
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
+          npm test -- journey/pipeline-run.test.ts -t 'podman fails'
 
   - name: glr-run-check-elevated-security-capabilities
     description: Check that a GitLab repository can trigger a gitlab runner to run
@@ -76,8 +78,9 @@ tasks:
       - description: Setup a repository and trigger a pipeline job
         dir: tests
         cmd: |
-          npm test -- journey/pipeline-run-kitteh.test.ts
-          npm test -- journey/pipeline-run-podman-success.test.ts
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
+          npm test -- journey/pipeline-run.test.ts -t 'podman succeeds'
+
 
   - name: glr-create-runner-token
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN

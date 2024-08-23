@@ -1,107 +1,141 @@
 import { expect, test} from '@jest/globals';
-import * as common from "../common";
+import {zarfExec, retry} from "../common";
 import * as path from 'path';
+import { execSync } from 'child_process';
+import { K8s, kind } from "kubernetes-fluent-client";
+import { rm } from 'fs/promises';
+
+test('hello kitteh succeeds', async () => {
+    const sourceRepoName = 'kitteh'
+    const expectedStatus = "success"
+    const expectedJobLogOutputs: string[] = ['Hello Kitteh']; 
+
+    await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus);
+
+}, 90000);
+
+
+test('podman succeeds', async () => {
+    const sourceRepoName = 'podman'
+    const expectedStatus = "success"
+    const expectedJobLogOutputs: string[] = ['STEP 1/2: FROM scratch', 'STEP 2/2: ADD test.txt /', 'COMMIT']; 
+
+    await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus);
+}, 90000);
 
 
 test('podman fails', async () => {
-    // millis is used through the tests to have a unique id
-    // this is handy so you can rerun the tests against an existing
-    // insance of gitlab and it will continue to make new projects 
-    // and you don't have to clean up or redeploy when iterating on local testing
-    const nowMillis = Date.now();
-
-    // Get the toolbox pod and add a token to the root GitLab user
-    const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${nowMillis}`
-
-    await common.createToken(nowMillis, tokenName);
 
     const sourceRepoName = 'podman'
-    const gitProjectName = `${sourceRepoName}-${nowMillis}`
-    const gitRepoDir = path.join(__dirname, 'tmp-repos', gitProjectName)
-    const sourceDir = path.join(__dirname, 'repo-sources', sourceRepoName)
-
-    common.createNewGitlabProject(gitRepoDir, sourceDir, tokenName, gitProjectName);
-  
-    const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
-
-    // get the project id using the project name
-    const projectId = await common.getGitlabProjectId(gitProjectName, headers);
-
-    console.log(`Found now project id [${projectId}]`)
-
-    await common.unprotectRunner(headers, tokenName);
-
-    // Check that the pipeline failed as expected
     const expectedStatus = "failed"
-    const expectedJobLogOutputs: string[] = []; // nothing expected on this one, just looking for a failure
-    await common.checkJobResults(projectId, headers, expectedJobLogOutputs, expectedStatus);
+    const expectedJobLogOutputs: string[] = []; 
+
+    await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus);
 }, 90000);
 
-test('podman succeeds', async () => {
-    // millis is used through the tests to have a unique id
-    // this is handy so you can rerun the tests against an existing
-    // insance of gitlab and it will continue to make new projects 
-    // and you don't have to clean up or redeploy when iterating on local testing
+
+async function executeTest(sourceRepoName: string, expectedJobLogOutputs: string[], expectedStatus: string) {
     const nowMillis = Date.now();
+    const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${nowMillis}`    
+    
+    var sourceDir = path.join(__dirname, 'repo-sources', sourceRepoName);
 
     // Get the toolbox pod and add a token to the root GitLab user
-    const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${nowMillis}`
+    await createToken(tokenName);
+    const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]];
 
-    await common.createToken(nowMillis, tokenName);
+    const gitLabProjectName = `${sourceRepoName}-${nowMillis}`;
+    const projectId = await createNewGitlabProject(sourceDir, tokenName, gitLabProjectName, headers);
+    
+    await unprotectRunner(headers, tokenName);
 
-    const sourceRepoName = 'podman'
-    const gitProjectName = `${sourceRepoName}-${nowMillis}`
-    const gitRepoDir = path.join(__dirname, 'tmp-repos', gitProjectName)
-    const sourceDir = path.join(__dirname, 'repo-sources', sourceRepoName)
+    // Check that the pipeline actually ran as expected
+    await checkJobResults(projectId, headers, expectedJobLogOutputs, expectedStatus);
+}
 
-    common.createNewGitlabProject(gitRepoDir, sourceDir, tokenName, gitProjectName);
-  
-    const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
 
-    // get the project id using the project name
-    const projectId = await common.getGitlabProjectId(gitProjectName, headers);
+async function createToken(tokenName: string) {
+    var nowMillis = Date.now();
+    const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get();
+    const toolboxPod = toolboxPods.items.at(0);
+    console.log('Using gitlab-rails runner to configure root token');
+    zarfExec(["tools",
+        "kubectl",
+        "--namespace", "gitlab",
+        "exec",
+        "-i",
+        toolboxPod?.metadata?.name!,
+        "--",
+        `gitlab-rails runner "token = User.find_by_username('root').personal_access_tokens.create(scopes: ['api', 'admin_mode', 'read_repository', 'write_repository'], name: 'Root Test Token ${nowMillis}', expires_at: 1.days.from_now); token.set_token('${tokenName}'); token.save!"`
+    ]);
+}
 
-    console.log(`Found now project id [${projectId}]`)
+async function createNewGitlabProject(sourceDir: string, tokenName: string, gitLabProjectName: string, headers: HeadersInit) {
+    //console.log(`Setting up new git repo at ${gitRepoDir}`);
+    //copyFilesToGitRepoDir(sourceDir, gitRepoDir);
+    const millis = Date.now();
+    await deleteDirectory(path.join(sourceDir, '.git')) 
+    execSync('git init', { cwd: sourceDir });
+    execSync('git add . ', { cwd: sourceDir });
+    execSync('git config commit.gpgsign false', { cwd: sourceDir }); // need this so that gpg signing doesn't attempt to happen locally when running tests
+    execSync('git commit -m "Initial commit" ', { cwd: sourceDir });
+    execSync(`git remote add origin https://root:${tokenName}@gitlab.uds.dev/root/${gitLabProjectName}.git`, { cwd: sourceDir });
+    execSync('git push -u origin --all', { cwd: sourceDir });
+    await deleteDirectory(path.join(sourceDir, '.git'))
 
-    await common.unprotectRunner(headers, tokenName);
+    console.log(`Finding project id for project name [${encodeURIComponent(gitLabProjectName)}]`)
+    const projectResp = await fetch(`https://gitlab.uds.dev/api/v4/projects?search=${encodeURIComponent(gitLabProjectName)}`, { headers });
+    const projects = await projectResp.json();
 
-    // Check that the pipeline failed as expected
-    const expectedStatus = "success"
-    const expectedJobLogOutputs: string[] = ['STEP 1/2: FROM scratch', 'STEP 2/2: ADD test.txt /', 'COMMIT']; 
-    await common.checkJobResults(projectId, headers, expectedJobLogOutputs, expectedStatus);
-}, 90000);
+    const project = projects.find((p: { name: string; }) => p.name === gitLabProjectName);
+    const projectId = project?.id;
+    console.log(`Found project id [${projectId}]`)
+    return projectId;
+}
 
-test('hello kitteh succeeds', async () => {
-    // millis is used through the tests to have a unique id
-    // this is handy so you can rerun the tests against an existing
-    // insance of gitlab and it will continue to make new projects 
-    // and you don't have to clean up or redeploy when iterating on local testing
-    const nowMillis = Date.now();
+async function unprotectRunner(headers: HeadersInit, tokenName: string) {
+    const runnerIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/runners/all`, { headers })).json();
+    const runnerID = runnerIDResp[0].id;
+    const runnerResp = await fetch(`https://gitlab.uds.dev/api/v4/runners/${runnerID}`, {
+        headers: [
+            ["PRIVATE-TOKEN", tokenName],
+            ["Content-Type", "application/x-www-form-urlencoded"]
+        ],
+        body: "access_level=not_protected",
+        method: "put"
+    });
+    expect(runnerResp.status).toBe(200);
+}
 
-    // Get the toolbox pod and add a token to the root GitLab user
-    const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${nowMillis}`
+async function checkJobResults(projectId: any, headers: HeadersInit, expectedJobLogOutputs: string[], expectedStatus: string) {
+    let status = await retry(async () => {
+        const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/${projectId}/jobs`, { headers })).json();
 
-    await common.createToken(nowMillis, tokenName);
+        // Print the job response (useful for debugging)
+        console.log(jobIDResp);
 
-    const sourceRepoName = 'kitteh'
-    const gitProjectName = `${sourceRepoName}-${nowMillis}`
-    const gitRepoDir = path.join(__dirname, 'tmp-repos', gitProjectName)
-    const sourceDir = path.join(__dirname, 'repo-sources', sourceRepoName)
+        if (jobIDResp.length > 0 && (jobIDResp[0].status === "success" || jobIDResp[0].status === "failed")) {
+            const jobID = jobIDResp[0].id;
+            const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/${projectId}/jobs/${jobID}/trace`, { headers })).text();
 
-    common.createNewGitlabProject(gitRepoDir, sourceDir, tokenName, gitProjectName);
-  
-    const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
+            // Print the job log (useful for debugging)
+            console.log(jobLog);
 
-    // get the project id using the project name
-    const projectId = await common.getGitlabProjectId(gitProjectName, headers);
+            expectedJobLogOutputs.forEach( expectedOutput => {
+                expect(jobLog).toContain(expectedOutput);
+            });
+            return jobIDResp[0].status;
+        }
+        return false;
+    }, 7, 7000);
+    expect(status).toBe(expectedStatus);
+}
 
-    console.log(`Found now project id [${projectId}]`)
-
-    await common.unprotectRunner(headers, tokenName);
-
-    // Check that the pipeline actually ran successfully
-    const expectedStatus = "success"
-    const expectedJobLogOutputs: string[] = ['Hello Kitteh']; 
-    await common.checkJobResults(projectId, headers, expectedJobLogOutputs, expectedStatus);
-
-}, 90000);
+async function deleteDirectory(path: string) {
+    try {
+        await rm(path, { recursive: true, force: true });
+        console.log(`Directory ${path} has been deleted successfully.`);
+    } catch (error) {
+        console.error(`Error while deleting directory ${path}:`, error);
+    }
+}
