@@ -35,13 +35,13 @@ test('podman fails', async () => {
 
 
 async function executeTest(sourceRepoName: string, expectedJobLogOutputs: string[], expectedStatus: string) {
-    const nowMillis = Date.now();
+    const nowMillis = Date.now()
     const tokenName = `if-you-see-me-in-production-something-is-horribly-wrong-${nowMillis}`    
     
     var sourceDir = path.join(__dirname, 'repo-sources', sourceRepoName)
 
     // Get the toolbox pod and add a token to the root GitLab user
-    await createToken(tokenName);
+    await createToken(tokenName, nowMillis)
     const headers: HeadersInit = [["PRIVATE-TOKEN", tokenName]]
 
     const gitLabProjectName = `${sourceRepoName}-${nowMillis}`
@@ -54,10 +54,9 @@ async function executeTest(sourceRepoName: string, expectedJobLogOutputs: string
 }
 
 
-async function createToken(tokenName: string) {
-    var nowMillis = Date.now();
-    const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get();
-    const toolboxPod = toolboxPods.items.at(0);
+async function createToken(tokenName: string, nowMillis: number) {
+    const toolboxPods = await K8s(kind.Pod).InNamespace("gitlab").WithLabel("app", "toolbox").Get()
+    const toolboxPod = toolboxPods.items.at(0)
     zarfExec(["tools",
         "kubectl",
         "--namespace", "gitlab",
@@ -70,9 +69,6 @@ async function createToken(tokenName: string) {
 }
 
 async function createNewGitlabProject(sourceDir: string, tokenName: string, gitLabProjectName: string, headers: HeadersInit) {
-    //console.log(`Setting up new git repo at ${gitRepoDir}`);
-    //copyFilesToGitRepoDir(sourceDir, gitRepoDir);
-    const millis = Date.now()
     await deleteDirectory(path.join(sourceDir, '.git')) 
     execSync('git init', { cwd: sourceDir })
     execSync('git add . ', { cwd: sourceDir })
@@ -118,12 +114,12 @@ async function checkJobResults(projectId: any, headers: HeadersInit, expectedJob
             const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/${projectId}/jobs/${jobID}/trace`, { headers })).text()
 
             // Print the job log (useful for debugging)
-            console.log(jobLog);
+            console.log(jobLog)
 
             expectedJobLogOutputs.forEach( expectedOutput => {
                 expect(jobLog).toContain(expectedOutput)
             });
-            return jobIDResp[0].status;
+            return jobIDResp[0].status
         }
         return false
     }, 7, 7000);
