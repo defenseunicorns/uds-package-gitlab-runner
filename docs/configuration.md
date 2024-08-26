@@ -51,9 +51,9 @@ By default the sandbox is excluded from being mutated by Zarf to allow external 
 
 ### Allow SETUID and SETGID security capabilities
 
-By default the runner build containers do not have `SETUID` and `SETGID` capabilities enabled, which means tools like [Buildah](https://buildah.io/) and [Podman](https://podman.io/) have limited functionality. Podman cannot run container image builds at all, and Buildah can build very simple images but anything that manipulates users or groups (e.g running `useradd` or `groupadd` within a Dockerfile) will fail.
+By default, runner build containers do not have `SETUID` and `SETGID` capabilities enabled. This limits the functionality of tools like [Buildah](https://buildah.io/) and [Podman](https://podman.io/). Podman cannot build container images, and Buildah can only create very basic images. Any actions that involve user or group modifications (e.g., using useradd or groupadd in a Dockerfile) will fail.
 
-To enable `SETUID` and `SETGID` capabilities on the build containers, set the Zarf variable `ENABLE_SECURITY_CAPABILITIES` to `true`. This will (set a security policity for the build container)[https://docs.gitlab.com/runner/executors/kubernetes/#set-a-security-policy-for-the-container] to add `SETUID` and `SETGID` capabilities. It will also add a (UDS Policy Exemption)[https://uds.defenseunicorns.com/core/configuration/uds-configure-policy-exemptions/] to allow these capabilities.
+To enable `SETUID` and `SETGID` capabilities in the build containers, set the `ENABLE_SECURITY_CAPABILITIES` Zarf variable to `true`. This will [apply a security policy for the build container](https://docs.gitlab.com/runner/executors/kubernetes/#set-a-security-policy-for-the-container) to add SETUID and SETGID capabilities. Additionally, it will [add a UDS Policy Exemption](https://uds.defenseunicorns.com/core/configuration/uds-configure-policy-exemptions/) to permit these capabilities.
 
 ### Change the Runner Service Account
 
