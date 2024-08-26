@@ -10,10 +10,6 @@ tasks:
       # Run checks on initial deployment
       - task: glr-registration-check
       - task: glr-run-check-default-security-capabilities
-      # Remove the GLR package and redeploy with additional capabilities enabled
-      # - task: remove:test-bundle
-      # - description: Deploy GitLab runner with SETUID and SETGID capabilities
-      #   cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress 
       # Create a runner token and hide the secret from the GLR package
       - task: glr-create-runner-token
       - task: glr-backup-registration-secret
