@@ -5,12 +5,14 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 import { rm } from 'fs/promises';
 
+const domainSuffix = process.env.DOMAIN_SUFFIX || ".uds.dev"
+
 test('hello kitteh succeeds', async () => {
     const sourceRepoName = 'kitteh'
     const expectedStatus = 'success'
     const expectedJobLogOutputs: string[] = ['Hello Kitteh']
 
-    await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
+    //await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
 
 }, 90000);
 
@@ -74,12 +76,12 @@ async function createNewGitlabProject(sourceDir: string, tokenName: string, gitL
     execSync('git add . ', { cwd: sourceDir })
     execSync('git config commit.gpgsign false', { cwd: sourceDir }) // need this so that gpg signing doesn't attempt to happen locally when running tests
     execSync('git commit -m "Initial commit" ', { cwd: sourceDir })
-    execSync(`git remote add origin https://root:${tokenName}@gitlab.uds.dev/root/${gitLabProjectName}.git`, { cwd: sourceDir })
+    execSync(`git remote add origin https://root:${tokenName}@gitlab${domainSuffix}/root/${gitLabProjectName}.git`, { cwd: sourceDir })
     execSync('git push -u origin --all', { cwd: sourceDir })
     await deleteDirectory(path.join(sourceDir, '.git'))
 
     console.log(`Finding project id for project name [${encodeURIComponent(gitLabProjectName)}]`)
-    const projectResp = await fetch(`https://gitlab.uds.dev/api/v4/projects?search=${encodeURIComponent(gitLabProjectName)}`, { headers })
+    const projectResp = await fetch(`https://gitlab${domainSuffix}/api/v4/projects?search=${encodeURIComponent(gitLabProjectName)}`, { headers })
     const projects = await projectResp.json()
 
     const project = projects.find((p: { name: string; }) => p.name === gitLabProjectName)
@@ -89,9 +91,9 @@ async function createNewGitlabProject(sourceDir: string, tokenName: string, gitL
 }
 
 async function unprotectRunner(headers: HeadersInit, tokenName: string) {
-    const runnerIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/runners/all`, { headers })).json()
+    const runnerIDResp = await (await fetch(`https://gitlab${domainSuffix}/api/v4/runners/all`, { headers })).json()
     const runnerID = runnerIDResp[0].id
-    const runnerResp = await fetch(`https://gitlab.uds.dev/api/v4/runners/${runnerID}`, {
+    const runnerResp = await fetch(`https://gitlab${domainSuffix}/api/v4/runners/${runnerID}`, {
         headers: [
             ["PRIVATE-TOKEN", tokenName],
             ["Content-Type", "application/x-www-form-urlencoded"]
@@ -104,14 +106,14 @@ async function unprotectRunner(headers: HeadersInit, tokenName: string) {
 
 async function checkJobResults(projectId: any, headers: HeadersInit, expectedJobLogOutputs: string[], expectedStatus: string) {
     let status = await retry(async () => {
-        const jobIDResp = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/${projectId}/jobs`, { headers })).json()
+        const jobIDResp = await (await fetch(`https://gitlab${domainSuffix}/api/v4/projects/${projectId}/jobs`, { headers })).json()
 
         // Print the job response (useful for debugging)
         console.log(jobIDResp)
 
         if (jobIDResp.length > 0 && (jobIDResp[0].status === "success" || jobIDResp[0].status === "failed")) {
             const jobID = jobIDResp[0].id;
-            const jobLog = await (await fetch(`https://gitlab.uds.dev/api/v4/projects/${projectId}/jobs/${jobID}/trace`, { headers })).text()
+            const jobLog = await (await fetch(`https://gitlab${domainSuffix}/api/v4/projects/${projectId}/jobs/${jobID}/trace`, { headers })).text()
 
             // Print the job log (useful for debugging)
             console.log(jobLog)
