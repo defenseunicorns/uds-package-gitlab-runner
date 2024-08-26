@@ -12,8 +12,7 @@ test('hello kitteh succeeds', async () => {
     const expectedStatus = 'success'
     const expectedJobLogOutputs: string[] = ['Hello Kitteh']
 
-    //await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-
+    await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
 }, 90000);
 
 
