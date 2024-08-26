@@ -22,6 +22,3 @@ overlay-values-*
 
 # Dependency files
 uds-config-gitlab.yaml
-
-# Temporary .git dirs made for temp repos that are pushed to gitlab during testing
-**/repo-sources/**/.git
