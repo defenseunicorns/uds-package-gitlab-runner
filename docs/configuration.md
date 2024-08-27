@@ -69,8 +69,14 @@ This package supports both the Kubernetes executor and the instance fleeting exe
 
 #### `gitlab-runner` chart:
 
-- `runners.executor` - set this to `instance` to flip the executor to use fleeting instances
-- `preEntrypointScript` - set this to `gitlab-runner fleeting install` (or if you are already using it add that to the value):
+- `runners.executor` - set this to `instance` as well to flip the executor to use fleeting instances
+- `preEntrypointScript` - set this to `gitlab-runner fleeting install` (or if you are already using it add that to the value)
+- `runners.fleeting.pluginConfig` - set this for your chosen plugin to configure it for the correct autoscaler (i.e. `name: "my-linux-asg"` for the aws plugin)
+- `runners.fleeting.connectorConfig` - set this for your chosen plugin to be able to connect to instances
+- `runners.fleeting.policy` - set the policy for how the fleeting runners are managed
+
+> [!NOTE]
+> To learn more about configuring instance runners see: https://docs.gitlab.com/runner/executors/instance.html  The `runners.fleeting` config values are YAML objects that are templated to their toml equivalents within the Helm chart.
 
 > [!TIP]
 > This package defaults to AWS for fleeting runners but can use other fleeting runner types by overriding the `fleeting.repository` and `fleeting.tag` values in the `gitlab-runner` chart to another plugin included in that package version.
