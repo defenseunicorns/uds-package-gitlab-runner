@@ -1,6 +1,8 @@
 # Stage 1: Pull the image and prepare the registry layout
 FROM alpine:3.20 AS prep
 
+ARG TARGETARCH
+
 # Install skopeo and necessary tools
 RUN apk add --no-cache skopeo tar gzip coreutils
 
@@ -18,7 +20,7 @@ RUN <<EXE
         tag=$(echo $plugin | cut -d':' -f2)
 
         # Pull the image into a temporary directory
-        skopeo copy docker://${REGISTRY}/${name}:${tag} dir:/tmp/image
+        skopeo --override-os linux --override-arch "${TARGETARCH}" copy "docker://${REGISTRY}/${name}:${tag}" dir:/tmp/image
 
         for file in /tmp/image/*; do
             # Get the basename of the file
@@ -41,7 +43,6 @@ RUN <<EXE
                 # Calculate SHA256 checksum of the manifest file
                 manifest_sha256=$(sha256sum "$file" | awk '{ print $1 }')
 
-
                 echo '{
     "schemaVersion": 2,
     "mediaType": "application/vnd.oci.image.index.v1+json",
@@ -55,7 +56,7 @@ RUN <<EXE
                 "org.opencontainers.image.version": "'"${tag}"'"
             },
             "platform": {
-                "architecture": "amd64",
+                "architecture": "'"${TARGETARCH}"'",
                 "os": "linux"
             }
         }
