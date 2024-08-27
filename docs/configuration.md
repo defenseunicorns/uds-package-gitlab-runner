@@ -43,4 +43,16 @@ By default the chart will create a service account named `gitlab-runner`.  You c
 
 ### Change the Runner Executor
 
-<!-- TODO: (@WSTARR) fill this in -->
+This package supports both the Kubernetes executor and the instance fleeting executor for running CI jobs.  The Kubernetes executor is default, but to swap to the fleeting executor change the following:
+
+#### `uds-gitlab-runner-config` chart:
+
+- `executor` - set this to `instance` to flip the executor to use fleeting instances
+
+#### `gitlab-runner` chart:
+
+- `runners.executor` - set this to `instance` to flip the executor to use fleeting instances
+- `preEntrypointScript` - set this to `gitlab-runner fleeting install` (or if you are already using it add that to the value):
+
+> [!TIP]
+> This package defaults to AWS for fleeting runners but can use other fleeting runner types by overriding the `fleeting.repository` and `fleeting.tag` values in the `gitlab-runner` chart to another plugin included in that package version.

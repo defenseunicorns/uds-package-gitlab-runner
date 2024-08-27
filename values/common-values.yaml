@@ -15,11 +15,11 @@ runners:
   protected: true
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
+  executor: kubernetes
   fleeting:
-    enabled: false
     maxInstances: 10
     pluginConfig:
-      name: "my-linux-asg"                            # AWS Autoscaling Group name
+      name: "my-linux-asg" # AWS Autoscaling Group name
     connectorConfig:
       username: "ec2-user"
       use_external_addr: true
@@ -31,8 +31,7 @@ runners:
       url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       cache_dir = "/tmp/gitlab-runner/cache"
-    {{- if .Values.runners.fleeting.enabled }}
-      executor = "instance"
+    {{- if eq .Values.runners.executor "instance" }}
       [runners.autoscaler]
         plugin = "{{ printf "%s/%s:%s" .Values.runners.fleeting.registry .Values.runners.fleeting.repository .Values.runners.fleeting.tag }}"
 

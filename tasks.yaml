@@ -40,7 +40,6 @@ tasks:
   - name: dev
     description: Deploy gitlab-runner on existing cluster with existing gitlab
     actions:
-      - task: create-glr-package
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
 
