@@ -1,0 +1,5 @@
+build-image-podman:
+  stage: build
+  image: quay.io/podman/stable:latest
+  script: |
+    podman build .

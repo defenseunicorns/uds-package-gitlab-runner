@@ -2,6 +2,18 @@
 
 GitLab Runners in this package are configured through the upstream [GitLab Runner chart](https://docs.gitlab.com/runner/install/kubernetes.html) as well as a UDS configuration chart that supports the following:
 
+## Node Configuration
+
+> [!IMPORTANT]
+> Any kubernetes node that will run GitLab Runner pods to use tooling like [Buildah](https://buildah.io/) must set sysctl `user.max_user_namespaces` to a nonzero value. This is required to run these container builds inside Linux containers from the runner pods.
+>
+> This is a [STIG finding](https://www.stigviewer.com/stig/red_hat_enterprise_linux_9/2023-09-13/finding/V-257816) but is `Not Applicable` when running Linux containers.
+
+Example:
+```bash
+sysctl -w user.max_user_namespaces=30110
+```
+
 ## Networking
 
 Network policies are controlled via the `uds-gitlab-runner-config` chart in accordance with the [common patterns for networking within UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory/blob/main/docs/networking.md).  Because GitLab runners do not interact with external resources like databases or object storage they only implement `custom` networking for both the runner namespace and the runner sandbox namespace:
@@ -36,6 +48,12 @@ By default the sandbox is excluded from being mutated by Zarf to allow external 
 
 > [!TIP]
 > The default registry behavior relies on the `###ZARF_REGISTRY###` internal value as outlined in the [Zarf documentation](https://docs.zarf.dev/ref/values/#internal-values-zarf).  This value is applied during Zarf deploy so cannot be used by GitLab when spawning pods.  If you do know the address of the Zarf registry (`127.0.0.1:31999` by default) you can still pull from the Zarf registry however.
+
+### Allow SETUID and SETGID security capabilities
+
+By default, runner build containers do not have `SETUID` and `SETGID` capabilities enabled. This limits the functionality of tools like [Buildah](https://buildah.io/) and [Podman](https://podman.io/). Podman cannot build container images, and Buildah can only create very basic images. Any actions that involve user or group modifications (e.g., using useradd or groupadd in a Dockerfile) will fail.
+
+To enable `SETUID` and `SETGID` capabilities in the build containers, set the `ENABLE_SECURITY_CAPABILITIES` Zarf variable to `true`. This will [apply a security policy for the build container](https://docs.gitlab.com/runner/executors/kubernetes/#set-a-security-policy-for-the-container) to add SETUID and SETGID capabilities. Additionally, it will [add a UDS Policy Exemption](https://uds.defenseunicorns.com/core/configuration/uds-configure-policy-exemptions/) to permit these capabilities.
 
 ### Change the Runner Service Account
 
