@@ -46,6 +46,6 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.1.0" # renovate: extractVersion=^alpine-(?<version>.*)$
-      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.3.1"
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.2.1" # renovate: extractVersion=^alpine-(?<version>.*)$
+      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.2.1"
       - "library/alpine:3.20.2"
