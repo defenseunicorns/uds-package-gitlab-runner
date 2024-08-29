@@ -14,4 +14,4 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
-    tag: v17.1.0
+    tag: v17.3.1
