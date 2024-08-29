@@ -8,14 +8,13 @@ tasks:
       # Ensure all GL services are up
       - task: gitlab-ingress
       # Run checks on initial deployment
-      - task: glr-health-check
-      - task: glr-run-check
+      - task: glr-registration-check
+      - task: glr-run-check-default-security-capabilities
       # Create a runner token and hide the secret from the GLR package
       - task: glr-create-runner-token
       - task: glr-backup-registration-secret
       # Remove the GLR package and redeploy with the manual token
       - task: remove:test-bundle
-      # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
       - description: Get the current UDS Bundle name
         cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
         setVariables:
@@ -24,11 +23,13 @@ tasks:
         cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
         setVariables:
           - name: BUNDLE_VERSION
+      # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
       - description: Deploys the current GitLab runner package
-        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN}
+        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN} --set ENABLE_SECURITY_CAPABILITIES=true
       # Check that the runner registered and restore the secret
-      - task: glr-health-check
+      - task: glr-registration-check
       - task: glr-restore-registration-secret
+      - task: glr-run-check-elevated-security-capabilities
 
   - name: gitlab-ingress
     actions:
@@ -45,7 +46,7 @@ tasks:
             exit 1
           fi
 
-  - name: glr-health-check
+  - name: glr-registration-check
     description: Check the status of Gitlab Runner
     actions:
       - description: Check Gitlab Runner Secret
@@ -58,12 +59,24 @@ tasks:
         dir: tests
         cmd: npm test -- journey/registration.test.ts
 
-  - name: glr-run-check
+  - name: glr-run-check-default-security-capabilities
     description: Check that a GitLab repository can trigger a gitlab runner to run
     actions:
       - description: Setup a repository and trigger a pipeline job
         dir: tests
-        cmd: npm test -- journey/pipeline-run.test.ts
+        cmd: |
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
+          npm test -- journey/pipeline-run.test.ts -t 'podman fails'
+
+  - name: glr-run-check-elevated-security-capabilities
+    description: Check that a GitLab repository can trigger a gitlab runner to run
+    actions:
+      - description: Setup a repository and trigger a pipeline job
+        dir: tests
+        cmd: |
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
+          npm test -- journey/pipeline-run.test.ts -t 'podman succeeds'
+
 
   - name: glr-create-runner-token
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN

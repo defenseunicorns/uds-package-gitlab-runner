@@ -7,6 +7,8 @@ serviceAccountName: "gitlab-runner"
 
 runnerAuthToken: "###ZARF_VAR_RUNNER_AUTH_TOKEN###"
 
+enableSecurityCapabilities: false
+
 custom: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
