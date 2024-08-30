@@ -1,5 +1,18 @@
 # Changelog
 
+## [17.2.1-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.1...v17.2.1-uds.0) (2024-08-30)
+
+
+### Features
+
+* add SETUID and SETGID capabilities for gitlab runner container security context ([#116](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/116)) ([6609aa0](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6609aa0503fa6b086c09a46a79197c7167337a9a))
+
+
+### Miscellaneous
+
+* cleanup tests to match pattern in other repos ([#112](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/112)) ([e7c2d33](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e7c2d33249bd9ba0dd188d53c22ebc4ebcbab966))
+* **deps:** update gitlab runner package dependencies ([#108](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/108)) ([beaec62](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/beaec62d6144e27fd74033fd53fc5b4d5cf759cc))
+
 ## [17.1.0-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.0...v17.1.0-uds.1) (2024-07-31)
 
 
