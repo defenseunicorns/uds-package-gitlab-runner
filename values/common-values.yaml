@@ -75,7 +75,11 @@ resources:
 volumes:
   - emptyDir: {}
     name: gitlab-runner
+  - emptyDir: {}
+    name: gitlab-runner-home
 
 volumeMounts:
   - name: gitlab-runner
     mountPath: /.gitlab-runner
+  - name: gitlab-runner-home
+    mountPath: /home/gitlab-runner
