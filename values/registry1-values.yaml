@@ -18,7 +18,3 @@ runners:
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
     tag: v17.2.1
-  fleeting:
-    registry: "###ZARF_REGISTRY###"
-    repository: gitlab-org/fleeting/plugins/aws
-    tag: "1.0.0"

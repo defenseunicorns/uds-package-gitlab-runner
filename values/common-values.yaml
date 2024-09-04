@@ -18,6 +18,7 @@ runners:
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
   executor: kubernetes
+
   fleeting:
     maxInstances: 10
     pluginConfig:
@@ -28,6 +29,10 @@ runners:
     policy:
       idle_count: 5
       idle_time: "20m0s"
+    registry: "gitlab-runner-registry.gitlab-runner.svc.cluster.local"
+    repository: gitlab-org/fleeting/plugins/aws
+    tag: "1.0.0"
+
   config: |
     [[runners]]
       url = "https://gitlab.###ZARF_VAR_DOMAIN###"
