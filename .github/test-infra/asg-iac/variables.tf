@@ -21,11 +21,13 @@ variable "name" {
 variable "namespace" {
   description = "Namespace containing the GitLab Runner Service Account"
   type        = string
+  default     = "gitlab-runner"
 }
 
 variable "service_account" {
   description = "Name of the GitLab Runner Service Account"
   type        = string
+  default     = "gitlab-runner"
 }
 
 variable "permissions_boundary_name" {
