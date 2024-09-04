@@ -74,7 +74,7 @@ resource "aws_iam_role" "asg_role" {
   permissions_boundary = var.permissions_boundary_name
 
   tags = {
-    PermissionsBoundary = split("/", var.permissions_boundary_name)[1]
+    PermissionsBoundary = var.permissions_boundary_name
   }
 }
 
