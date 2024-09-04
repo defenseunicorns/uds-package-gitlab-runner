@@ -18,6 +18,11 @@ variable "name" {
   type        = string
 }
 
+variable "ami_id" {
+  description = "The ID of the AMI to scale in the ASG (must have git and gitlab-runner installed)"
+  type        = string
+}
+
 variable "namespace" {
   description = "Namespace containing the GitLab Runner Service Account"
   type        = string

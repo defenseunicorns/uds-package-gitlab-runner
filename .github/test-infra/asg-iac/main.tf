@@ -1,6 +1,6 @@
 resource "aws_launch_template" "uds-package-gitlab-runner" {
   name_prefix   = "uds-package-gitlab-runner-"
-  image_id      = "ami-12345678"  # TODO: Replace with proper AMI ID
+  image_id      = var.ami_id
   instance_type = "t3.micro"
 
   network_interfaces {

@@ -29,6 +29,7 @@ jobs:
       UDS_STATE_BUCKET_NAME: uds-ci-govcloud-us-gov-west-1-tfstate
       UDS_STATE_DYNAMODB_TABLE_NAME: uds-ci-govcloud-tfstate-lock
       TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
+      TF_VAR_ami_id: ${{ secrets.AMI_ID }}
       TF_VAR_permissions_boundary_name: ${{ secrets.PERMISSIONS_BOUNDARY_NAME }}
     steps:
       - name: Set ENV
