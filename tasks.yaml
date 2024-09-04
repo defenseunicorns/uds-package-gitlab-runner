@@ -77,7 +77,7 @@ tasks:
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
       - task: test:all
-n
+
 # Nightly CI will execute the following (via .github/workflows/nightly-testing) so they need to be here with these names
 
   - name: test-fleeting
