@@ -71,7 +71,7 @@ resource "aws_iam_role" "asg_role" {
     ]
   })
 
-  permissions_boundary = var.permissions_boundary_name
+  permissions_boundary = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:policy/${var.permissions_boundary_name}"
 
   tags = {
     PermissionsBoundary = var.permissions_boundary_name
