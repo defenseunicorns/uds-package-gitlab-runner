@@ -1,13 +1,8 @@
 variables:
-  - name: ASG_NAME
   - name: REGION
-  - name: PERMISSIONS_BOUNDARY_NAME
-  - name: PERMISSIONS_BOUNDARY_ARN
   - name: STATE_BUCKET_NAME
   - name: STATE_DYNAMODB_TABLE_NAME
   - name: STATE_KEY
-  - name: AMI_ID
-    default: ami-068ab6ac1cec494e0
 
 tasks:
   - name: destroy-iac
@@ -48,4 +43,3 @@ tasks:
         dir: .github/test-infra/asg-iac
       - cmd: tofu plan -out terraform.plan
         dir: .github/test-infra/asg-iac
-
