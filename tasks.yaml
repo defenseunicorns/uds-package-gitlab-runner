@@ -25,9 +25,15 @@ tasks:
 
   - name: create-glr-test-bundle
     description: Create a local UDS Gitlab Runner bundle
+    inputs:
+      path:
+        description: Path relative to the repositories root where the uds-bundle.yaml lives
+        default: bundle
     actions:
       - task: create-glr-package
       - task: create:test-bundle
+        with:
+          path: ${{ .inputs.path }}
 
   - name: create-glr-latest-release-bundle
     description: Create UDS Gitlab Runner bundle based on the latest release
@@ -71,3 +77,16 @@ tasks:
       - task: create-glr-test-bundle
       - task: deploy:test-bundle
       - task: test:all
+n
+# Nightly CI will execute the following (via .github/workflows/nightly-testing) so they need to be here with these names
+
+  - name: test-fleeting
+    description: Test the health of Gitlab and Gitlab Runner deployments
+    actions:
+      - task: create-glr-test-bundle
+        with:
+          path: bundle/fleeting
+      - task: setup:k3d-test-cluster
+      - task: dependencies:deploy
+      - task: deploy:test-bundle
+      - task: test:fleeting

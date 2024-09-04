@@ -22,10 +22,9 @@ on:
       - "CONTRIBUTING.md"
       - "SECURITY.md"
 
-
 # Abort prior jobs in the same workflow / PR
 concurrency:
-  group: test-${{ github.ref }}-${{ inputs.package }}
+  group: test-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

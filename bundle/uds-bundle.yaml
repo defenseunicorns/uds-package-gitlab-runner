@@ -12,16 +12,3 @@ packages:
     # x-release-please-start-version
     ref: 17.1.0-uds.1
     # x-release-please-end
-    overrides:
-      gitlab-runner:
-        uds-gitlab-runner-config:
-          values:
-            - path: executor
-              value: instance
-        gitlab-runner:
-          values:
-            - path: preEntrypointScript
-              value: |
-                gitlab-runner fleeting install
-            - path: runners.executor
-              value: instance

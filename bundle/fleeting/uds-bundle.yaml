@@ -1,0 +1,31 @@
+kind: UDSBundle
+metadata:
+  name: gitlab-test-fleeting
+  description: A UDS bundle for deploying Gitlab Runner on a development cluster (req's GitLab to be installed first)
+  # x-release-please-start-version
+  version: 17.1.0-uds.1
+  # x-release-please-end
+
+packages:
+  - name: gitlab-runner
+    path: ../../
+    # x-release-please-start-version
+    ref: 17.1.0-uds.1
+    # x-release-please-end
+    overrides:
+      gitlab-runner:
+        uds-gitlab-runner-config:
+          values:
+            - path: executor
+              value: instance
+        gitlab-runner:
+          values:
+            - path: preEntrypointScript
+              value: |
+                gitlab-runner fleeting install
+            - path: runners.executor
+              value: instance
+          variables:
+            # Plugin Docs: https://gitlab.com/gitlab-org/fleeting/plugins/aws
+            - name: GITLAB_RUNNER_AUTOSCALING_GROUP
+              path: runners.fleeting.pluginConfig.name

@@ -1,0 +1,51 @@
+variables:
+  - name: ASG_NAME
+  - name: REGION
+  - name: PERMISSIONS_BOUNDARY_NAME
+  - name: PERMISSIONS_BOUNDARY_ARN
+  - name: STATE_BUCKET_NAME
+  - name: STATE_DYNAMODB_TABLE_NAME
+  - name: STATE_KEY
+  - name: AMI_ID
+    default: ami-068ab6ac1cec494e0
+
+tasks:
+  - name: destroy-iac
+    actions:
+      - cmd: tofu destroy -auto-approve
+        dir: .github/test-infra/asg-iac
+
+  - name: apply-iac
+    actions:
+      - cmd: echo ${STATE_KEY} | sed 's/\.tfstate/-buckets1.tfstate/g'
+        setVariables:
+          - name: BUCKETS_STATE_KEY
+        dir: .github/test-infra/asg-iac
+      - cmd: echo ${BUCKETS_STATE_KEY}
+      - cmd: |
+          tofu init -force-copy \
+          -backend-config="bucket=${STATE_BUCKET_NAME}" \
+          -backend-config="key=${BUCKETS_STATE_KEY}" \
+          -backend-config="region=${REGION}" \
+          -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE_NAME}"
+        dir: .github/test-infra/asg-iac
+      - cmd: tofu apply -auto-approve
+        dir: .github/test-infra/asg-iac
+
+  - name: plan-iac
+    actions:
+      - cmd: echo ${STATE_KEY} | sed 's/\.tfstate/-buckets1.tfstate/g'
+        setVariables:
+          - name: BUCKETS_STATE_KEY
+        dir: .github/test-infra/asg-iac
+      - cmd: echo ${BUCKETS_STATE_KEY}
+      - cmd: |
+          tofu init -force-copy \
+          -backend-config="bucket=${STATE_BUCKET_NAME}" \
+          -backend-config="key=${BUCKETS_STATE_KEY}" \
+          -backend-config="region=${REGION}" \
+          -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE_NAME}"
+        dir: .github/test-infra/asg-iac
+      - cmd: tofu plan -out terraform.plan
+        dir: .github/test-infra/asg-iac
+
