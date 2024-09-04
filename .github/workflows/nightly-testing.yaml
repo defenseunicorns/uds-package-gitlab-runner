@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-ci-${{ matrix.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
           echo "UDS_STATE_KEY="tfstate/ci/install/${SHA:0:7}-gitlab-runner-${{ matrix.flavor }}-aws.tfstate >> $GITHUB_ENV
-          echo "TF_VAR_vpc_id=${UDS_VPC_ID}"
+          echo "TF_VAR_vpc_id=${UDS_VPC_ID}" >> $GITHUB_ENV
           echo "TF_VAR_runner_ip=$(curl -s https://api.ipify.org)" >> $GITHUB_ENV
           echo "TF_VAR_region=${UDS_REGION}" >> $GITHUB_ENV
           echo "TF_VAR_name=uds-package-gitlab-runner-ci-${{ matrix.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
