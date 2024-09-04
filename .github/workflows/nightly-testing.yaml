@@ -33,12 +33,12 @@ jobs:
     steps:
       - name: Set ENV
         run: |
-          echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-ci-${{ inputs.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
-          echo "UDS_STATE_KEY="tfstate/ci/install/${SHA:0:7}-gitlab-runner-${{ inputs.flavor }}-aws.tfstate >> $GITHUB_ENV
+          echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-ci-${{ matrix.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
+          echo "UDS_STATE_KEY="tfstate/ci/install/${SHA:0:7}-gitlab-runner-${{ matrix.flavor }}-aws.tfstate >> $GITHUB_ENV
           echo "TF_VAR_vpc_id=${UDS_VPC_ID}"
           echo "TF_VAR_runner_ip=$(curl -s https://api.ipify.org)" >> $GITHUB_ENV
           echo "TF_VAR_region=${UDS_REGION}" >> $GITHUB_ENV
-          echo "TF_VAR_name=uds-package-gitlab-runner-ci-${{ inputs.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
+          echo "TF_VAR_name=uds-package-gitlab-runner-ci-${{ matrix.flavor }}-${SHA:0:7}" >> $GITHUB_ENV
           echo "TF_VAR_permissions_boundary_name=${UDS_PERMISSIONS_BOUNDARY_NAME}" >> $GITHUB_ENV
 
       - name: Checkout repository
@@ -70,7 +70,7 @@ jobs:
         timeout-minutes: 20
 
       - name: Test Fleeting Bundle
-        run: uds run test-fleeting --set FLAVOR=${{ inputs.flavor }} --no-progress
+        run: uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
         timeout-minutes: 25
 
       - name: Destroy IAC
