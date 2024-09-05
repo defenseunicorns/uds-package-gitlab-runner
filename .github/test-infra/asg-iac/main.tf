@@ -95,7 +95,7 @@ resource "aws_instance" "jumpbox" {
   key_name      = aws_key_pair.jumpbox_key_pair.key_name
 
   tags = {
-    Name = "Jumpbox"
+    Name = "${var.name}-jumpbox"
   }
 
   # Security group to allow SSH (port 22)

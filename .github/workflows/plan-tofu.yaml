@@ -30,7 +30,6 @@ jobs:
       SHA: ${{ github.sha }}
       FLAVOR: ${{ matrix.flavor }}
       UDS_REGION: us-gov-west-1
-      UDS_VPC_ID: ${{ secrets.VPC_ID }}
       UDS_STATE_BUCKET_NAME: uds-ci-govcloud-us-gov-west-1-tfstate
       UDS_STATE_DYNAMODB_TABLE_NAME: uds-ci-govcloud-tfstate-lock
       TF_VAR_ami_id: ${{ secrets.AMI_ID }}
