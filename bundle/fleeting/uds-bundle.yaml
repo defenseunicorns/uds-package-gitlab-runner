@@ -29,6 +29,8 @@ packages:
                 gitlab-runner fleeting install
             - path: runners.executor
               value: instance
+            - path: runners.fleeting.connectorConfig.username
+              value: ubuntu
             - path: extraEnv
               value:
                 AWS_REGION: us-gov-west-1

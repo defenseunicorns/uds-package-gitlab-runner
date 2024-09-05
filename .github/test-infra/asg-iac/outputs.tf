@@ -11,6 +11,7 @@ output "asg_role_arn" {
 output "jumpbox_public_ip" {
   value = aws_instance.jumpbox.public_ip
   description = "The IP Address of the jumpbox"
+  sensitive = true
 }
 
 output "jumpbox_private_key" {
