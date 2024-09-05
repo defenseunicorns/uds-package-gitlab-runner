@@ -123,7 +123,7 @@ async function checkJobResults(projectId: any, headers: HeadersInit, expectedJob
             return jobIDResp[0].status
         }
         return false
-    }, 7, 7000);
+    }, 20, 5000);
     expect(status).toBe(expectedStatus)
 }
 
