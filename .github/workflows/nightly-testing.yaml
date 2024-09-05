@@ -39,7 +39,6 @@ jobs:
     steps:
       - name: Set ENV
         run: |
-          echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-ci-${FLAVOR}-${SHA:0:7}" >> $GITHUB_ENV
           echo "UDS_STATE_KEY=tfstate/ci/install/${SHA:0:7}-gitlab-runner-${FLAVOR}-aws.tfstate" >> $GITHUB_ENV
           echo "TF_VAR_runner_ip=$(curl -s https://api.ipify.org)" >> $GITHUB_ENV
           echo "TF_VAR_region=${UDS_REGION}" >> $GITHUB_ENV
@@ -78,7 +77,7 @@ jobs:
         run: cd tests && npm ci
 
       - name: Test Fleeting Bundle
-        run: UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
+        run: UDS_GITLAB_RUNNER_AUTOSCALING_GROUP_ARN=$(tofu output -raw asg_arn) UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
         timeout-minutes: 25
 
       - name: Debug Output

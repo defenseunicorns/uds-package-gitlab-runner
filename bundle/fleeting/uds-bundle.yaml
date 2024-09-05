@@ -27,7 +27,7 @@ packages:
               value: instance
           variables:
             # Plugin Docs: https://gitlab.com/gitlab-org/fleeting/plugins/aws
-            - name: GITLAB_RUNNER_AUTOSCALING_GROUP
+            - name: GITLAB_RUNNER_AUTOSCALING_GROUP_ARN
               path: runners.fleeting.pluginConfig.name
             - name: GITLAB_RUNNER_AUTOSCALING_ROLE_ARN
               path: serviceAccount.annotations.irsa/role-arn
