@@ -59,6 +59,6 @@ resource "aws_security_group" "uds-package-gitlab-runner" {
 
 resource "aws_subnet" "uds-package-gitlab-runner" {
   vpc_id            = var.vpc_id
-  cidr_block        = "10.0.1.0/24"
+  cidr_block        = var.cidr_block
   map_public_ip_on_launch = true
 }
