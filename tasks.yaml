@@ -89,4 +89,6 @@ tasks:
       - task: setup:k3d-test-cluster
       - task: dependencies:deploy
       - task: deploy:test-bundle
+        with:
+          path: bundle/fleeting
       - task: test:fleeting
