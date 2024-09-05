@@ -3,17 +3,6 @@ variable "runner_ip" {
   type        = string
 }
 
-variable "vpc_id" {
-  description = "The VPC to create the ASG within"
-  type        = string
-}
-
-variable "cidr_block" {
-  description = "The CIDR Block to take within the VPC"
-  type        = string
-  default     = "192.168.159.0/24"
-}
-
 variable "region" {
   description = "AWS region"
   type        = string

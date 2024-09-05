@@ -1,3 +1,25 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.1.1"
+
+  name                 = "${var.name}-vpc"
+  cidr                 = "10.0.0.0/16"
+  azs                  = [for az_name in slice(data.aws_availability_zones.available.names, 0, min(length(data.aws_availability_zones.available.names), 3)) : az_name]
+  public_subnets       = [for k, v in module.vpc.azs : cidrsubnet(module.vpc.vpc_cidr_block, 5, k)]
+  enable_nat_gateway   = false
+
+  instance_tenancy                  = "default"
+  vpc_flow_log_permissions_boundary = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:policy/${var.permissions_boundary_name}"
+
+  tags = {
+    Name = "${var.name}-vpc"
+  }
+}
+
 resource "aws_launch_template" "uds-package-gitlab-runner" {
   name_prefix   = "uds-package-gitlab-runner-"
   image_id      = var.ami_id
@@ -29,7 +51,7 @@ resource "aws_autoscaling_group" "uds-package-gitlab-runner" {
   desired_capacity     = 0
   max_size             = 10
   min_size             = 0
-  vpc_zone_identifier  = [aws_subnet.uds-package-gitlab-runner.id]
+  vpc_zone_identifier  = module.vpc.public_subnets
 
   launch_template {
     id      = aws_launch_template.uds-package-gitlab-runner.id
@@ -40,7 +62,7 @@ resource "aws_autoscaling_group" "uds-package-gitlab-runner" {
 resource "aws_security_group" "uds-package-gitlab-runner" {
   name        = "${var.name}-security-group"
   description = "Allow inbound traffic from GitHub runner"
-  vpc_id      = var.vpc_id
+  vpc_id      = module.vpc.vpc_id
 
   ingress {
     from_port   = 22
@@ -57,23 +79,13 @@ resource "aws_security_group" "uds-package-gitlab-runner" {
   }
 }
 
-resource "aws_subnet" "uds-package-gitlab-runner" {
-  vpc_id            = var.vpc_id
-  cidr_block        = var.cidr_block
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "${var.name}-subnet"
-  }
-}
-
 resource "tls_private_key" "jumpbox_tls_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "aws_key_pair" "jumpbox_key_pair" {
-  key_name   = "jumpbox-ssh-key"
+  key_name   = "${var.name}-jumpbox-ssh-key"
   public_key = tls_private_key.jumpbox_tls_key.public_key_openssh
 }
 
@@ -88,13 +100,13 @@ resource "aws_instance" "jumpbox" {
 
   # Security group to allow SSH (port 22)
   vpc_security_group_ids = [aws_security_group.uds-package-gitlab-runner.id]
-  subnet_id = aws_subnet.uds-package-gitlab-runner.id
+  subnet_id = module.vpc.public_subnets[0]
 }
 
 resource "aws_route53_zone" "uds_dev" {
   name = "uds.dev"
   vpc {
-    vpc_id = var.vpc_id
+    vpc_id = module.vpc.vpc_id
   }
 }
 
