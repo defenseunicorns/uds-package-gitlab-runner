@@ -74,6 +74,9 @@ jobs:
         run: uds run -f tasks/iac.yaml apply-iac --no-progress
         timeout-minutes: 20
 
+      - name: NPM setup
+        run: cd tests && npm ci
+
       - name: Test Fleeting Bundle
         run: UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
         timeout-minutes: 25
