@@ -95,7 +95,7 @@ jobs:
             --k3s-arg=--kube-apiserver-arg=api-audiences=kubernetes.svc.default \
             --k3s-arg=--kube-apiserver-arg=service-account-issuer=https://govcloud-ci-oidc.s3.us-gov-west-1.amazonaws.com \
             --k3s-arg=--kube-apiserver-arg=audit-log-path=/var/log/kubernetes/audit/audit.log \
-            -v=irsa:/irsa
+            -v=${{ github.workspace }}/irsa:/irsa
 
       - name: Debug Output
         if: always()
