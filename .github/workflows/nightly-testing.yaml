@@ -74,12 +74,28 @@ jobs:
         run: uds run -f tasks/iac.yaml apply-iac --no-progress
         timeout-minutes: 20
 
+      - name: IRSA Setup
+        run: |
+          echo "Getting OIDC keypair"
+          sudo mkdir irsa
+          aws secretsmanager get-secret-value --secret-id govcloud-ci-oidc-private-key | jq -r '.SecretString' > irsa/signer.key
+          aws secretsmanager get-secret-value --secret-id govcloud-ci-oidc-public-key | jq -r '.SecretString' > irsa/signer.key.pub
+        timeout-minutes: 20
+
       - name: NPM setup
         run: cd tests && npm ci
 
       - name: Test Fleeting Bundle
         run: UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
         timeout-minutes: 25
+        env:
+          UDS_K3D_EXTRA_ARGS: |
+            --k3s-arg=--kube-apiserver-arg=service-account-key-file=/irsa/signer.key.pub \
+            --k3s-arg=--kube-apiserver-arg=service-account-signing-key-file=/irsa/signer.key \
+            --k3s-arg=--kube-apiserver-arg=api-audiences=kubernetes.svc.default \
+            --k3s-arg=--kube-apiserver-arg=service-account-issuer=https://govcloud-ci-oidc.s3.us-gov-west-1.amazonaws.com \
+            --k3s-arg=--kube-apiserver-arg=audit-log-path=/var/log/kubernetes/audit/audit.log \
+            -v=irsa:/irsa
 
       - name: Debug Output
         if: always()

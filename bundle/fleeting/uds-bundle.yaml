@@ -7,6 +7,10 @@ metadata:
   # x-release-please-end
 
 packages:
+  - name: pod-identity-webhook
+    repository: ghcr.io/defenseunicorns/packages/uds/pod-identity-webhook
+    ref: 0.3.1-upstream
+
   - name: gitlab-runner
     path: ../../
     # x-release-please-start-version
@@ -27,7 +31,7 @@ packages:
               value: instance
             - path: extraEnv
               value:
-                AWS_REGION:  us-gov-west-1
+                AWS_REGION: us-gov-west-1
           variables:
             # Plugin Docs: https://gitlab.com/gitlab-org/fleeting/plugins/aws
             - name: GITLAB_RUNNER_AUTOSCALING_GROUP
