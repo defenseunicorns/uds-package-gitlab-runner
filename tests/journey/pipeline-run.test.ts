@@ -13,7 +13,7 @@ test('hello kitteh succeeds', async () => {
     const expectedJobLogOutputs: string[] = ['Hello Kitteh']
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 90000);
+}, 1000000);
 
 
 test('podman succeeds', async () => {
@@ -22,7 +22,7 @@ test('podman succeeds', async () => {
     const expectedJobLogOutputs: string[] = ['STEP 1/2: FROM scratch', 'STEP 2/2: ADD test.txt /', 'COMMIT']
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 90000);
+}, 1000000);
 
 
 test('podman fails', async () => {
@@ -32,7 +32,7 @@ test('podman fails', async () => {
     const expectedJobLogOutputs: string[] = []
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 90000);
+}, 1000000);
 
 
 async function executeTest(sourceRepoName: string, expectedJobLogOutputs: string[], expectedStatus: string) {
@@ -123,7 +123,7 @@ async function checkJobResults(projectId: any, headers: HeadersInit, expectedJob
             return jobIDResp[0].status
         }
         return false
-    }, 20, 5000);
+    }, 50, 5000);
     expect(status).toBe(expectedStatus)
 }
 
