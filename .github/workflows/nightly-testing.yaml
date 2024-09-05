@@ -77,7 +77,7 @@ jobs:
       - name: IRSA Setup
         run: |
           echo "Getting OIDC keypair"
-          sudo mkdir irsa
+          mkdir irsa
           aws secretsmanager get-secret-value --secret-id govcloud-ci-oidc-private-key | jq -r '.SecretString' > irsa/signer.key
           aws secretsmanager get-secret-value --secret-id govcloud-ci-oidc-public-key | jq -r '.SecretString' > irsa/signer.key.pub
         timeout-minutes: 20
