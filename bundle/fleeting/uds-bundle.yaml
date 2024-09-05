@@ -25,6 +25,9 @@ packages:
                 gitlab-runner fleeting install
             - path: runners.executor
               value: instance
+            - path: extraEnv
+              value:
+                AWS_DEFAULT_REGION:  us-gov-west-1
           variables:
             # Plugin Docs: https://gitlab.com/gitlab-org/fleeting/plugins/aws
             - name: GITLAB_RUNNER_AUTOSCALING_GROUP_ARN
