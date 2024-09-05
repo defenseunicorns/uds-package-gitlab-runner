@@ -88,10 +88,14 @@ resource "aws_instance" "jumpbox" {
 
   # Security group to allow SSH (port 22)
   vpc_security_group_ids = [aws_security_group.uds-package-gitlab-runner.id]
+  subnet_id = aws_subnet.uds-package-gitlab-runner.id
 }
 
 resource "aws_route53_zone" "uds_dev" {
   name = "uds.dev"
+  vpc {
+    vpc_id = var.vpc_id
+  }
 }
 
 resource "aws_route53_record" "my_domain" {
