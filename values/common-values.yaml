@@ -3,11 +3,13 @@ unregisterRunners: false
 # Create a non-default service account with the name gitlab-runner with minimal permissions
 rbac:
   create: true
-  generatedServiceAccountName: gitlab-runner
   rules:
     - apiGroups: [""]
       resources: [""]
       verbs: [""]
+
+serviceAccount:
+  name: gitlab-runner
 
 enableSecurityCapabilities: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
 
