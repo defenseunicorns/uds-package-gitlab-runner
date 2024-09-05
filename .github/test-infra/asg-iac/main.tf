@@ -66,3 +66,39 @@ resource "aws_subnet" "uds-package-gitlab-runner" {
     Name = "${var.name}-subnet"
   }
 }
+
+resource "tls_private_key" "jumpbox_tls_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "jumpbox_key_pair" {
+  key_name   = "jumpbox-ssh-key"
+  public_key = tls_private_key.jumpbox_tls_key.public_key_openssh
+}
+
+resource "aws_instance" "jumpbox" {
+  ami           = var.ami_id
+  instance_type = "t3.micro"
+  key_name      = aws_key_pair.jumpbox_key_pair.key_name
+
+  tags = {
+    Name = "Jumpbox"
+  }
+
+  # Security group to allow SSH (port 22)
+  vpc_security_group_ids = [aws_security_group.uds-package-gitlab-runner.id]
+}
+
+resource "aws_route53_zone" "uds_dev" {
+  name = "uds.dev"
+}
+
+resource "aws_route53_record" "my_domain" {
+  zone_id = aws_route53_zone.uds_dev.id
+  name    = "gitlab.uds.dev"
+  type    = "A"
+  ttl     = 300
+
+  records = [aws_instance.jumpbox.private_ip]
+}

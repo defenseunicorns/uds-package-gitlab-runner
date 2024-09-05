@@ -7,3 +7,14 @@ output "asg_role_arn" {
   value = aws_iam_role.asg_role.arn
   description = "The ARN of the ASG IRSA role"
 }
+
+output "jumpbox_public_ip" {
+  value = aws_instance.jumpbox.public_ip
+  description = "The IP Address of the jumpbox"
+}
+
+output "jumpbox_private_key" {
+  value     = tls_private_key.jumpbox_tls_key.private_key_pem
+  description = "The SSH Key for the jumpbox"
+  sensitive = true
+}
