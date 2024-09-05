@@ -27,10 +27,10 @@ packages:
               value: instance
             - path: extraEnv
               value:
-                AWS_DEFAULT_REGION:  us-gov-west-1
+                AWS_REGION:  us-gov-west-1
           variables:
             # Plugin Docs: https://gitlab.com/gitlab-org/fleeting/plugins/aws
-            - name: GITLAB_RUNNER_AUTOSCALING_GROUP_ARN
+            - name: GITLAB_RUNNER_AUTOSCALING_GROUP
               path: runners.fleeting.pluginConfig.name
             - name: GITLAB_RUNNER_AUTOSCALING_ROLE_ARN
               path: serviceAccount.annotations.irsa/role-arn
