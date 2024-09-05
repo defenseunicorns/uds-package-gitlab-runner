@@ -68,7 +68,14 @@ resource "aws_security_group" "uds-package-gitlab-runner" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.runner_ip}/32", module.vpc.vpc_cidr_block]
+    cidr_blocks = ["${var.runner_ip}/32"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 
   egress {
