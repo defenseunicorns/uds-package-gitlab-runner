@@ -1,71 +1,71 @@
-name: Temporary Testing
+# name: Temporary Testing
 
-# TODO: @WSTARR - temporary testing!
-on:
-  pull_request:
-    branches: [main]
-    types: [milestoned, opened, synchronize]
+# # TODO: @WSTARR - temporary testing!
+# on:
+#   pull_request:
+#     branches: [main]
+#     types: [milestoned, opened, synchronize]
 
-# Abort prior jobs in the same workflow / PR
-concurrency:
-  group: test-fleeting-${{ github.ref }}
-  cancel-in-progress: true
+# # Abort prior jobs in the same workflow / PR
+# concurrency:
+#   group: test-fleeting-${{ github.ref }}
+#   cancel-in-progress: true
 
-permissions:
-  id-token: write
-  contents: read
+# permissions:
+#   id-token: write
+#   contents: read
 
-jobs:
-  nightly-testing:
-    name: Test Fleeting GitLab Runners
-    runs-on: uds-swf-ubuntu-big-boy-8-core
-    strategy:
-      matrix:
-        flavor: [upstream]
-      fail-fast: false
-    env:
-      FLAVOR: ${{ matrix.flavor }}
-      UDS_REGION: us-gov-west-1
-      UDS_STATE_BUCKET_NAME: uds-ci-govcloud-us-gov-west-1-tfstate
-      UDS_STATE_DYNAMODB_TABLE_NAME: uds-ci-govcloud-tfstate-lock
-      TF_VAR_runner_ip: ${{ secrets.RUNNER_IP }}
-      TF_VAR_ami_id: ${{ secrets.AMI_ID }}
-      TF_VAR_permissions_boundary_name: ${{ secrets.PERMISSIONS_BOUNDARY_NAME }}
-    steps:
-      - name: Set ENV
-        run: |
-          echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-local-${FLAVOR}" >> $GITHUB_ENV
-          echo "UDS_STATE_KEY=tfstate/ci/install/local-gitlab-runner-${FLAVOR}-aws.tfstate" >> $GITHUB_ENV
-          echo "TF_VAR_region=${UDS_REGION}" >> $GITHUB_ENV
-          echo "TF_VAR_name=uds-package-gitlab-runner-local-${FLAVOR}" >> $GITHUB_ENV
+# jobs:
+#   nightly-testing:
+#     name: Test Fleeting GitLab Runners
+#     runs-on: uds-swf-ubuntu-big-boy-8-core
+#     strategy:
+#       matrix:
+#         flavor: [upstream]
+#       fail-fast: false
+#     env:
+#       FLAVOR: ${{ matrix.flavor }}
+#       UDS_REGION: us-gov-west-1
+#       UDS_STATE_BUCKET_NAME: uds-ci-govcloud-us-gov-west-1-tfstate
+#       UDS_STATE_DYNAMODB_TABLE_NAME: uds-ci-govcloud-tfstate-lock
+#       TF_VAR_runner_ip: ${{ secrets.RUNNER_IP }}
+#       TF_VAR_ami_id: ${{ secrets.AMI_ID }}
+#       TF_VAR_permissions_boundary_name: ${{ secrets.PERMISSIONS_BOUNDARY_NAME }}
+#     steps:
+#       - name: Set ENV
+#         run: |
+#           echo "UDS_GITLAB_RUNNER_AUTOSCALING_GROUP=uds-package-gitlab-runner-local-${FLAVOR}" >> $GITHUB_ENV
+#           echo "UDS_STATE_KEY=tfstate/ci/install/local-gitlab-runner-${FLAVOR}-aws.tfstate" >> $GITHUB_ENV
+#           echo "TF_VAR_region=${UDS_REGION}" >> $GITHUB_ENV
+#           echo "TF_VAR_name=uds-package-gitlab-runner-local-${FLAVOR}" >> $GITHUB_ENV
 
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+#       - name: Checkout repository
+#         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4
-        with:
-          role-to-assume: ${{ secrets.AWS_GOVCLOUD_ROLE_TO_ASSUME }}
-          role-session-name: ${{ github.job || github.event.client_payload.pull_request.head.sha || github.sha }}
-          aws-region: ${{ env.UDS_REGION }}
-          role-duration-seconds: 21600
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4
+#         with:
+#           role-to-assume: ${{ secrets.AWS_GOVCLOUD_ROLE_TO_ASSUME }}
+#           role-session-name: ${{ github.job || github.event.client_payload.pull_request.head.sha || github.sha }}
+#           aws-region: ${{ env.UDS_REGION }}
+#           role-duration-seconds: 21600
 
-      - name: Environment setup
-        uses: defenseunicorns/uds-common/.github/actions/setup@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0
-        with:
-          registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
-          registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
-          ghToken: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Environment setup
+#         uses: defenseunicorns/uds-common/.github/actions/setup@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0
+#         with:
+#           registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
+#           registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
+#           ghToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Tofu
-        uses: opentofu/setup-opentofu@12f4debbf681675350b6cd1f0ff8ecfbda62027b # v1.0.4
-        with:
-          tofu_version: 1.8.1
-          tofu_wrapper: false
+#       - name: Setup Tofu
+#         uses: opentofu/setup-opentofu@12f4debbf681675350b6cd1f0ff8ecfbda62027b # v1.0.4
+#         with:
+#           tofu_version: 1.8.1
+#           tofu_wrapper: false
 
-      - name: Apply IAC
-        run: uds run -f tasks/iac.yaml apply-iac --no-progress
-        timeout-minutes: 20
+#       - name: Apply IAC
+#         run: uds run -f tasks/iac.yaml apply-iac --no-progress
+#         timeout-minutes: 20
 
       # - name: IRSA Setup
       #   run: |
@@ -103,8 +103,8 @@ jobs:
       #   with:
       #     suffix: ${{ matrix.type }}-${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}
 
-      - name: Destroy IAC
-        if: always()
-        run: uds run -f tasks/iac.yaml destroy-iac --no-progress
-        timeout-minutes: 10
-        continue-on-error: true
+      # - name: Destroy IAC
+      #   if: always()
+      #   run: uds run -f tasks/iac.yaml destroy-iac --no-progress
+      #   timeout-minutes: 10
+      #   continue-on-error: true
