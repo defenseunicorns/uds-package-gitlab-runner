@@ -32,7 +32,7 @@ test('podman fails', async () => {
     const expectedJobLogOutputs: string[] = []
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 1000000);
+}, 90000);
 
 
 async function executeTest(sourceRepoName: string, expectedJobLogOutputs: string[], expectedStatus: string) {
