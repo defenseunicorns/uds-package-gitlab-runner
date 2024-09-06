@@ -22,7 +22,7 @@ test('podman succeeds', async () => {
     const expectedJobLogOutputs: string[] = ['STEP 1/2: FROM scratch', 'STEP 2/2: ADD test.txt /', 'COMMIT']
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 1000000);
+}, 90000);
 
 
 test('podman fails', async () => {
