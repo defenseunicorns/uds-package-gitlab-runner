@@ -74,5 +74,5 @@ spec:
     - port:
         number: 443
       tls:
-        mode: DISABLE # initiates HTTP when accessing zarf-docker-registry.zarf.svc.cluster.local
+        mode: DISABLE # initiates HTTP when accessing gitlab-runner-registry.gitlab-runner.svc.cluster.local
 {{- end }}
