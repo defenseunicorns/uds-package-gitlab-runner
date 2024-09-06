@@ -48,7 +48,7 @@ In order to enable this there are two potential paths:
 
 - Only works in smaller environments, and likely only makes sense on-prem
 
-4. Create a custom [shell executor](https://docs.gitlab.com/runner/executors/shell.html) wrapper that handles autoscaling.
+4. Create a [custom executor](https://docs.gitlab.com/runner/executors/custom.html) wrapper that handles autoscaling.
 
 **Pros:**
 
@@ -64,4 +64,4 @@ We decided to implement the **instance executor and fleeting plugins** to solve 
 
 ## Consequences
 
-Runner start times could be compromised with this solution and this does not support on-prem environments. For the runner start times we can explore the docker autoscaler though we will lose OS access and will need to work through / around that.  On-prem environments can fallback to the existing k8s runners and in the future we may look to explore VirtualBox runners as a third option.
+Runner start times could be compromised with this solution and this does not support on-prem environments. For the runner start times we can explore the docker autoscaler though we will lose OS access and will need to work through / around that.  On-prem environments can fallback to the existing k8s runners and in the future we may look to explore VirtualBox or custom runners as a third option.
