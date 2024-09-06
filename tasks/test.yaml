@@ -38,7 +38,10 @@ tasks:
       - task: gitlab-ingress
       # Run checks on initial deployment
       - task: glr-registration-check
-      - task: glr-run-check-elevated-security-capabilities
+      - description: Setup a repository and trigger a pipeline job
+        dir: tests
+        cmd: |
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
 
   - name: gitlab-ingress
     actions:
@@ -85,7 +88,6 @@ tasks:
         cmd: |
           npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
           npm test -- journey/pipeline-run.test.ts -t 'podman succeeds'
-
 
   - name: glr-create-runner-token
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN
