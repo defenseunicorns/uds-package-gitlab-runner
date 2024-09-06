@@ -91,20 +91,6 @@ resource "tls_private_key" "jumpbox_tls_key" {
   rsa_bits  = 4096
 }
 
-resource "aws_secretsmanager_secret" "jumpbox_private_key" {
-  name        = "${var.name}-private-key"
-  description = "Private key for the jumpbox instance"
-
-  tags = {
-    Name = "${var.name}-jumpbox-private-key"
-  }
-}
-
-resource "aws_secretsmanager_secret_version" "jumpbox_private_key_version" {
-  secret_id     = aws_secretsmanager_secret.jumpbox_private_key.id
-  secret_string = tls_private_key.jumpbox_tls_key.private_key_pem
-}
-
 resource "aws_key_pair" "jumpbox_key_pair" {
   key_name   = "${var.name}-jumpbox-ssh-key"
   public_key = tls_private_key.jumpbox_tls_key.public_key_openssh
