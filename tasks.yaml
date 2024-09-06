@@ -88,13 +88,6 @@ tasks:
           path: bundle/fleeting
       - task: setup:k3d-test-cluster
       - task: dependencies:deploy
-      - cmd: |
-          tofu output -raw jumpbox_private_key > ~/.ssh/id_rsa_jump
-          chmod 600 ~/.ssh/id_rsa_jump
-          nohup ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_jump \
-            -R 8080:localhost:443 "ubuntu@$(tofu output -raw jumpbox_public_ip)" \
-            'sudo socat TCP-LISTEN:443,reuseaddr,keepalive,nodelay,fork TCP:localhost:8080' &
-        dir: .github/test-infra/asg-iac
       - task: deploy:test-bundle
         with:
           path: bundle/fleeting
