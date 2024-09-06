@@ -13,7 +13,7 @@ test('hello kitteh succeeds', async () => {
     const expectedJobLogOutputs: string[] = ['Hello Kitteh']
 
     await executeTest(sourceRepoName, expectedJobLogOutputs, expectedStatus)
-}, 1000000);
+}, 90000);
 
 
 test('podman succeeds', async () => {
