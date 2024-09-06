@@ -85,14 +85,6 @@ jobs:
 
       - name: Test Fleeting Bundle
         run: |
-          pushd .github/test-infra/asg-iac
-          tofu output -raw jumpbox_private_key > ~/.ssh/id_rsa_jump
-          chmod 600 ~/.ssh/id_rsa_jump
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_jump \
-            -R 8080:localhost:443 "ubuntu@$(tofu output -raw jumpbox_public_ip)" \
-            'sudo socat TCP-LISTEN:443,reuseaddr,keepalive,nodelay,fork TCP:localhost:8080' &
-          popd
-
           UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(cd .github/test-infra/asg-iac && tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
         timeout-minutes: 25
         env:
