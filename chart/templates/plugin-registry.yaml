@@ -1,0 +1,78 @@
+{{- if eq .Values.executor "instance" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plugin-registry
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: plugin-registry
+spec:
+  selector:
+    matchLabels:
+      app: plugin-registry
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: plugin-registry
+        release: {{ .Release.Name }}
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      containers:
+        - name: docker-registry
+          image: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
+          imagePullPolicy: IfNotPresent
+          command:
+          - /bin/registry
+          - serve
+          - /etc/docker/registry/config.yml
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitlab-runner-registry
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: plugin-registry
+  ports:
+  - name: https-443
+    port: 443
+    targetPort: 5000
+  - name: http-80
+    port: 80
+    targetPort: 5000
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: gitlab-runner-registry-destination
+  namespace: {{ .Release.Namespace }}
+spec:
+  host: gitlab-runner-registry.gitlab-runner.svc.cluster.local
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        number: 443
+      tls:
+        mode: DISABLE # initiates HTTP when accessing gitlab-runner-registry.gitlab-runner.svc.cluster.local
+{{- end }}

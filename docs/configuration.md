@@ -58,3 +58,31 @@ To enable `SETUID` and `SETGID` capabilities in the build containers, set the `E
 ### Change the Runner Service Account
 
 By default the chart will create a service account named `gitlab-runner`.  You can change the name of this service account by by overriding the `serviceAccountName` value in the `uds-gitlab-runner-config` chart along with the `rbac.generatedServiceAccountName` value in the `gitlab-runner` chart.
+
+### Change the Runner Executor
+
+This package supports both the Kubernetes executor and the instance fleeting executor for running CI jobs.  The Kubernetes executor is default, but to swap to the fleeting executor change the following:
+
+#### `uds-gitlab-runner-config` chart:
+
+- `executor` - set this to `instance` to flip the executor to use fleeting instances
+
+#### `gitlab-runner` chart:
+
+- `runners.executor` - set this to `instance` as well to flip the executor to use fleeting instances
+- `preEntrypointScript` - set this to `gitlab-runner fleeting install` (or if you are already using this value add that line)
+- `runners.fleeting.pluginConfig` - set this for your chosen plugin to configure it for the correct autoscaler (i.e. `name: "my-linux-asg"` for the aws plugin)
+- `runners.fleeting.connectorConfig` - set this for your chosen plugin to be able to connect to instances (i.e. `username: "ubuntu"` for the aws plugin)
+- `runners.fleeting.policy` - set the policy for how the fleeting runners are managed (i.e. 
+      `idle_count: 1`)
+- `serviceAccount.annotations.irsa/role-arn` - if you are connecting through IRSA this must be set to the role ARN with access to the autoscaling group.
+- `extraEnv` - set any extra environment variables that may be needed (i.e. `AWS_REGION: us-gov-west-1` for the aws plugin)
+
+> [!TIP]
+> You can see an example of this configuration for AWS in a bundle under [`bundle/fleeting/uds-bundle.yaml`](./bundle/fleeting/uds-bundle.yaml) in this repository.  Associated terraform (used for testing this repo) can be found under [`.github/test-infra/asg-iac`](./.github/test-infra/asg-iac) to set things up with an ASG configured through IRSA.
+
+> [!NOTE]
+> To learn more about configuring instance runners see: https://docs.gitlab.com/runner/executors/instance.html  The `runners.fleeting` config values are YAML objects that are templated to their toml equivalents within the Helm chart.
+
+> [!NOTE]
+> This package defaults to AWS for fleeting runners but can use other fleeting runner types by overriding the `fleeting.repository` and `fleeting.tag` values in the `gitlab-runner` chart to another plugin included in that package version. The documentation for each fleeting type can be found in their repositories for [`aws`](https://gitlab.com/gitlab-org/fleeting/plugins/aws#fleeting-plugin-aws), [`azure`](https://gitlab.com/gitlab-org/fleeting/plugins/azure#fleeting-plugin-azure), and [`googlecloud`](https://gitlab.com/gitlab-org/fleeting/plugins/googlecloud#fleeting-plugin-for-google-cloud-platform-gcp).  You can see which versions are included in the package by looking at the Dockerfile under [`plugins/Dockerfile`](./plugins/Dockerfile).

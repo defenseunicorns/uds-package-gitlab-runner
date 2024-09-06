@@ -23,6 +23,7 @@ spec:
         port: 443
         description: "UDS Tenant Gateway Services"
 
+    {{- if eq .Values.executor "kubernetes" }}
       - direction: Egress
         podLabels:
           app: gitlab-runner
@@ -34,6 +35,16 @@ spec:
         remoteNamespace: {{ .Values.sandboxNamespace }}
         remoteSelector:
           uds/network-access-gitlab: "true"
+    {{- end }}
+
+    {{- if eq .Values.executor "instance" }}
+      - direction: Ingress
+        remoteGenerated: IntraNamespace
+      - direction: Egress
+        podLabels:
+          app: gitlab-runner
+        remoteGenerated: Anywhere
+    {{- end }}
 
       # Custom rules for unanticipated scenarios
     {{- range .Values.custom }}

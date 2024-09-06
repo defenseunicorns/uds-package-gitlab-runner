@@ -20,7 +20,12 @@ components:
         version: "0.68.1"
         valuesFiles:
           - ../values/common-values.yaml
+    images:
+      - ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
     actions:
+      onCreate:
+        before:
+          - cmd: docker buildx build --load ../plugins -t ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest --platform linux/###ZARF_PKG_ARCH###
       onDeploy:
         before:
           - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
