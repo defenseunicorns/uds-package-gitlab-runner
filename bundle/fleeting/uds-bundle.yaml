@@ -7,6 +7,7 @@ metadata:
   # x-release-please-end
 
 packages:
+  # This sets up the pod identity webhook for testing with IRSA in this repository
   - name: pod-identity-webhook
     repository: ghcr.io/defenseunicorns/packages/uds/pod-identity-webhook
     ref: 0.3.1-upstream
@@ -31,6 +32,8 @@ packages:
               value: instance
             - path: runners.fleeting.connectorConfig.username
               value: ubuntu
+            - path: runners.fleeting.policy.idle_count
+              value: 1
             - path: extraEnv
               value:
                 AWS_REGION: us-gov-west-1

@@ -33,9 +33,6 @@ components:
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v17.2.1"
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v17.2.1"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.4"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/aws:1.0.0"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/azure:0.3.0"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/googlecloud:1.0.0"
 
   - name: gitlab-runner
     required: true
@@ -52,6 +49,3 @@ components:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.2.1" # renovate: extractVersion=^alpine-(?<version>.*)$
       - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.2.1"
       - "library/alpine:3.20.2"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/aws:1.0.0"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/azure:0.3.0"
-      - "registry.gitlab.com/gitlab-org/fleeting/plugins/googlecloud:1.0.0"
