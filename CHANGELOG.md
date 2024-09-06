@@ -1,5 +1,17 @@
 # Changelog
 
+## [17.2.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.0...v17.2.1-uds.1) (2024-09-06)
+
+
+### Features
+
+* support autoscaling runners ([#117](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/117)) ([38482bd](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/38482bdd7f5e6c32297764c0d2914025eda17332))
+
+
+### Miscellaneous
+
+* fix ADR wording ([#120](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/120)) ([22385f7](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/22385f79fdc36982bd730609ee03dc86b231154a))
+
 ## [17.2.1-uds.0](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.1.0-uds.1...v17.2.1-uds.0) (2024-08-30)
 
 
