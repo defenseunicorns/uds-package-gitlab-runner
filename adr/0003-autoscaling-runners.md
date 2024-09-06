@@ -14,7 +14,7 @@ We need to choose a method to better support runners in larger environments with
 2. Building complex docker containers without needing to swap out tooling (i.e. to buildah)
 3. Interacting with lower level concepts like shared memory or other kernel capabilities that are not exposed to the container in K8s
 
-In order to enable this there are two potential paths:
+In order to enable this there are four potential paths:
 
 1. Make use of the [instance executor and fleeting plugins](https://docs.gitlab.com/runner/executors/instance.html).
 
