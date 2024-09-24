@@ -1,5 +1,13 @@
 # Changelog
 
+## [17.2.1-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.1...v17.2.1-uds.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* downgrade destination rule to support older clusters ([#123](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/123)) ([2128611](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/2128611e5ab1fc06467da0c9ce671718098ce24b))
+* nightly test failure post release ([#121](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/121)) ([ed8d425](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/ed8d425f0d65d58d9e47051d750295b240ed72cd))
+
 ## [17.2.1-uds.1](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.0...v17.2.1-uds.1) (2024-09-06)
 
 
