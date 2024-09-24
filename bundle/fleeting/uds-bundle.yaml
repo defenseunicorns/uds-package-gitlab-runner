@@ -3,7 +3,7 @@ metadata:
   name: gitlab-test-fleeting
   description: A UDS bundle for deploying Gitlab Runner on a development cluster (req's GitLab to be installed first)
   # x-release-please-start-version
-  version: 17.2.1-uds.1
+  version: 17.2.1-uds.2
   # x-release-please-end
 
 packages:
@@ -15,7 +15,7 @@ packages:
   - name: gitlab-runner
     path: ../../
     # x-release-please-start-version
-    ref: 17.2.1-uds.1
+    ref: 17.2.1-uds.2
     # x-release-please-end
     overrides:
       gitlab-runner:
