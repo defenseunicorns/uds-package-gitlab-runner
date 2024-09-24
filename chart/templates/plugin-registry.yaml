@@ -62,7 +62,7 @@ spec:
     port: 80
     targetPort: 5000
 ---
-apiVersion: networking.istio.io/v1
+apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: gitlab-runner-registry-destination
