@@ -31,6 +31,18 @@ tasks:
       - task: glr-restore-registration-secret
       - task: glr-run-check-elevated-security-capabilities
 
+  - name: fleeting
+    description: Run the tests for a fleeting deployment of GLR
+    actions:
+      # Ensure all GL services are up
+      - task: gitlab-ingress
+      # Run checks on initial deployment
+      - task: glr-registration-check
+      - description: Setup a repository and trigger a pipeline job
+        dir: tests
+        cmd: |
+          npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
+
   - name: gitlab-ingress
     actions:
       # `/-/readiness` endpoint returns 503 if any checks fail.
@@ -76,7 +88,6 @@ tasks:
         cmd: |
           npm test -- journey/pipeline-run.test.ts -t 'hello kitteh succeeds'
           npm test -- journey/pipeline-run.test.ts -t 'podman succeeds'
-
 
   - name: glr-create-runner-token
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN

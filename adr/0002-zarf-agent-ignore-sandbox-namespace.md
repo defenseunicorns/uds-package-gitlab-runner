@@ -1,4 +1,4 @@
-# 1. Record architecture decisions
+# 2. Zarf Agent Ignore Sandbox
 
 Date: 2024-02-27
 

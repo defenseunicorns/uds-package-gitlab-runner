@@ -22,3 +22,6 @@ overlay-values-*
 
 # Dependency files
 uds-config-gitlab.yaml
+
+# CI files
+irsa

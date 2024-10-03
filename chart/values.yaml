@@ -1,3 +1,6 @@
+# which executor to use, either 'kubernetes' or 'instance'
+executor: "kubernetes"
+
 sandboxNamespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
 
 # whether to have the Zarf Agent ignore the sandbox namespace
