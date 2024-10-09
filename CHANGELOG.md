@@ -1,5 +1,12 @@
 # Changelog
 
+## [17.2.1-uds.3](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.2...v17.2.1-uds.3) (2024-10-09)
+
+
+### Bug Fixes
+
+* validate package with full resource name ([#124](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/124)) ([114c8f8](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/114c8f89f0244ef3193fc38d7d3dc845860de944))
+
 ## [17.2.1-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.1...v17.2.1-uds.2) (2024-09-24)
 
 
