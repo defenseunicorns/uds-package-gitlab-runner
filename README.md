@@ -1,6 +1,6 @@
 # 🏭 UDS Gitlab Runner Package
 
-[<img alt="Made for UDS" src="https://raw.githubusercontent.com/defenseunicorns/uds-common/main/docs/made-for-uds.svg" height="20px"/>](https://github.com/defenseunicorns/uds-core)
+[<img alt="Made for UDS" src="https://raw.githubusercontent.com/defenseunicorns/uds-common/refs/heads/main/docs/assets/made-for-uds.svg" height="20px"/>](https://github.com/defenseunicorns/uds-core)
 [![Latest Release](https://img.shields.io/github/v/release/defenseunicorns/uds-package-gitlab-runner)](https://github.com/defenseunicorns/uds-package-gitlab-runner/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/defenseunicorns/uds-package-gitlab-runner/tag-and-release.yaml)](https://github.com/defenseunicorns/uds-package-gitlab-runner/actions/workflows/tag-and-release.yaml)
 [![Nightly Test Status](https://img.shields.io/github/actions/workflow/status/defenseunicorns/uds-package-gitlab-runner/nightly-testing.yaml?label=nightly)](https://github.com/defenseunicorns/uds-package-gitlab-runner/actions/workflows/nightly-testing.yaml)
