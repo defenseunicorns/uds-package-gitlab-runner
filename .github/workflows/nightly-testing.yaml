@@ -40,7 +40,7 @@ jobs:
           echo "TF_VAR_name=uds-package-gitlab-runner-ci-${FLAVOR}-${SHA:0:7}" >> $GITHUB_ENV
 
       - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4
@@ -51,7 +51,7 @@ jobs:
           role-duration-seconds: 21600
 
       - name: Environment setup
-        uses: defenseunicorns/uds-common/.github/actions/setup@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0
+        uses: defenseunicorns/uds-common/.github/actions/setup@97fc3a00fb2b9897316131cd210026691e160d5a # v1.1.1
         with:
           registry1Username: ${{ secrets.IRON_BANK_ROBOT_USERNAME }}
           registry1Password: ${{ secrets.IRON_BANK_ROBOT_PASSWORD }}
@@ -96,11 +96,11 @@ jobs:
 
       - name: Debug Output
         if: always()
-        uses: defenseunicorns/uds-common/.github/actions/debug-output@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0
+        uses: defenseunicorns/uds-common/.github/actions/debug-output@97fc3a00fb2b9897316131cd210026691e160d5a # v1.1.1
 
       - name: Save logs
         if: always()
-        uses: defenseunicorns/uds-common/.github/actions/save-logs@e7c0643d3f9d74ce49c7386b48964d2be646d726 # v0.10.0
+        uses: defenseunicorns/uds-common/.github/actions/save-logs@97fc3a00fb2b9897316131cd210026691e160d5a # v1.1.1
         with:
           suffix: ${{ matrix.type }}-${{ matrix.flavor }}-${{ github.run_id }}-${{ github.run_attempt }}
 
