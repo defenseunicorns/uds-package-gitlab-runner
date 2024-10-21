@@ -41,7 +41,7 @@ components:
 
               ./zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
                 curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
-                --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
+                --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=${ZARF_VAR_RUNNER_TAGS}" \
                 | ./zarf tools yq .token
             mute: true
             setVariables:
