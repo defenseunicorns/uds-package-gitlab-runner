@@ -54,7 +54,7 @@ tasks:
       - task: create-dev-package
       - task: setup:k3d-test-cluster
         with:
-          version: 0.27.3
+          version: 0.24.1
       - task: dependencies:deploy
       - task: create-deploy-test-bundle
       - task: compliance:validate
@@ -65,7 +65,7 @@ tasks:
       - task: upgrade:create-latest-tag-bundle
       - task: setup:k3d-test-cluster
         with:
-          version: 0.27.3
+          version: 0.24.1
       - task: dependencies:deploy
       - task: deploy:test-bundle
       - task: setup:create-doug-user
@@ -82,7 +82,7 @@ tasks:
       - task: create:package
       - task: setup:k3d-test-cluster
         with:
-          version: 0.27.3
+          version: 0.24.1
         if: ${{ or (ne .variables.FLAVOR "upstream") (ne .variables.ARCH "arm64") }}
       - task: dependencies:deploy
         if: ${{ or (ne .variables.FLAVOR "upstream") (ne .variables.ARCH "arm64") }}
