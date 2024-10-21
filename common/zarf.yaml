@@ -56,14 +56,6 @@ components:
                 name: gitlab-runner
                 namespace: gitlab-runner
                 condition: "'{.status.phase}'=Ready"
-          - description: Validate GitLab Runner Sandbox Package
-            maxTotalSeconds: 300
-            wait:
-              cluster:
-                kind: packages.uds.dev
-                name: gitlab-runner-sandbox
-                namespace: ${ZARF_VAR_RUNNER_SANDBOX_NAMESPACE}
-                condition: "'{.status.phase}'=Ready"
           - description: Gitlab Runner to be Healthy
             wait:
               cluster:
