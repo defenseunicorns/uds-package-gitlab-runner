@@ -4,7 +4,7 @@ metadata:
   name: gitlab-runner
   description: "UDS GitLab Runner Package"
   # x-release-please-start-version
-  version: "17.2.1-uds.2"
+  version: "17.2.1-uds.3"
   # x-release-please-end
 
 variables:

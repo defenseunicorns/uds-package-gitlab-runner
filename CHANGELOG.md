@@ -1,5 +1,18 @@
 # Changelog
 
+## [17.2.1-uds.3](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.2...v17.2.1-uds.3) (2024-10-21)
+
+
+### Features
+
+* make runner tags configurable and properly template sandbox package (https://github.com/defenseunicorns/uds-package-gitlab-runner/pull/127) ([c6cfc8d](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/c6cfc8dd24d6bb5b7df3cbe7de04dcdf629d3968))
+
+
+### Bug Fixes
+
+* made for uds badge url ([#126](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/126)) ([382ca96](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/382ca96c1b2c1a52df5fe87bde3e9103eb8c774d))
+* validate package with full resource name ([#124](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/124)) ([114c8f8](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/114c8f89f0244ef3193fc38d7d3dc845860de944))
+
 ## [17.2.1-uds.2](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.1...v17.2.1-uds.2) (2024-09-24)
 
 
