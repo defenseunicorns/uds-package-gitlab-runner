@@ -1,3 +1,4 @@
+{{- if eq .Values.executor "kubernetes" }}
 apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
@@ -37,3 +38,4 @@ spec:
         {{- end }}
         description: {{ .description }}
     {{- end }}
+{{- end }}

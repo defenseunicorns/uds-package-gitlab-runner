@@ -41,7 +41,7 @@ components:
 
               ./zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
                 curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
-                --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
+                --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=${ZARF_VAR_RUNNER_TAGS}" \
                 | ./zarf tools yq .token
             mute: true
             setVariables:
@@ -55,14 +55,6 @@ components:
                 kind: packages.uds.dev
                 name: gitlab-runner
                 namespace: gitlab-runner
-                condition: "'{.status.phase}'=Ready"
-          - description: Validate GitLab Runner Sandbox Package
-            maxTotalSeconds: 300
-            wait:
-              cluster:
-                kind: packages.uds.dev
-                name: gitlab-runner-sandbox
-                namespace: ${ZARF_VAR_RUNNER_SANDBOX_NAMESPACE}
                 condition: "'{.status.phase}'=Ready"
           - description: Gitlab Runner to be Healthy
             wait:
