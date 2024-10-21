@@ -1,3 +1,6 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 output "asg_arn" {
   value = aws_autoscaling_group.uds-package-gitlab-runner.arn
   description = "The ARN of the Autoscaling Group"

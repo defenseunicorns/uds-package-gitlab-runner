@@ -16,7 +16,7 @@
       "extra-files": [
         "bundle/fleeting/uds-bundle.yaml",
         "bundle/uds-bundle.yaml",
-        "tasks/publish.yaml",
+        "tasks.yaml",
         "zarf.yaml"
       ]
     }
