@@ -12,6 +12,7 @@ spec:
     - description: Allow more capabilities for container build tools (Buildah) to be able to map user and group IDs
       policies:
         - RestrictCapabilities
+        - DisallowPrivileged
       title: "gitlab-runner-container-building"
       matcher:
         namespace: gitlab-runner-sandbox
