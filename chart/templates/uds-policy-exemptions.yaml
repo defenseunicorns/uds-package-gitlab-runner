@@ -1,3 +1,6 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 {{- if .Values.enableSecurityCapabilities }}
 apiVersion: uds.dev/v1alpha1
 kind: Exemption
@@ -9,6 +12,7 @@ spec:
     - description: Allow more capabilities for container build tools (Buildah) to be able to map user and group IDs
       policies:
         - RestrictCapabilities
+        - DisallowPrivileged
       title: "gitlab-runner-container-building"
       matcher:
         namespace: gitlab-runner-sandbox

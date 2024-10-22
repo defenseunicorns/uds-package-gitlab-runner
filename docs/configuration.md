@@ -51,9 +51,15 @@ By default the sandbox is excluded from being mutated by Zarf to allow external 
 
 ### Allow SETUID and SETGID security capabilities
 
-By default, runner build containers do not have `SETUID` and `SETGID` capabilities enabled. This limits the functionality of tools like [Buildah](https://buildah.io/) and [Podman](https://podman.io/). Podman cannot build container images, and Buildah can only create very basic images. Any actions that involve user or group modifications (e.g., using useradd or groupadd in a Dockerfile) will fail.
+By default, runner build containers do not have `SETUID` and `SETGID` capabilities enabled and do not allow privilege escalation to the root user (`0`) inside the container. This limits the functionality of tools like [Buildah](https://buildah.io/) and [Podman](https://podman.io/). Podman cannot build container images at all, and Buildah can only create very basic images. Any actions that involve user or group modifications (e.g., using `useradd` or `groupadd` in a Dockerfile) will fail.
 
-To enable `SETUID` and `SETGID` capabilities in the build containers, set the `ENABLE_SECURITY_CAPABILITIES` Zarf variable to `true`. This will [apply a security policy for the build container](https://docs.gitlab.com/runner/executors/kubernetes/#set-a-security-policy-for-the-container) to add SETUID and SETGID capabilities. Additionally, it will [add a UDS Policy Exemption](https://uds.defenseunicorns.com/core/configuration/uds-configure-policy-exemptions/) to permit these capabilities.
+To enable `SETUID` and `SETGID` capabilities in the build containers, including allowing user `0`, set the `ENABLE_SECURITY_CAPABILITIES` Zarf variable to `true`. This will [apply a security policy for the build container](https://docs.gitlab.com/runner/executors/kubernetes/#set-a-security-policy-for-the-container) to add SETUID and SETGID capabilities and will `allowPrivilegeEscalation` inside the container. Additionally, it will [add a UDS Policy Exemption](https://uds.defenseunicorns.com/core/configuration/uds-configure-policy-exemptions/) to permit these capabilities.
+
+> [!CAUTION]
+> This setting is defaulted to `false` for a reason and **must** be used with care.  It is recommended to have your GitLab runner deployed to an entirely separate cluster to reduce the potential attack surface to other workloads that this may open up.  Remember, GitLab runners by their very nature allow for untrusted code execution.  It may also be worth considering [fleeting runners](#change-the-runner-executor) instead if you have access to a supported cloud account - ephemeral virtual machines are a much more flexible and secure runner mechanism.
+
+> [!NOTE]
+> The specific Exemptions from UDS Operator Pepr policies are outlined in the [exemptions template](../chart/templates/uds-policy-exemptions.yaml) of the config chart.  You can find more about these policies in the [UDS Operator Pepr policies documentation](https://github.com/defenseunicorns/uds-core/blob/main/docs/reference/configuration/pepr-policies.md).
 
 ### Change the Runner Service Account
 

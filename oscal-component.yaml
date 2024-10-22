@@ -1,10 +1,13 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 component-definition:
   uuid: 506892e9-a751-40e1-ae41-488beacbda5b
   metadata:
     title: UDS Package GitLab Runner
     last-modified: "2023-11-27T17:09:15Z"
     version: "20231127"
-    oscal-version: 1.1.1
+    oscal-version: 1.1.2
     parties:
       - uuid: f3cf70f8-ba44-4e55-9ea3-389ef24847d3
         type: organization

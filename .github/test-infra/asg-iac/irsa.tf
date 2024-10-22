@@ -1,3 +1,6 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 data "aws_s3_bucket" "oidc_bucket" {
   bucket = "govcloud-ci-oidc"
 }
