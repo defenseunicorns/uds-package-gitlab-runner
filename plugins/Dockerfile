@@ -1,3 +1,6 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 # Stage 1: Pull the image and prepare the registry layout
 FROM alpine:3.20 AS prep
 

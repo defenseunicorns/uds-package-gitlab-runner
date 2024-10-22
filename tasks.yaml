@@ -1,89 +1,101 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 includes:
   - dependencies: ./tasks/dependencies.yaml
   - test: ./tasks/test.yaml
-  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/create.yaml
-  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/lint.yaml
-  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/pull.yaml
-  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/deploy.yaml
-  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/setup.yaml
+  - create: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/create.yaml
+  - publish: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/publish.yaml
+  - lint: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/lint.yaml
+  - pull: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/pull.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/deploy.yaml
+  - setup: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/setup.yaml
+  - actions: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/actions.yaml
+  - badge: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/badge.yaml
+  - upgrade: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/upgrade.yaml
+  - compliance: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/compliance.yaml
 
 tasks:
   - name: default
-    description: Setup k3d cluster, deploy Gitlab, deploy Gitlab runner
+    description: Create K3D Cluster with UDS-Core (Dev) and GitLab Runner
     actions:
-      - task: create-glr-test-bundle
+      - task: create-dev-package
       - task: setup:k3d-test-cluster
       - task: dependencies:deploy
-      - task: deploy:test-bundle
+      - task: create-deploy-test-bundle
 
-  - name: create-glr-package
-    description: Create the Gitlab runner package
+  - name: create-dev-package
+    description: Create the GitLab Runner package
     actions:
       - task: create:package
         with:
           options: "--skip-sbom"
 
-  - name: create-glr-test-bundle
-    description: Create a local UDS Gitlab Runner bundle
-    inputs:
-      path:
-        description: Path relative to the repositories root where the uds-bundle.yaml lives
-        default: bundle
+  - name: create-deploy-test-bundle
+    description: Test and validate cluster is deployed with GitLab Runner
     actions:
-      - task: create-glr-package
       - task: create:test-bundle
-        with:
-          path: ${{ .inputs.path }}
-
-  - name: create-glr-latest-release-bundle
-    description: Create UDS Gitlab Runner bundle based on the latest release
-    actions:
-      - task: pull:latest-package-release
-        with:
-          spoof_release: "true"
-      - task: create:test-bundle
+      - task: deploy:test-bundle
+      - task: setup:create-doug-user
+      - task: test:all
 
   - name: dev
-    description: Deploy gitlab-runner on existing cluster with existing gitlab
+    description: Create and deploy the bundle against an existing cluster
     actions:
-      - task: create-glr-test-bundle
+      - task: create-dev-package
+      - task: create:test-bundle
       - task: deploy:test-bundle
 
-  - name: doug-admin
-    description: Promote Doug to admin (requires running setup:create-doug-user and logging into gitlab ui first)
-    actions:
-      - cmd: |
-         ./uds zarf tools kubectl exec -n gitlab deployment/gitlab-toolbox -- gitlab-rails runner -e production "user = User.find_by(username: 'doug'); user.admin = true; user.save!"
+# CI will execute the following (via uds-common/.github/workflows/callable-[test|publish].yaml) so they need to be here with these names
 
-# CI will execute the following (via uds-common/.github/actions/test) so they need to be here with these names
-
-  - name: test-package
-    description: Test the health of Gitlab and Gitlab Runner deployments
+  - name: test-install
+    description: Test the health of a GitLab Runner deployment
     actions:
-      - task: create-glr-test-bundle
+      - task: create-dev-package
       - task: setup:k3d-test-cluster
       - task: dependencies:deploy
-      - task: deploy:test-bundle
-      - task: test:all
+      - task: create-deploy-test-bundle
+      - task: compliance:validate
 
   - name: test-upgrade
     description: Test an upgrade from the latest released package to the current branch
     actions:
-      - task: create-glr-latest-release-bundle
+      - task: upgrade:create-latest-tag-bundle
       - task: setup:k3d-test-cluster
       - task: dependencies:deploy
       - task: deploy:test-bundle
-      - task: setup:create-doug-user
-      - task: create-glr-test-bundle
-      - task: deploy:test-bundle
-      - task: test:all
+      - task: compliance:validate
+      - task: create-dev-package
+      - task: create-deploy-test-bundle
+      - task: compliance:validate
+      - task: compliance:evaluate
+
+  - name: publish-release
+    description: Build and publish the packages
+    actions:
+      - task: actions:determine-arch
+      - task: create:package
+      - task: setup:k3d-test-cluster
+        if: ${{ or (ne .variables.FLAVOR "upstream") (ne .variables.ARCH "arm64") }}
+      - task: dependencies:deploy
+        if: ${{ or (ne .variables.FLAVOR "upstream") (ne .variables.ARCH "arm64") }}
+      - task: create-deploy-test-bundle
+        if: ${{ or (ne .variables.FLAVOR "upstream") (ne .variables.ARCH "arm64") }}
+      - description: Publish the package
+        task: publish:package
+        with:
+          # x-release-please-start-version
+          version: "17.2.1-uds.3"
+          # x-release-please-end
+
 
 # Nightly CI will execute the following (via .github/workflows/nightly-testing) so they need to be here with these names
 
   - name: test-fleeting
     description: Test the health of Gitlab and Gitlab Runner deployments
     actions:
-      - task: create-glr-test-bundle
+      - task: create-dev-package
+      - task: create:test-bundle
         with:
           path: bundle/fleeting
       - task: setup:k3d-test-cluster

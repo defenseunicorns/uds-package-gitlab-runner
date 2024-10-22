@@ -1,10 +1,13 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.1.1"
+  version = "5.14.0"
 
   name                 = "${var.name}-vpc"
   cidr                 = "10.0.0.0/16"

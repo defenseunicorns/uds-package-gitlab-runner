@@ -1,10 +1,16 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
 includes:
-  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v0.10.0/tasks/remove.yaml
+  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/remove.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.1.2/tasks/deploy.yaml
 
 tasks:
   - name: all
     description: Run all of the GitLab Runner Tests
     actions:
+      - dir: tests
+        cmd: npm ci
       # Ensure all GL services are up
       - task: gitlab-ingress
       # Run checks on initial deployment
@@ -15,17 +21,9 @@ tasks:
       - task: glr-backup-registration-secret
       # Remove the GLR package and redeploy with the manual token
       - task: remove:test-bundle
-      - description: Get the current UDS Bundle name
-        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.name
-        setVariables:
-          - name: BUNDLE_NAME
-      - description: Get the current UDS Bundle version
-        cmd: cat bundle/uds-bundle.yaml | ./uds zarf tools yq .metadata.version
-        setVariables:
-          - name: BUNDLE_VERSION
-      # TODO: (@WSTARR) Maru will complain about "cyclical" task imports if this imports the deploy task from uds-common.  This is a bug: https://github.com/defenseunicorns/maru-runner/issues/122
-      - description: Deploys the current GitLab runner package
-        cmd: UDS_CONFIG=bundle/uds-config.yaml ./uds deploy bundle/uds-bundle-${BUNDLE_NAME}-${UDS_ARCH}-${BUNDLE_VERSION}.tar.zst --confirm --no-progress --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN} --set ENABLE_SECURITY_CAPABILITIES=true
+      - task: deploy:test-bundle
+        with:
+          options: --set RUNNER_AUTH_TOKEN=${RUNNER_AUTH_TOKEN} --set ENABLE_SECURITY_CAPABILITIES=true
       # Check that the runner registered and restore the secret
       - task: glr-registration-check
       - task: glr-restore-registration-secret
@@ -34,6 +32,8 @@ tasks:
   - name: fleeting
     description: Run the tests for a fleeting deployment of GLR
     actions:
+      - dir: tests
+        cmd: npm ci
       # Ensure all GL services are up
       - task: gitlab-ingress
       # Run checks on initial deployment
@@ -53,7 +53,7 @@ tasks:
         cmd: |
           STATUS=$(curl -s -o /dev/null --write-out '%{http_code}' 'https://gitlab.uds.dev/-/readiness?all=1')
           echo "GitLab readiness status: ${STATUS}"
-          if [ $STATUS != "200" ]; then
+          if [ "$STATUS" != "200" ]; then
             sleep 10
             exit 1
           fi
@@ -93,10 +93,10 @@ tasks:
     description: Create a runner auth token and set the variable RUNNER_AUTH_TOKEN
     actions:
       - cmd: |
-          RUNNER_REGISTRATION_TOKEN=$(./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath={.data.runner-registration-token} | base64 -d)
+          RUNNER_REGISTRATION_TOKEN=$(./uds zarf tools kubectl get secret -n gitlab gitlab-gitlab-runner-secret -o jsonpath='{.data.runner-registration-token}' | base64 -d)
           WEBSERVICE_POD=$(./uds zarf tools kubectl get pod -n gitlab -l "app=webservice" -o json | ./uds zarf tools yq '[.items[] | select(.status.phase = "Running") | .metadata.name][0]')
 
-          ./uds zarf tools kubectl exec -n gitlab ${WEBSERVICE_POD} -- \
+          ./uds zarf tools kubectl exec -n gitlab "${WEBSERVICE_POD}" -- \
             curl -s --request POST "http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/api/v4/runners" \
             --form "token=${RUNNER_REGISTRATION_TOKEN}" --form "tag_list=uds" \
             | ./uds zarf tools yq .token
@@ -115,3 +115,9 @@ tasks:
     actions:
       - cmd: ./uds zarf tools kubectl get secret -n default gitlab-gitlab-runner-secret -o yaml | ./uds zarf tools yq 'del(.metadata.namespace,.metadata.resourceVersion,.metadata.uid) | .metadata.creationTimestamp=null' | ./uds zarf tools kubectl apply --namespace=gitlab -f -
       - cmd: ./uds zarf tools kubectl delete secret -n default gitlab-gitlab-runner-secret
+
+  - name: doug-admin
+    description: Promote Doug to admin (requires running setup:create-doug-user and logging into gitlab ui first)
+    actions:
+      - cmd: |
+         ./uds zarf tools kubectl exec -n gitlab deployment/gitlab-toolbox -- gitlab-rails runner -e production "user = User.find_by(username: 'doug'); user.admin = true; user.save!"
