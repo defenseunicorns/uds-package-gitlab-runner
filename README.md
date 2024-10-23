@@ -10,37 +10,11 @@ This package is designed for use as part of a [UDS Software Factory](https://git
 
 ## Pre-requisites
 
-Gitlab-Runner has one dependency, Gitlab.
-
-- Utilizing [uds-package-gitlab](https://github.com/defenseunicorns/uds-package-gitlab) is the quickest and easiest solution for meeting this dependency. 
-
-- If choosing not to use `uds-package-gitlab` be aware that the Gitlab-Runner needs to be connected properly to Gitlab for registering itself and running pipelines as expected. 
-
-## Flavors
-
- Flavor | Description | Example Creation |
-| ------ | ----------- | ---------------- |
-| upstream | Uses upstream images within the package. | `zarf package create . -f upstream` |
-| registry1 | Uses images from registry1.dso.mil within the package. | `zarf package create . -f registry1` |
+Gitlab-Runner has one dependency, Gitlab, and using [uds-package-gitlab](https://github.com/defenseunicorns/uds-package-gitlab) is the quickest and easiest solution for meeting this dependency.  You can learn more about configuring GitLab in various deployment scenarios in the [configuration documentation](./docs/configuration.md)
 
 ## Releases
 
 The released packages can be found in [ghcr](https://github.com/defenseunicorns/uds-package-gitlab-runner/pkgs/container/packages%2Fuds%2Fgitlab-runner).
-
-## General
-
-- `Upstream` flavor is the default
-  - To set a different flavor, use the following flag:
-    - `--set FLAVOR=registry1`
-
-- For proper registration of a Gitlab-Runner with a Gitlab instance, a secret is created in the `gitlab-runner` namespace called `gitlab-gitlab-runner-secret` which uses the `runner-registration-token` field from the `gitlab` namespace secret called `gitlab-gitlab-runner-secret` to register a runner with a returned [runner authentication token](https://docs.gitlab.com/ee/api/runners.html#create-an-instance-runner).
-
----
-
-## Deploying
-
-Utilizes [UDS-CLI task runners](https://github.com/defenseunicorns/uds-cli)
-- Which means `uds run --list` is available for cli descriptions.
 
 ## UDS Tasks (for local dev and CI)
 
@@ -54,4 +28,4 @@ Please see the [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Development
 
-When developing this package it is ideal to utilize the json schemas for UDS Bundles, Zarf Packages and Maru Tasks. This involves configuring your IDE to provide schema validation for the respective files used by each application. For guidance on how to set up this schema validation, please refer to the [guide](https://github.com/defenseunicorns/uds-common/blob/main/docs/development-ide-configuration.md) in uds-common.
+When developing this package it is ideal to utilize the json schemas for UDS Bundles, Zarf Packages and Maru Tasks. This involves configuring your IDE to provide schema validation for the respective files used by each application. For guidance on how to set up this schema validation, please refer to the [guide](https://github.com/defenseunicorns/uds-common/blob/main/docs/uds-packages/development/development-ide-configuration.md) in uds-common.

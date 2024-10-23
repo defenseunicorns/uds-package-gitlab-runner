@@ -1,0 +1,23 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
+image:
+  registry: cgr.dev
+  image: du-uds-defenseunicorns/gitlab-runner-fips
+  tag: "17.2.1"
+
+runners:
+  job:
+    registry: "###ZARF_REGISTRY###"
+    repository: du-uds-defenseunicorns/busybox-fips
+    # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/busybox-fips versioning=semver
+    tag: "1.37.0"
+  helper:
+    registry: "###ZARF_REGISTRY###"
+    repository: du-uds-defenseunicorns/gitlab-runner-helper-fips
+    # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips versioning=semver
+    tag: "17.2.1"
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65532
+      runAsGroup: 65532
