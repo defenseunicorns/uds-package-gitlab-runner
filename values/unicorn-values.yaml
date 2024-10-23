@@ -17,3 +17,7 @@ runners:
     repository: du-uds-defenseunicorns/gitlab-runner-helper-fips
     # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips versioning=semver
     tag: "17.2.1"
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65532
+      runAsGroup: 65532

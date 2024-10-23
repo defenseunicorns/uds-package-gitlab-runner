@@ -22,6 +22,11 @@ runners:
   protected: true
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
+  helper:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 0
   executor: kubernetes
 
   fleeting:
@@ -59,7 +64,7 @@ runners:
           idle_time = {{ .Values.runners.fleeting.policy.idle_time | quote }}
     {{- else }}
       [runners.kubernetes]
-        namespace = "{{ printf "%s" .Values.runners.job.namespace }}"
+        namespace = "{{ .Values.runners.job.namespace }}"
         helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
         image_pull_secrets = ["private-registry"]
@@ -76,9 +81,9 @@ runners:
           add = ["SETUID", "SETGID"]
       {{- end }}
       [runners.kubernetes.helper_container_security_context]
-        run_as_non_root = true
-        run_as_user = 1001
-        run_as_group = 0
+        run_as_non_root = {{ .Values.runners.helper.securityContext.runAsNonRoot }}
+        run_as_user = {{ .Values.runners.helper.securityContext.runAsUser }}
+        run_as_group = {{ .Values.runners.helper.securityContext.runAsGroup }}
     {{- end }}
 
 concurrent: 50
