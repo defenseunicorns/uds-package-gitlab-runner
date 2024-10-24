@@ -6,12 +6,12 @@ metadata:
   name: gitlab-test
   description: A UDS bundle for deploying Gitlab Runner on a development cluster (req's GitLab to be installed first)
   # x-release-please-start-version
-  version: 17.2.1-uds.3
+  version: 17.2.1-uds.4
   # x-release-please-end
 
 packages:
   - name: gitlab-runner
     path: ../
     # x-release-please-start-version
-    ref: 17.2.1-uds.3
+    ref: 17.2.1-uds.4
     # x-release-please-end
