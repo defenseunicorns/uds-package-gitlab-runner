@@ -12,6 +12,7 @@
 
 * add pull request permissions to commitlint ([#131](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/131)) ([3d792b4](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/3d792b40608dbcb1b97107544efc71fd0389d458))
 * **deps:** update gitlab runner support dependencies ([#114](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/114)) ([0184320](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/018432024606a63b497f564863825360b5b50dda))
+* fix arm64 'if's for release ([#133](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/133)) ([86fed4b](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/86fed4b5f6f233829f8cef68187d0913f309fc63))
 * fix release version of GLR ([#132](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/132)) ([e429743](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e4297439995e8435f4f91cd982915226884a79f5))
 
 ## [17.2.1-uds.3](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.2...v17.2.1-uds.3) (2024-10-21)
