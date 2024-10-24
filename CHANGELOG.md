@@ -1,5 +1,19 @@
 # Changelog
 
+## [17.2.1-uds.4](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.3...v17.2.1-uds.4) (2024-10-24)
+
+
+### Features
+
+* add a unicorn flavor ([#115](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/115)) ([cbb45fb](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/cbb45fb8be106db385048f74594937b082f558c8))
+
+
+### Miscellaneous
+
+* add pull request permissions to commitlint ([#131](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/131)) ([3d792b4](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/3d792b40608dbcb1b97107544efc71fd0389d458))
+* **deps:** update gitlab runner support dependencies ([#114](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/114)) ([0184320](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/018432024606a63b497f564863825360b5b50dda))
+* fix release version of GLR ([#132](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/132)) ([e429743](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e4297439995e8435f4f91cd982915226884a79f5))
+
 ## [17.2.1-uds.3](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.2...v17.2.1-uds.3) (2024-10-21)
 
 
