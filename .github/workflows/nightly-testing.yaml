@@ -97,7 +97,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_jump \
             -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
             -R 8080:localhost:443 "ubuntu@$(tofu output -raw jumpbox_public_ip)" \
-            'sudo socat TCP-LISTEN:443,reuseaddr,keepalive,nodelay,fork TCP:localhost:8080' > /tmp/debug-tunnel.log 2>&1 &
+            'sudo apt install socat -y && sudo socat TCP-LISTEN:443,reuseaddr,keepalive,nodelay,fork TCP:localhost:8080' > /tmp/debug-tunnel.log 2>&1 &
           popd || exit
 
           UDS_GITLAB_RUNNER_AUTOSCALING_ROLE_ARN=$(cd .github/test-infra/asg-iac && tofu output -raw asg_role_arn) uds run test-fleeting --set FLAVOR=${{ matrix.flavor }} --no-progress
