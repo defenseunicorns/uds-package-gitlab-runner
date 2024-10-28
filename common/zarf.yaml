@@ -31,9 +31,6 @@ components:
           - cmd: docker buildx build --load ../plugins -t ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest --platform linux/###ZARF_PKG_ARCH###
       onDeploy:
         before:
-          - cmd: ./zarf tools kubectl label secret -n gitlab-runner gitlab-gitlab-runner-secret app.kubernetes.io/managed-by=Helm || true
-          - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-name=uds-gitlab-runner-config || true
-          - cmd: ./zarf tools kubectl annotate secret -n gitlab-runner gitlab-gitlab-runner-secret meta.helm.sh/release-namespace=gitlab-runner || true
           - cmd: |
               test -n "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && echo "${ZARF_VAR_RUNNER_AUTH_TOKEN}" && exit 0 || true
 
@@ -53,16 +50,18 @@ components:
         after:
           - description: Validate GitLab Runner Package
             maxTotalSeconds: 300
-            wait:
-              cluster:
-                kind: packages.uds.dev
-                name: gitlab-runner
-                namespace: gitlab-runner
-                condition: "'{.status.phase}'=Ready"
+            cmd: |
+              if ./zarf tools kubectl get packages.uds.dev gitlab-runner -n gitlab-runner; then
+                 ./zarf tools wait-for packages.uds.dev gitlab-runner -n gitlab-runner '{.status.phase}'=Ready
+              fi
+          - description: Validate GitLab Runner Sandbox Package
+            maxTotalSeconds: 300
+            cmd: |
+              if ./zarf tools kubectl get packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE"; then
+                 ./zarf tools wait-for packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE" '{.status.phase}'=Ready
+              fi
           - description: Gitlab Runner to be Healthy
-            wait:
-              cluster:
-                kind: Deployment
-                name: gitlab-runner
-                namespace: gitlab-runner
-                condition: Available
+            cmd: |
+              if ./zarf tools kubectl get deployment gitlab-runner -n gitlab-runner; then
+                 ./zarf tools wait-for deployment gitlab-runner -n gitlab-runner Available
+              fi
