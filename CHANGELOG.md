@@ -1,5 +1,18 @@
 # Changelog
 
+## [17.2.1-uds.5](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.4...v17.2.1-uds.5) (2024-10-28)
+
+
+### Bug Fixes
+
+* add conditionals to the GLR waits to handle namespace overrides ([#139](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/139)) ([05a6c8f](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/05a6c8f39351d539139b6cf342d52a60839f6536))
+* install socat in jumpbox ([#137](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/137)) ([db6fc7c](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/db6fc7cf2aad56b93494348d4a16d73668434886))
+
+
+### Miscellaneous
+
+* add fail-fast true back to test matrix ([#135](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/135)) ([9833003](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/9833003eed168010c4617d0b7ccc18d325903a7f))
+
 ## [17.2.1-uds.4](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.3...v17.2.1-uds.4) (2024-10-24)
 
 
