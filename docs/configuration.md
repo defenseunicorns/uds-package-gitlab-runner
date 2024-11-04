@@ -85,7 +85,7 @@ This package supports both the Kubernetes executor and the instance fleeting exe
 - `extraEnv` - set any extra environment variables that may be needed (i.e. `AWS_REGION: us-gov-west-1` for the aws plugin)
 
 > [!TIP]
-> You can see an example of this configuration for AWS in a bundle under [`bundle/fleeting/uds-bundle.yaml`](./bundle/fleeting/uds-bundle.yaml) in this repository.  Associated terraform (used for testing this repo) can be found under [`.github/test-infra/asg-iac`](./.github/test-infra/asg-iac) to set things up with an ASG configured through IRSA.
+> You can see an example of this configuration for AWS in a bundle under [`bundle/fleeting/uds-bundle.yaml`](../bundle/fleeting/uds-bundle.yaml) in this repository.  Associated terraform (used for testing this repo) can be found under [`.github/test-infra/asg-iac`](../.github/test-infra/asg-iac) to set things up with an ASG configured through IRSA.
 
 > [!NOTE]
 > To learn more about configuring instance runners see: https://docs.gitlab.com/runner/executors/instance.html  The `runners.fleeting` config values are YAML objects that are templated to their toml equivalents within the Helm chart.
