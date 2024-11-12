@@ -7,6 +7,7 @@
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-gitlab-runner/badge)](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-gitlab-runner)
 
 This package is designed for use as part of a [UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory) bundle deployed on [UDS Core](https://github.com/defenseunicorns/uds-core)
+> GitLab Runner is a software application that executes CI/CD jobs defined in a GitLab project, automating tasks like building, testing, and deploying code. It can run jobs on various platforms, including local machines, virtual machines, and cloud-based environments.
 
 ## Pre-requisites
 
