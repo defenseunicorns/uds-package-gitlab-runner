@@ -8,6 +8,8 @@
 
 This package is designed for use as part of a [UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory) bundle deployed on [UDS Core](https://github.com/defenseunicorns/uds-core)
 
+> GitLab Runner is a software application that executes CI/CD jobs defined in a GitLab project, automating tasks like building, testing, and deploying code. It can run jobs on various platforms, including local machines, virtual machines, and cloud-based environments.
+
 ## Pre-requisites
 
 Gitlab-Runner has one dependency, Gitlab, and using [uds-package-gitlab](https://github.com/defenseunicorns/uds-package-gitlab) is the quickest and easiest solution for meeting this dependency.  You can learn more about configuring GitLab in various deployment scenarios in the [configuration documentation](./docs/configuration.md)
