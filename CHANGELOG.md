@@ -1,5 +1,15 @@
 # Changelog
 
+## [17.2.1-uds.6](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.5...v17.2.1-uds.6) (2024-11-13)
+
+
+### Miscellaneous
+
+* **deps:** update azure fleeting plugin to 1.0.0 ([#144](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/144)) ([cfed154](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/cfed154ad1bf0e76f6fed28356e1f445b6d90a68))
+* **deps:** update gitlab runner support dependencies ([#138](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/138)) ([d984405](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/d98440511eb9d86026ee26be972c2831b4eda980))
+* fix documentation links ([#142](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/142)) ([d932fc1](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/d932fc1688e8b51a4dc6c913b25b4db4d5542b34))
+* update README.md ([#143](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/143)) ([c514b3c](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/c514b3caa2106c7907fc95cace401d2700a63c9d))
+
 ## [17.2.1-uds.5](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.4...v17.2.1-uds.5) (2024-10-28)
 
 
