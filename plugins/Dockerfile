@@ -13,7 +13,7 @@ RUN apk add --no-cache skopeo tar gzip coreutils
 RUN mkdir -p /tmp/image /registry_data/docker/registry/v2/blobs/sha256
 
 ARG REGISTRY="registry.gitlab.com"
-ARG PLUGINS="gitlab-org/fleeting/plugins/aws:1.0.0 gitlab-org/fleeting/plugins/azure:0.3.0 gitlab-org/fleeting/plugins/googlecloud:1.0.0"
+ARG PLUGINS="gitlab-org/fleeting/plugins/aws:1.0.0 gitlab-org/fleeting/plugins/azure:1.0.0 gitlab-org/fleeting/plugins/googlecloud:1.0.0"
 
 # Move the layer blobs into the blobs directory
 RUN <<EXE
