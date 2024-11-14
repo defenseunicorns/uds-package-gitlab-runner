@@ -2,5 +2,5 @@
 * @defenseunicorns/swf
 
 # Additional privileged files
-/CODEOWNERS @jeff-mccoy @daveworth
+/CODEOWNERS @oates
 /LICENS* @jeff-mccoy @austenbryan
