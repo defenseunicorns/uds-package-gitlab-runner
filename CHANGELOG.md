@@ -1,5 +1,14 @@
 # Changelog
 
+## [17.2.1-uds.7](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.6...v17.2.1-uds.7) (2024-12-06)
+
+
+### Miscellaneous
+
+* **deps:** update gitlab runner support dependencies ([#141](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/141)) ([68cf78d](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/68cf78df7186663abcc0e71f698339b50bba711b))
+* improve helm value flexibility ([#149](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/149)) ([c1c9e46](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/c1c9e46ba24d7af1a54127edee43381241c2fea5))
+* update base pattern match in CODEOWNERS file ([#145](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/145)) ([3e4ed1e](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/3e4ed1e182e2d451976f4209fe93d1a0f1b6d2cf))
+
 ## [17.2.1-uds.6](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.5...v17.2.1-uds.6) (2024-11-13)
 
 
