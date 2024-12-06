@@ -25,7 +25,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: docker-registry
-          image: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
+          image: {{ .Values.pluginRegistryImage }}
           imagePullPolicy: IfNotPresent
           command:
           - /bin/registry
