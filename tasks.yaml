@@ -85,7 +85,7 @@ tasks:
         task: publish:package
         with:
           # x-release-please-start-version
-          version: "17.2.1-uds.6"
+          version: "17.2.1-uds.7"
           # x-release-please-end
 
 
