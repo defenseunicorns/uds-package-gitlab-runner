@@ -18,8 +18,6 @@ enableSecurityCapabilities: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
 
 runners:
   secret: gitlab-gitlab-runner-secret
-  runUntagged: true
-  protected: true
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
   helper:
