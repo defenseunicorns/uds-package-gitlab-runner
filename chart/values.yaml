@@ -17,11 +17,11 @@ enableSecurityCapabilities: false
 
 pluginRegistryImage: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
 
-custom: []
+additionalNetworkAllow: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
   #   description: "Egress from to external GitLab"
-customSandbox: []
+additionalNetworkAllowSandbox: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
   #   description: "Egress from to external GitLab"
