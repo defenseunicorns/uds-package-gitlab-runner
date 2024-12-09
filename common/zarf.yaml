@@ -60,8 +60,4 @@ components:
               if ./zarf tools kubectl get packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE"; then
                  ./zarf tools wait-for packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE" '{.status.phase}'=Ready
               fi
-          - description: Gitlab Runner to be Healthy
-            cmd: |
-              if ./zarf tools kubectl get deployment gitlab-runner -n gitlab-runner; then
-                 ./zarf tools wait-for deployment gitlab-runner -n gitlab-runner Available
-              fi
+
