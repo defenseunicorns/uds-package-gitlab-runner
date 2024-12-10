@@ -14,7 +14,7 @@ rbac:
 serviceAccount:
   name: gitlab-runner
 
-enableSecurityCapabilities: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
+kubernetesSandbox.enableSecurityExceptions: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
 
 runners:
   secret: gitlab-gitlab-runner-secret
