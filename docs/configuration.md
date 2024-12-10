@@ -19,7 +19,7 @@ sysctl -w user.max_user_namespaces=30110
 Network policies are controlled via the `uds-gitlab-runner-config` chart in accordance with the [common patterns for networking within UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory/blob/main/docs/networking.md).  Because GitLab runners do not interact with external resources like databases or object storage they only implement `custom` networking for both the runner namespace and the runner sandbox namespace:
 
 - `additionalNetworkAllow`: sets custom network policies for the GitLab runner namespace - note this is _not_ where jobs run and is the orchestration side of the GitLab runner deployment.
-- `additionalNetworkAllowSandbox`: sets custom network policies for the GitLab runner sandbox namespace - this is where jobs will execute and can be used to allow them to access external services.
+- `kubernetesSandbox.additionalNetworkAllow`: sets custom network policies for the GitLab runner sandbox namespace - this is where jobs will execute and can be used to allow them to access external services.
 
 ## Runner
 

@@ -6,7 +6,7 @@ apiVersion: uds.dev/v1alpha1
 kind: Package
 metadata:
   name: gitlab-runner-sandbox
-  namespace: {{ .Values.sandboxNamespace }}
+  namespace: {{ .Values.kubernetesSandbox.namespace }}
 spec:
   network:
     allow:

@@ -5,8 +5,8 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.sandboxNamespace }}
-  namespace: {{ .Values.sandboxNamespace }}
+  name: {{ .Values.kubernetesSandbox.namespace }}
+  namespace: {{ .Values.kubernetesSandbox.namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccountName }}
@@ -14,5 +14,5 @@ subjects:
 roleRef:
   apiGroup: ""
   kind: ClusterRole
-  name: {{ .Values.sandboxNamespace }}
+  name: {{ .Values.kubernetesSandbox.namespace }}
 {{- end }}

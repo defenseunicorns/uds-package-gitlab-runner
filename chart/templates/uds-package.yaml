@@ -35,7 +35,7 @@ spec:
       - direction: Egress
         selector:
           app: gitlab-runner
-        remoteNamespace: {{ .Values.sandboxNamespace }}
+        remoteNamespace: {{ .Values.kubernetesSandbox.namespace }}
         remoteSelector:
           uds/network-access-gitlab: "true"
     {{- end }}
