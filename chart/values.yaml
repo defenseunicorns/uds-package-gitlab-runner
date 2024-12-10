@@ -21,7 +21,17 @@ additionalNetworkAllow: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
   #   description: "Egress from to external GitLab"
-additionalNetworkAllowSandbox: []
-  # - direction: Egress
-  #   remoteGenerated: Anywhere
-  #   description: "Egress from to external GitLab"
+
+kubernetesSandbox:
+  namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
+
+  # whether to have the Zarf Agent ignore the sandbox namespace
+  zarfIgnore: true
+
+  # whether to allow securityContext capabilities like SET_UID/SET_GID in the sandbox: https://github.com/defenseunicorns/uds-package-gitlab-runner/blob/main/docs/configuration.md#allow-setuid-and-setgid-security-capabilities
+  enableSecurityExceptions: false
+
+  additionalNetworkAllow: []
+    # - direction: Egress
+    #   remoteGenerated: Anywhere
+    #   description: "Egress from to external GitLab"

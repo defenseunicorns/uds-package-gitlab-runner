@@ -27,7 +27,7 @@ spec:
         port: 443
         description: "UDS Tenant Gateway Services"
 
-    {{- range .Values.customSandbox }}
+    {{- range .Values.kubernetesSandbox.additionalNetworkAllow }}
       - direction: {{ .direction }}
         selector:
           {{ .selector | toYaml | nindent 10 }}
