@@ -60,4 +60,3 @@ components:
               if ./zarf tools kubectl get packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE"; then
                  ./zarf tools wait-for packages.uds.dev gitlab-runner-sandbox -n "$ZARF_VAR_RUNNER_SANDBOX_NAMESPACE" '{.status.phase}'=Ready
               fi
-
