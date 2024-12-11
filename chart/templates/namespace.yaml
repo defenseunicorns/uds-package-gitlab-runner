@@ -5,8 +5,8 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ .Values.sandboxNamespace }}
-  {{- if .Values.sandboxZarfIgnore }}
+  name: {{ .Values.kubernetesSandbox.namespace }}
+  {{- if .Values.kubernetesSandbox.zarfIgnore }}
   labels:
     zarf.dev/agent: ignore
   {{- end }}

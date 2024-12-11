@@ -1,4 +1,5 @@
 # Copyright 2024 Defense Unicorns
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
-enableSecurityCapabilities: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
+kubernetesSandbox:
+  enableSecurityExceptions: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###

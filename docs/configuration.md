@@ -18,8 +18,8 @@ sysctl -w user.max_user_namespaces=30110
 
 Network policies are controlled via the `uds-gitlab-runner-config` chart in accordance with the [common patterns for networking within UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory/blob/main/docs/networking.md).  Because GitLab runners do not interact with external resources like databases or object storage they only implement `custom` networking for both the runner namespace and the runner sandbox namespace:
 
-- `custom`: sets custom network policies for the GitLab runner namespace - note this is _not_ where jobs run and is the orchestration side of the GitLab runner deployment.
-- `customSandbox`: sets custom network policies for the GitLab runner sandbox namespace - this is where jobs will execute and can be used to allow them to access external services.
+- `additionalNetworkAllow`: sets custom network policies for the GitLab runner namespace - note this is _not_ where jobs run and is the orchestration side of the GitLab runner deployment.
+- `kubernetesSandbox.additionalNetworkAllow`: sets custom network policies for the GitLab runner sandbox namespace - this is where jobs will execute and can be used to allow them to access external services.
 
 ## Runner
 
@@ -41,7 +41,7 @@ If you would like to setup a different kind of runner or add your own informatio
 
 ### Allow Zarf Mutation in Sandbox
 
-By default the sandbox is excluded from being mutated by Zarf to allow external images to be used in Zarf.  If you would like to change this behavior you can do so by overriding the `sandboxZarfIgnore` value in the `uds-gitlab-runner-config` chart to `false` along with overriding the `runners.job.registry` and `runners.helper.registry` to the registry corresponding to your package flavor (`docker.io` and `registry1.dso.mil` respectively for `upstream` and `registry1.dso.mil` and `registry1.dso.mil` respectively for `registry1`)
+By default the sandbox is excluded from being mutated by Zarf to allow external images to be used in Zarf.  If you would like to change this behavior you can do so by overriding the `kubernetesSandbox.zarfIgnore` value in the `uds-gitlab-runner-config` chart to `false` along with overriding the `runners.job.registry` and `runners.helper.registry` to the registry corresponding to your package flavor (`docker.io` and `registry1.dso.mil` respectively for `upstream` and `registry1.dso.mil` and `registry1.dso.mil` respectively for `registry1`)
 
 > [!NOTE]
 > By default images pulled from private registries will need to follow the [GitLab documentation](https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#access-an-image-from-a-private-container-registry) in order to setup login information to pull from private registries.  The `kubelet` will also need network access to these registries.  If you change the configuration for Zarf to mutate images, instead, it will add this information on its own, _but_ you will _only_ be able to pull images that are available in the Zarf registry.

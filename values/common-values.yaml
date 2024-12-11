@@ -14,7 +14,8 @@ rbac:
 serviceAccount:
   name: gitlab-runner
 
-enableSecurityCapabilities: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
+kubernetesSandbox:
+  enableSecurityExceptions: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
 
 runners:
   secret: gitlab-gitlab-runner-secret
@@ -73,7 +74,7 @@ runners:
         "uds/user" = "${UDS_RUN_AS_USER}"
         "uds/group" = "${UDS_RUN_AS_GROUP}"
         "uds/network-access-gitlab" = "true"
-      {{- if .Values.enableSecurityCapabilities }}
+      {{- if .Values.kubernetesSandbox.enableSecurityExceptions }}
       [runners.kubernetes.build_container_security_context]
         [runners.kubernetes.build_container_security_context.capabilities]
           add = ["SETUID", "SETGID"]

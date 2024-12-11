@@ -5,7 +5,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.sandboxNamespace }}
+  name: {{ .Values.kubernetesSandbox.namespace }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps", "pods", "pods/attach", "secrets", "services"]
