@@ -1,5 +1,26 @@
 # Changelog
 
+## [17.2.1-uds.7](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.6...v17.2.1-uds.7) (2024-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* update custom network properties key ([#150](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/150))
+
+### Bug Fixes
+
+* default the registry URL to use the correct namespace by default ([#152](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/152)) ([a8a0e38](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/a8a0e386d865da32dbbb719377a96fff403efc02))
+
+
+### Miscellaneous
+
+* clean up deployment wait ([#151](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/151)) ([e58d831](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/e58d83184b725a3346e25b18df96387cf2229640))
+* **deps:** update gitlab runner support dependencies ([#141](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/141)) ([68cf78d](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/68cf78df7186663abcc0e71f698339b50bba711b))
+* improve helm value flexibility ([#149](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/149)) ([c1c9e46](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/c1c9e46ba24d7af1a54127edee43381241c2fea5))
+* update base pattern match in CODEOWNERS file ([#145](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/145)) ([3e4ed1e](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/3e4ed1e182e2d451976f4209fe93d1a0f1b6d2cf))
+* update custom network properties key ([#150](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/150)) ([6ada204](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/6ada204255796e15a5a81acb6cb9105d684a0c19))
+* update test to ensure git config setup ([#153](https://github.com/defenseunicorns/uds-package-gitlab-runner/issues/153)) ([f50ee45](https://github.com/defenseunicorns/uds-package-gitlab-runner/commit/f50ee45b3a7655183df23dbb93ca04b76ebece43))
+
 ## [17.2.1-uds.6](https://github.com/defenseunicorns/uds-package-gitlab-runner/compare/v17.2.1-uds.5...v17.2.1-uds.6) (2024-11-13)
 
 
