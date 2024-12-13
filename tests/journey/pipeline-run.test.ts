@@ -78,7 +78,9 @@ async function createNewGitlabProject(sourceDir: string, tokenName: string, gitL
     await deleteDirectory(path.join(sourceDir, '.git')) 
     execSync('git init', { cwd: sourceDir })
     execSync('git add . ', { cwd: sourceDir })
-    execSync('git config commit.gpgsign false', { cwd: sourceDir }) // need this so that gpg signing doesn't attempt to happen locally when running tests
+    execSync('git config user.email "doug@uds.dev"', { cwd: sourceDir }) // need this to ensure GitHub runners always have a configured user
+    execSync('git config user.name "doug"', { cwd: sourceDir })          // need this to ensure GitHub runners always have a configured user
+    execSync('git config commit.gpgsign false', { cwd: sourceDir })      // need this so that gpg signing doesn't attempt to happen locally when running tests
     execSync('git commit -m "Initial commit" ', { cwd: sourceDir })
     execSync(`git remote add origin https://root:${tokenName}@gitlab${domainSuffix}/root/${gitLabProjectName}.git`, { cwd: sourceDir })
     execSync('git push -u origin --all', { cwd: sourceDir })
