@@ -83,10 +83,6 @@ tasks:
         if: ${{ ne .variables.ARCH "arm64" }}
       - description: Publish the package
         task: publish:package
-        with:
-          # x-release-please-start-version
-          version: "17.2.1-uds.6"
-          # x-release-please-end
 
 
 # Nightly CI will execute the following (via .github/workflows/nightly-testing) so they need to be here with these names
