@@ -16,7 +16,7 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: du-uds-defenseunicorns/gitlab-runner-helper-fips
     # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips versioning=semver
-    tag: "17.2.1"
+    tag: "17.7.0"
     securityContext:
       runAsNonRoot: true
       runAsUser: 65532
