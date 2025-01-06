@@ -4,7 +4,8 @@
 image:
   registry: cgr.dev
   image: du-uds-defenseunicorns/gitlab-runner-fips
-  tag: "17.2.1"
+  # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips versioning=semver
+  tag: "17.7.0"
 
 runners:
   job:
