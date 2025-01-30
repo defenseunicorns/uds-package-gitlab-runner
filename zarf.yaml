@@ -34,8 +34,8 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v17.5.4"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v17.3.1"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v17.8.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v17.8.0"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.5"
 
   - name: gitlab-runner
@@ -51,8 +51,8 @@ components:
           - values/upstream-values.yaml
     images:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.7.0" # renovate: extractVersion=^alpine-v(?<version>\\d+\\.\\d+\\.\\d+)$
-      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.7.0"
-      - "library/alpine:3.21.0"
+      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.8.3"
+      - "library/alpine:3.21.2"
 
   - name: gitlab-runner
     required: true
@@ -66,6 +66,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.7.0"
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.7.0"
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.8.0"
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.8.0"
       - "cgr.dev/du-uds-defenseunicorns/busybox-fips:1.37.0"

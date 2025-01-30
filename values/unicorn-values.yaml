@@ -5,7 +5,7 @@ image:
   registry: cgr.dev
   image: du-uds-defenseunicorns/gitlab-runner-fips
   # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips versioning=semver
-  tag: "17.7.0"
+  tag: "17.8.0"
 
 runners:
   job:
@@ -17,7 +17,7 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: du-uds-defenseunicorns/gitlab-runner-helper-fips
     # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips versioning=semver
-    tag: "17.7.0"
+    tag: "17.8.0"
     securityContext:
       runAsNonRoot: true
       runAsUser: 65532
