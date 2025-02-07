@@ -7,6 +7,11 @@ metadata:
   name: gitlab-runner
   description: "UDS GitLab Runner Package"
   version: "dev"
+  annotations:
+    title: GitLab Runner
+    description: GitLab Runner is a powerful, open-source automation tool that executes jobs in your CI/CD pipelines. It works seamlessly with GitLab, allowing you to build, test, and deploy your code efficiently. GitLab Runner supports multiple programming languages, can run on various operating systems, and offers flexible deployment options including Docker containers and Kubernetes clusters. With its scalable architecture and robust feature set, GitLab Runner helps development teams streamline their workflows and deliver high-quality software faster.
+    categories: Software Dev,IT Management,Kubernetes (K8s),Productivity
+    keywords: CI/CD Pipelines,Automation,GitLab Integration,Docker Containers,Kubernetes Clusters,Scalable Architecture,Multi-Language Support,Workflow Streamlining,Continuous Integration,Continuous Deployment
 
 variables:
   - name: DOMAIN
