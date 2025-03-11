@@ -5,9 +5,14 @@
 kind: ZarfPackageConfig
 metadata:
   name: gitlab-runner
-  description: "UDS GitLab Runner Package"
+  description: "GitLab Runner is a powerful, open-source automation tool that executes jobs in your CI/CD pipelines. It works seamlessly with GitLab, allowing you to build, test, and deploy your code efficiently. GitLab Runner supports multiple programming languages, can run on various operating systems, and offers flexible deployment options including Docker containers and Kubernetes clusters. With its scalable architecture and robust feature set, GitLab Runner helps development teams streamline their workflows and deliver high-quality software faster."
   version: "dev"
-
+  annotations:
+    dev.uds.title: GitLab Runner
+    dev.uds.tagline: Open Source CI/CD Job Execution Tool
+    dev.uds.categories: Software Dev, IT Management, Kubernetes (K8s), Productivity
+    dev.uds.keywords: CI/CD Pipelines, Automation, GitLab Integration, Docker Containers, Kubernetes Clusters, Scalable Architecture, Multi-Language Support, Workflow Streamlining, Continuous Integration, Continuous Deployment
+    dev.uds.icon: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgeG1sbnM6dj0iaHR0cHM6Ly92ZWN0YS5pby9uYW5vIj48ZyBjbGlwLXBhdGg9InVybCgjQikiPjxwYXRoIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjAxIiBkPSJNMTIsMTJoNTZ2NTZIMTJ6Ii8+PGcgY2xpcC1wYXRoPSJ1cmwoI0MpIj48bWFzayBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIxMiIgeT0iMTIiIHdpZHRoPSI1NiIgaGVpZ2h0PSI1NiI+PHBhdGggZD0iTTY4LDEySDEyVjY4SDY4VjEyWiIgZmlsbD0iI2ZmZiIvPjwvbWFzaz48ZyBtYXNrPSJ1cmwoI0EpIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMiwxMmMxMS4yNjkuMDMyLDE3LjM4MyAyLjAwNSwyOCA3LDEwLjYxNy00Ljk5NSwxNi43MzEtNi45NjgsMjgtN3Y0OWMtMTEuMzE1LjExNS0xNy40MjMsMi4xNC0yOCw3LTEwLjU3Ny00Ljg2LTE2LjY4NS02Ljg4NS0yOC03VjEyem00NS41MjYsMjQuMjIzbC4wNDkuMTMxYy43MTEsMS44Ni43OTggMy45MDEuMjQ4LDUuODE1cy0xLjcwNywzLjU5OC0zLjI5Nyw0Ljc5N2wtLjAyMS4wMTYtNy41NzksNS42NzItMy43MzMsMi44MjEtMi4yNjgsMS43MTVhMS41MywxLjUzIDAsMCAxLTEuODQ4LDBsLTIuMjY4LTEuNzE1LTMuNzMzLTIuODIxLTcuNTI1LTUuNjQtLjA0Mi0uMDMzLS4wMTktLjAxNGE5LjE4LDkuMTggMCwwIDEtMy4yOTctNC43OThjLS41NDktMS45MTUtLjQ2Mi0zLjk1Ni4yNS01LjgxNmwuMDUxLS4xMjgsNC45NDQtMTIuOTA2Yy4xLS4yNTMuMjc4LS40NjguNTA5LS42MTRhMS4zMSwxLjMxIDAsMCAxLDEuOTYzLjc0N2wzLjMzOSwxMC4yMjJoMTMuNTIybDMuMzM5LTEwLjIyMmExLjMxLDEuMzEgMCwwIDEsLjc5My0uODY4LDEuMyAxLjMsMCAwLDEgLjU5OS0uMDc4Yy4yMDMuMDIxLjM5OC4wODkuNTcuMTk5LjIzLjE0NS40MDguMzYuNTA5LjYxNGw0Ljk0NywxMi45MDN6IiBmaWxsPSIjZmM2ZDI2Ii8+PC9nPjwvZz48L2c+PGRlZnM+PGNsaXBQYXRoPjxwYXRoIGZpbGw9IiNmZmYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLDEyKSIgZD0iTTAsMGg1NnY1NkgweiIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoPjxwYXRoIGZpbGw9IiNmZmYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLDEyKSIgZD0iTTAsMGg1NnY1NkgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==
 variables:
   - name: DOMAIN
     default: "uds.dev"
@@ -20,7 +25,6 @@ variables:
     default: uds
   - name: ENABLE_SECURITY_CAPABILITIES
     default: "false"
-
 components:
   - name: gitlab-runner
     required: true
@@ -37,7 +41,6 @@ components:
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v17.8.0"
       - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v17.8.0"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.5"
-
   - name: gitlab-runner
     required: true
     description: "Deploy gitlab-runner"
@@ -53,7 +56,6 @@ components:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.7.0" # renovate: extractVersion=^alpine-v(?<version>\\d+\\.\\d+\\.\\d+)$
       - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.9.1"
       - "library/alpine:3.21.3"
-
   - name: gitlab-runner
     required: true
     description: "Deploy gitlab-runner"
