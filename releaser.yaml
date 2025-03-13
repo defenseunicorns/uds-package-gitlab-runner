@@ -10,4 +10,4 @@ flavors:
     version: 17.8.0-uds.2
   - name: unicorn
     # renovate-uds: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips
-    version: 17.9.0-uds.1
+    version: 17.9.1-uds.0
