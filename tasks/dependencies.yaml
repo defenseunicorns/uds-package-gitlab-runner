@@ -6,7 +6,7 @@ tasks:
     description: Deploy the latest version of the dev GitLab bundle to use with the runner in tests
     actions:
       - description: Get latest tag version from OCI
-        cmd: curl -s https://api.github.com/repos/defenseunicorns/uds-package-gitlab/releases | uds zarf tools yq -p=json -r '.[].tag_name' | grep upstream | tail -n1
+        cmd: curl -s https://api.github.com/repos/defenseunicorns/uds-package-gitlab/releases | uds zarf tools yq -p=json -r '.[].tag_name' | grep upstream | head -n1
         setVariables:
           - name: LATEST_VERSION
       - description: Download the latest dev UDS config for GitLab
