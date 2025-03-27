@@ -8,7 +8,7 @@ image:
   registry: "registry1.dso.mil"
   image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
   # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner versioning=semver
-  tag: v17.8.0
+  tag: v17.9.0
 
 runners:
   job:
@@ -20,4 +20,4 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
-    tag: v17.8.0
+    tag: v17.9.0
