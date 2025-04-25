@@ -30,7 +30,7 @@ spec:
           command:
           - /bin/registry
           - serve
-          - /etc/distribution/config.yaml
+          - /etc/distribution/config.yml
           ports:
             - containerPort: 5000
           livenessProbe:
