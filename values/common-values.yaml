@@ -48,7 +48,7 @@ runners:
       url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
       cache_dir = "/tmp/gitlab-runner/cache"
-      
+   
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
           image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
