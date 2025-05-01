@@ -50,9 +50,9 @@ runners:
       cache_dir = "/tmp/gitlab-runner/cache"
       
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
-    [runners.docker]
-        image = "{{ .Values.runners.docker.image }}"
-    {{- else }}
+      [runners.docker]
+          image = "busybox:latest"
+    {{- end }}
 
     {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
       [runners.autoscaler]
