@@ -51,7 +51,7 @@ runners:
       
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
-          image = "busybox:latest"
+          image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
     {{- end }}
 
     {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
