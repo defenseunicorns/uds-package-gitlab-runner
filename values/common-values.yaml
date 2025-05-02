@@ -51,6 +51,7 @@ runners:
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
           image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
+          volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
     {{- end }}
     {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
       [runners.autoscaler]
