@@ -67,7 +67,7 @@ By default the chart will create a service account named `gitlab-runner`.  You c
 
 ### Change the Runner Executor
 
-This package supports Kubernetes executor, docker-autoscaler, and instance fleeting executor for running CI jobs.  The Kubernetes executor is default, but to swap to the fleeting executor change the following:
+This package supports Kubernetes executor, docker-autoscaler, and instance fleeting executor for running CI jobs.  The Kubernetes executor is default, but to swap to either of the fleeting-based executors change the following:
 
 #### `uds-gitlab-runner-config` chart:
 
