@@ -40,7 +40,7 @@ spec:
           uds/network-access-gitlab: "true"
     {{- end }}
 
-    {{- if eq .Values.executor "instance" }}
+    {{- if has .Values.executor (list "instance" "docker-autoscaler") }}
       - direction: Ingress
         remoteGenerated: IntraNamespace
       - direction: Egress
