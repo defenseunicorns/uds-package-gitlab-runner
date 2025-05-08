@@ -9,6 +9,8 @@ metadata:
   namespace: {{ .Values.kubernetesSandbox.namespace }}
 spec:
   network:
+    serviceMesh:
+      mode: ambient
     allow:
       - direction: Ingress
         selector: 

@@ -15,6 +15,8 @@ spec:
       description: Metrics
 
   network:
+    serviceMesh:
+      mode: ambient
     allow:
       # Allow access to other UDS services (i.e. gitlab.<domain>, sonarqube.<domain>) from the runner
       - direction: Egress
