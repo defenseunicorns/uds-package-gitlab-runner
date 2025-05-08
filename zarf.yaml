@@ -58,7 +58,7 @@ components:
           - values/upstream-values.yaml
     images:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.7.0" # renovate: extractVersion=^alpine-v(?<version>\\d+\\.\\d+\\.\\d+)$
-      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.10.1"
+      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.11.1"
       - "library/alpine:3.21.3"
 
   - name: gitlab-runner
@@ -73,6 +73,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.10.1"
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.10.1"
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.11.1"
+      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.11.1"
       - "cgr.dev/du-uds-defenseunicorns/busybox-fips:1.37.0"
