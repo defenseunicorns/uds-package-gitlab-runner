@@ -1,7 +1,7 @@
 # Copyright 2024 Defense Unicorns
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
-{{- if has .Values.executor (list "instance" "docker-autoscaler") }}
+{{- if and (has .Values.executor (list "instance" "docker-autoscaler")) .Values.pluginRegistry.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,8 +25,8 @@ spec:
         runAsUser: 1000
       containers:
         - name: docker-registry
-          image: {{ .Values.pluginRegistryImage }}
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.pluginRegistry.image }}
+          imagePullPolicy: {{ .Values.pluginRegistry.imagePullPolicy }}
           command:
           - /bin/registry
           - serve

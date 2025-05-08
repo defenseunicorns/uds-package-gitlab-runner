@@ -8,7 +8,10 @@ serviceAccountName: "gitlab-runner"
 
 runnerAuthToken: "###ZARF_VAR_RUNNER_AUTH_TOKEN###"
 
-pluginRegistryImage: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
+pluginRegistry:
+  enabled: true
+  image: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
+  imagePullPolicy: Always
 
 additionalNetworkAllow: []
   # - direction: Egress
