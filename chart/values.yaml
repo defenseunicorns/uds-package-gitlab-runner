@@ -13,8 +13,7 @@ pluginRegistry:
   image: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
   imagePullPolicy: Always
 
-additionalNetworkAllow:
-  []
+additionalNetworkAllow: []
   # - direction: Egress
   #   remoteGenerated: Anywhere
   #   description: "Egress from to external GitLab"
@@ -28,8 +27,7 @@ kubernetesSandbox:
   # whether to allow securityContext capabilities like SET_UID/SET_GID in the sandbox: https://github.com/defenseunicorns/uds-package-gitlab-runner/blob/main/docs/configuration.md#allow-setuid-and-setgid-security-capabilities
   enableSecurityExceptions: false
 
-  additionalNetworkAllow:
-    []
+  additionalNetworkAllow: []
     # - direction: Egress
     #   remoteGenerated: Anywhere
     #   description: "Egress from to external GitLab"
