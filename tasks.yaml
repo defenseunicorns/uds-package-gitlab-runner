@@ -34,7 +34,6 @@ tasks:
   - name: create-deploy-test-bundle
     description: Test and validate cluster is deployed with GitLab Runner
     actions:
-      - task: create-dev-package
       - task: create:test-bundle
       - task: deploy:test-bundle
       - task: setup:create-doug-user
