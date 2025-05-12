@@ -14,9 +14,9 @@ pluginRegistry:
   imagePullPolicy: Always
 
 additionalNetworkAllow: []
-  # - direction: Egress
-  #   remoteGenerated: Anywhere
-  #   description: "Egress from to external GitLab"
+# - direction: Egress
+#   remoteGenerated: Anywhere
+#   description: "Egress from to external GitLab"
 
 kubernetesSandbox:
   namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
@@ -28,6 +28,6 @@ kubernetesSandbox:
   enableSecurityExceptions: false
 
   additionalNetworkAllow: []
-    # - direction: Egress
-    #   remoteGenerated: Anywhere
-    #   description: "Egress from to external GitLab"
+  # - direction: Egress
+  #   remoteGenerated: Anywhere
+  #   description: "Egress from to external GitLab"
