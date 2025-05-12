@@ -8,9 +8,6 @@ serviceAccountName: "gitlab-runner"
 
 runnerAuthToken: "###ZARF_VAR_RUNNER_AUTH_TOKEN###"
 
-# The namespace in which the runner scheduler is deployed
-runnerNamespace: gitlab-runner
-
 pluginRegistry:
   enabled: true
   image: ghcr.io/defenseunicorns/uds-package-gitlab-runner/gitlab-runner-plugins:latest
@@ -22,7 +19,6 @@ additionalNetworkAllow: []
 #   description: "Egress from to external GitLab"
 
 kubernetesSandbox:
-  # The namespace in which the job pods are deployed
   namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
 
   # whether to have the Zarf Agent ignore the sandbox namespace
