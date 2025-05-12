@@ -10,7 +10,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccountName }}
-    namespace: gitlab-runner
+    namespace: {{ .Values.runnerNamespace }}
 roleRef:
   apiGroup: ""
   kind: ClusterRole
