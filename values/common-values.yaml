@@ -42,6 +42,8 @@ runners:
     registry: "gitlab-runner-registry.{{ .Release.Namespace }}.svc.cluster.local"
     repository: gitlab-org/fleeting/plugins/aws
     tag: "1.0.0"
+    # extra config for [runners.docker] section
+    docker_extra_config: {}
 
   config: |
     [[runners]]
@@ -50,20 +52,22 @@ runners:
       cache_dir = "/tmp/gitlab-runner/cache"
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
-          image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
-          volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
+        image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
+        volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
+        {{- if gt (len .Values.runners.fleeting.docker_extra_config) 0 }}
+        {{- toToml .Values.runners.fleeting.docker_extra_config | nindent 4 }}
+        {{- end }}
     {{- end }}
     {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
       [runners.autoscaler]
         plugin = "{{ printf "%s/%s:%s" (tpl .Values.runners.fleeting.registry .) .Values.runners.fleeting.repository .Values.runners.fleeting.tag }}"
-
         capacity_per_instance = 1
         max_use_count = 1
         max_instances = {{ .Values.runners.fleeting.maxInstances }}
         [runners.autoscaler.plugin_config]
-          {{- toToml .Values.runners.fleeting.pluginConfig | nindent 10 }}
+          {{- toToml .Values.runners.fleeting.pluginConfig | nindent 6 }}
         [runners.autoscaler.connector_config]
-          {{- toToml .Values.runners.fleeting.connectorConfig | nindent 10 }}
+          {{- toToml .Values.runners.fleeting.connectorConfig | nindent 6 }}
         [[runners.autoscaler.policy]]
           idle_count = {{ .Values.runners.fleeting.policy.idle_count }}
           idle_time = {{ .Values.runners.fleeting.policy.idle_time | quote }}
