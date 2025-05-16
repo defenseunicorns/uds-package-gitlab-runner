@@ -43,7 +43,7 @@ runners:
     repository: gitlab-org/fleeting/plugins/aws
     tag: "1.0.0"
     # extra config for [runners.docker] section
-    runners_docker_extra_config: {}
+    docker_extra_config: {}
 
   config: |
     [[runners]]
@@ -54,8 +54,8 @@ runners:
       [runners.docker]
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
         volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
-        {{- if gt (len .Values.runners.fleeting.runners_docker_extra_config) 0 }}
-        {{- toToml .Values.runners.fleeting.runners_docker_extra_config | nindent 4 }}
+        {{- if gt (len .Values.runners.fleeting.docker_extra_config) 0 }}
+        {{- toToml .Values.runners.fleeting.docker_extra_config | nindent 4 }}
         {{- end }}
     {{- end }}
     {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
