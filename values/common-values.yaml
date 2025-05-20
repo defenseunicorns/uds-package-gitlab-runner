@@ -18,6 +18,7 @@ kubernetesSandbox:
   enableSecurityExceptions: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
 
 runners:
+  gitlab_endpoint: "https://gitlab.###ZARF_VAR_DOMAIN###"
   secret: gitlab-gitlab-runner-secret
   job:
     namespace: "###ZARF_VAR_RUNNER_SANDBOX_NAMESPACE###"
@@ -47,8 +48,8 @@ runners:
 
   config: |
     [[runners]]
-      url = "https://gitlab.###ZARF_VAR_DOMAIN###"
-      clone_url = "https://gitlab.###ZARF_VAR_DOMAIN###"
+      url = "{{ .Values.runners.gitlab_endpoint }}"
+      clone_url = "{{ .Values.runners.gitlab_endpoint }}"
       cache_dir = "/tmp/gitlab-runner/cache"
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
