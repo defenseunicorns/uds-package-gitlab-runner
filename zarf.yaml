@@ -41,8 +41,8 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.1"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.1"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.2"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.2"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
 
   - name: gitlab-runner
@@ -73,6 +73,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.1"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.1"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.2"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.2"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"

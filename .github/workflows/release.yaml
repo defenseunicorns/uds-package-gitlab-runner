@@ -27,6 +27,8 @@ jobs:
         exclude:
           - flavor: registry1
             architecture: arm64
+          - flavor: unicorn
+            architecture: arm64
     uses: defenseunicorns/uds-common/.github/workflows/callable-publish.yaml@2c146b9da5a437da70b2506796b899cd8fa2c03c # v1.15.0
     with:
       flavor: ${{ matrix.flavor }}
