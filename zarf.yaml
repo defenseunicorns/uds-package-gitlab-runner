@@ -73,6 +73,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-fips:17.11.1"
-      - "cgr.dev/du-uds-defenseunicorns/gitlab-runner-helper-fips:17.11.1"
-      - "cgr.dev/du-uds-defenseunicorns/busybox-fips:1.37.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.2"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.2"
+      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
