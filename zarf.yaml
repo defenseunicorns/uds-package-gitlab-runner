@@ -41,8 +41,8 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.2"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.2"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.1"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.1"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
 
   - name: gitlab-runner
@@ -58,7 +58,7 @@ components:
           - values/upstream-values.yaml
     images:
       - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.7.0" # renovate: extractVersion=^alpine-v(?<version>\\d+\\.\\d+\\.\\d+)$
-      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v18.0.2"
+      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v18.0.1"
       - "library/alpine:3.22.0"
 
   - name: gitlab-runner
@@ -73,6 +73,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.2"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.2"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.0.1"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.0.1"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
