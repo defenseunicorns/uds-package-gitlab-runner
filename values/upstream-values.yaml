@@ -4,7 +4,7 @@
 image:
   registry: registry.gitlab.com
   image: gitlab-org/gitlab-runner
-  # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/gitlab-runner versioning=semver extractVersion=^alpine-v(?<version>\\d+\\.\\d+\\.\\d+)$
+  # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/gitlab-runner versioning=semver extractVersion=^alpine-v(?<version>\d+\.\d+\.\d+)$
   tag: alpine-v17.7.0
 
 runners:
