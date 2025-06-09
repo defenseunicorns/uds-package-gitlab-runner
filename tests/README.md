@@ -4,7 +4,7 @@ To use these tests ensure Node / NPM are installed and run the following to inst
 
 ```bash
 npm install
-npm install jest --global
+npm install -D vitest
 ```
 
 Then you can execute tests with the following:
