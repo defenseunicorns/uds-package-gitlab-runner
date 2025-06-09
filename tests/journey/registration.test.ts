@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
  */
 
-import { expect, test} from '@jest/globals';
+import { expect, test} from 'vitest';
 import { K8s, kind } from "kubernetes-fluent-client";
 import { zarfExec, retry } from "../common";
 
