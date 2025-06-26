@@ -20,7 +20,7 @@ components:
       - name: gitlab-runner
         namespace: gitlab-runner
         url: https://charts.gitlab.io
-        version: "0.77.2"
+        version: "0.78.1"
         valuesFiles:
           - ../values/common-values.yaml
     images:

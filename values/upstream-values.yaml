@@ -5,7 +5,7 @@ image:
   registry: registry.gitlab.com
   image: gitlab-org/gitlab-runner
   # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/gitlab-runner versioning=regex:^alpine-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  tag: alpine-v18.0.2
+  tag: alpine-v18.1.1
 
 runners:
   job:
@@ -17,4 +17,4 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
-    tag: v18.0.2
+    tag: v18.1.1
