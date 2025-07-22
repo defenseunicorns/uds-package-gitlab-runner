@@ -51,8 +51,8 @@ components:
           - description: Validate GitLab Runner Package
             maxTotalSeconds: 300
             cmd: |
-              if ./zarf tools kubectl get packages.uds.dev gitlab-runner -n gitlab-runner; then
-                 ./zarf tools wait-for packages.uds.dev gitlab-runner -n gitlab-runner '{.status.phase}'=Ready
+              if ./zarf tools kubectl get packages.uds.dev gitlab-runner -n {{ .Deploy.Namespace }}; then
+                 ./zarf tools wait-for packages.uds.dev gitlab-runner -n {{ .Deploy.Namespace }} '{.status.phase}'=Ready
               fi
           - description: Validate GitLab Runner Sandbox Package
             maxTotalSeconds: 300
