@@ -71,7 +71,7 @@ metadata:
   name: gitlab-runner-registry-destination
   namespace: {{ .Release.Namespace }}
 spec:
-  host: gitlab-runner-registry.gitlab-runner.svc.cluster.local
+  host: gitlab-runner-registry.{{ .Release.Namespace }}.svc.cluster.local
   trafficPolicy:
     portLevelSettings:
     - port:
