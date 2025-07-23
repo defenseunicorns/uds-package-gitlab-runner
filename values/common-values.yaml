@@ -33,11 +33,11 @@ runners:
   fleeting:
     maxInstances: 10
     pluginConfig:
-      name: "###ZARF_VAR_GITLAB_RUNNER_AUTOSCALING_GROUP" # AWS Autoscaling Group name
+      name: "###ZARF_VAR_GITLAB_RUNNER_AUTOSCALING_GROUP###" # AWS Autoscaling Group name
     connectorConfig:
       username: "###ZARF_VAR_RUNNER_AMI_USERNAME###"  # This used to be overwritten in bundle overrides through values path mapping, I couldn't get that working via deploying an oci zarf package.
-                                                    # This probably isn't supported until Zarf Zep 0021 zarf values is implemented https://github.com/zarf-dev/proposals/tree/main/0021-zarf-values
-      idle_count: "###ZARF_VAR_GITLAB_RUNNER_AUTOSCALING_IDLE_COUNT###" # Number of instances to keep idle
+                                                     # This probably isn't supported until Zarf Zep 0021 zarf values is implemented https://github.com/zarf-dev/proposals/tree/main/0021-zarf-values
+      idle_count: "###ZARF_VAR_GITLAB_RUNNER_AUTOSCALING_IDLE_COUNT###"  # Number of instances to keep idle
       idle_time: "20m0s"
     registry: "gitlab-runner-registry.{{ .Release.Namespace }}.svc.cluster.local"
     repository: gitlab-org/fleeting/plugins/aws
