@@ -28,7 +28,7 @@ spec:
         port: 443
         description: "UDS Tenant Gateway Services"
 
-    {{- if eq .Values.executor "kubernetes" }}
+    {{- if eq .Values.runners.executor "kubernetes" }}
       - direction: Egress
         podLabels:
           app: gitlab-runner
@@ -42,7 +42,7 @@ spec:
           uds/network-access-gitlab: "true"
     {{- end }}
 
-    {{- if has .Values.executor (list "instance" "docker-autoscaler") }}
+    {{- if has .Values.runners.executor (list "instance" "docker-autoscaler") }}
       - direction: Ingress
         remoteGenerated: IntraNamespace
       - direction: Egress

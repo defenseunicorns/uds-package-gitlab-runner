@@ -17,6 +17,12 @@ metadata:
 variables:
   - name: DOMAIN
     default: "uds.dev"
+  # - name: EXTERNAL_GITLAB
+  #   description: Set whether the GitLab instance is external or not (this will create netpol for egress to that instance)
+  #   default: "false"
+  - name: ADDITIONAL_NETWORK_ALLOW
+    description: The additional network policies to allow for the GitLab Runner
+    default: ""
   - name: RUNNER_AUTH_TOKEN
     description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
   - name: RUNNER_SANDBOX_NAMESPACE

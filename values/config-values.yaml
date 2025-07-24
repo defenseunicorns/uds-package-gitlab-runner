@@ -3,3 +3,5 @@
 
 kubernetesSandbox:
   enableSecurityExceptions: ###ZARF_VAR_ENABLE_SECURITY_CAPABILITIES###
+
+additionalNetworkAllow: ###ZARF_VAR_ADDITIONAL_NETWORK_ALLOW###
