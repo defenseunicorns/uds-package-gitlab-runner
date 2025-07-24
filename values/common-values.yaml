@@ -68,7 +68,9 @@ runners:
         [runners.autoscaler.plugin_config]
           {{- toToml .Values.runners.fleeting.pluginConfig | nindent 6 }}
         [runners.autoscaler.connector_config]
-          {{- toToml .Values.runners.fleeting.connectorConfig | nindent 6 }}
+          {{- $cfg := deepCopy .Values.runners.fleeting.connectorConfig }}
+          {{- $_ := set $cfg "protocol_port" (int $cfg.protocol_port) }}
+          {{- toToml $cfg | nindent 6 }}
         [[runners.autoscaler.policy]]
           idle_count = {{ .Values.runners.fleeting.policy.idle_count }}
           idle_time = {{ .Values.runners.fleeting.policy.idle_time | quote }}
