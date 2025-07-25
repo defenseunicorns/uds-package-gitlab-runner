@@ -29,7 +29,44 @@ runners:
       runAsGroup: 0
   executor: kubernetes
   allowedPullPolicies: []
-
+  cache: {}
+  kubernetes:
+    node_tolerations: {}
+    node_selector: {}
+    volumes: {}
+  # cache:
+  #   Type: "s3"
+  #   Path: "runners"
+  #   Shared: true
+  #   s3:
+  #     ServerAddress: "s3.us-gov-west-1.amazonaws.com"
+  #     AuthenticationType: "iam"
+  #     ServerSideEncryption: "S3"
+  #     BucketName: "your-bucket"
+  #     BucketLocation: "us-gov-west-1"
+  # kubernetes:
+  #   volumes:
+  #     host_path:
+  #       - name: "hostpath-1"
+  #         mount_path: "/mnt/a"
+  #         read_only: true
+  #         host_path: "/var/a"
+  #       - name: "hostpath-2"
+  #         mount_path: "/mnt/b"
+  #     pvc:
+  #       - name: "my-pvc"
+  #         mount_path: "/mnt/data"
+  #     config_map:
+  #       - name: "my-configmap"
+  #         mount_path: "/etc/config"
+  #         items:
+  #           key_1: "file1"
+  #           key_2: "file2"
+    # node_tolerations: 
+    #   "dedicated=experimental": "PreferNoSchedule"
+    #   "special=true": "NoSchedule"
+    # node_selector: 
+    #   nodegroup: my-node-group
   fleeting:
     maxInstances: 10
     pluginConfig:
@@ -51,6 +88,31 @@ runners:
       url = "{{ .Values.runners.gitlab_endpoint }}"
       clone_url = "{{ .Values.runners.gitlab_endpoint }}"
       cache_dir = "/tmp/gitlab-runner/cache"
+    {{- /* 
+      Helper: toml.block
+      This helper wraps .data inside nested maps and arrays as defined by .path
+    */ -}}
+    {{- define "toml.block" -}}
+    {{- $sectionPath := .path }}
+    {{- $data := .data | default dict }}
+    {{- if gt (len $data) 0 }}
+      {{- $segments := splitList "." $sectionPath }}
+      {{- $wrapped := $data }}
+      {{- range $idx := until (int (len $segments)) | reverse }}
+        {{- $key := index $segments $idx }}
+        {{- $wrapped = dict $key $wrapped }}
+      {{- end }}
+      {{- $toml := toToml $wrapped }}
+      {{- $sectionToStrip := printf "^\\[%s\\]\\n" (join "." (slice $segments 0 1)) }}
+      {{- $cleaned := regexReplaceAll $sectionToStrip $toml "" | trimSuffix "\n" }}
+      {{- range $line := splitList "\n" $cleaned }}
+    {{- if and (ne (trim $line) "[runners.kubernetes]") (ne (trim $line) "[runners.kubernetes.volumes]") }}
+    {{- printf "%s\n" $line }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{ include "toml.block" (dict "path" "runners.cache" "data" .Values.runners.cache) }}
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
@@ -83,23 +145,31 @@ runners:
       {{- if .Values.runners.allowedPullPolicies }}
         allowed_pull_policies = [{{ range $index, $val := .Values.runners.allowedPullPolicies }}{{ if $index }}, {{ end }}"{{ $val }}"{{ end }}]
       {{- end }}
-      [runners.kubernetes.pod_labels]
-        "job_id" = "${CI_JOB_ID}"
-        "job_name" = "${CI_JOB_NAME}"
-        "pipeline_id" = "${CI_PIPELINE_ID}"
-        "uds/user" = "${UDS_RUN_AS_USER}"
-        "uds/group" = "${UDS_RUN_AS_GROUP}"
-        "uds/network-access-gitlab" = "true"
-      {{- if .Values.kubernetesSandbox.enableSecurityExceptions }}
-      [runners.kubernetes.build_container_security_context]
-        [runners.kubernetes.build_container_security_context.capabilities]
-          add = ["SETUID", "SETGID"]
-      {{- end }}
-      [runners.kubernetes.helper_container_security_context]
-        run_as_non_root = {{ .Values.runners.helper.securityContext.runAsNonRoot }}
-        run_as_user = {{ .Values.runners.helper.securityContext.runAsUser }}
-        run_as_group = {{ .Values.runners.helper.securityContext.runAsGroup }}
-    {{- end }}
+        [runners.kubernetes.pod_labels]
+          "job_id" = "${CI_JOB_ID}"
+          "job_name" = "${CI_JOB_NAME}"
+          "pipeline_id" = "${CI_PIPELINE_ID}"
+          "uds/user" = "${UDS_RUN_AS_USER}"
+          "uds/group" = "${UDS_RUN_AS_GROUP}"
+          "uds/network-access-gitlab" = "true"
+        {{- if .Values.kubernetesSandbox.enableSecurityExceptions }}
+        [runners.kubernetes.build_container_security_context]
+          [runners.kubernetes.build_container_security_context.capabilities]
+            add = ["SETUID", "SETGID"]
+        {{- end }}
+        [runners.kubernetes.helper_container_security_context]
+          run_as_non_root = {{ .Values.runners.helper.securityContext.runAsNonRoot }}
+          run_as_user = {{ .Values.runners.helper.securityContext.runAsUser }}
+          run_as_group = {{ .Values.runners.helper.securityContext.runAsGroup }}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.node_selector" "data" .Values.runners.kubernetes.node_selector) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.node_tolerations" "data" .Values.runners.kubernetes.node_tolerations) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.host_path" "data" .Values.runners.kubernetes.volumes.host_path) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.pvc" "data" .Values.runners.kubernetes.volumes.pvc) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.config_map" "data" .Values.runners.kubernetes.volumes.config_map) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.secret" "data" .Values.runners.kubernetes.volumes.secret) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.empty_dir" "data" .Values.runners.kubernetes.volumes.empty_dir) -}}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.volumes.csi" "data" .Values.runners.kubernetes.volumes.csi) -}}
+    {{- end -}}
 
 concurrent: 50
 
