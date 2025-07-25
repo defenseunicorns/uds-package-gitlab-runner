@@ -29,17 +29,26 @@ runners:
       runAsGroup: 0
   executor: kubernetes
   allowedPullPolicies: []
-  cache: {}
-    # Type: "s3"
-    # Path: "runners"
-    # Shared: true
-    # s3:
-    #   ServerAddress: "s3.us-gov-west-1.amazonaws.com"
-    #   AuthenticationType: "iam"
-    #   ServerSideEncryption: "S3"
-    #   BucketName: "your-bucket"
-    #   BucketLocation: "us-gov-west-1"
-
+  # cache: {}
+  # kubernetes:
+  #   node_tolerations: {}
+  #   node_selector: {}
+  cache: 
+    Type: "s3"
+    Path: "runners"
+    Shared: true
+    s3:
+      ServerAddress: "s3.us-gov-west-1.amazonaws.com"
+      AuthenticationType: "iam"
+      ServerSideEncryption: "S3"
+      BucketName: "your-bucket"
+      BucketLocation: "us-gov-west-1"
+  kubernetes:
+    node_tolerations: 
+      "dedicated=experimental": "PreferNoSchedule"
+      "special=true": "NoSchedule"
+    node_selector: 
+      nodegroup: my-node-group
   fleeting:
     maxInstances: 10
     pluginConfig:
@@ -62,17 +71,37 @@ runners:
       clone_url = "{{ .Values.runners.gitlab_endpoint }}"
       cache_dir = "/tmp/gitlab-runner/cache"
 
-    {{- $cache := .Values.runners.cache | default dict }}
-    {{- if gt (len $cache) 0 }}
-    {{- $wrapped := dict "runners" (dict "cache" $cache) }}
-    {{- $toml := toToml $wrapped }}
-    {{- $cleaned := regexReplaceAll "^\\[runners\\]\\n" $toml "" }}
-    {{- range $line := splitList "\n" $cleaned }}
-    {{ $line }}
+    {{- /* 
+      Helper: toml.block
+      This helper wraps .data inside nested maps as defined by .path
+      (e.g., "runners.cache.s3"), renders it with toToml, and removes
+      the top-level TOML section header for cleaner inline injection.
+      usage: include "toml.block" (dict "path" "nested.map" "data" .Values.netsed.map)
+    */ -}}
+
+    {{- define "toml.block" -}}
+    {{- $sectionPath := .path }}
+    {{- $data := .data | default dict }}
+    {{- if gt (len $data) 0 }}
+      {{- $segments := splitList "." $sectionPath }}
+      {{- $wrapped := $data }}
+      {{- range $idx := until (int (len $segments)) | reverse }}
+        {{- $key := index $segments $idx }}
+        {{- $wrapped = dict $key $wrapped }}
+      {{- end }}
+      {{- $toml := toToml $wrapped }}
+      {{- $sectionToStrip := printf "^\\[%s\\]\\n" (join "." (slice $segments 0 1)) }}
+      {{- $cleaned := regexReplaceAll $sectionToStrip $toml "" | trimSuffix "\n" }}
+      {{- range $line := splitList "\n" $cleaned }}
+    {{- if ne (trim $line) "[runners.kubernetes]" }}
+    {{- printf "%s\n" $line }}
+      {{- end }}
+      {{- end }}
     {{- end }}
     {{- end }}
 
-
+    {{ include "toml.block" (dict "path" "runners.cache" "data" .Values.runners.cache) }}
+  
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
@@ -105,22 +134,24 @@ runners:
       {{- if .Values.runners.allowedPullPolicies }}
         allowed_pull_policies = [{{ range $index, $val := .Values.runners.allowedPullPolicies }}{{ if $index }}, {{ end }}"{{ $val }}"{{ end }}]
       {{- end }}
-      [runners.kubernetes.pod_labels]
-        "job_id" = "${CI_JOB_ID}"
-        "job_name" = "${CI_JOB_NAME}"
-        "pipeline_id" = "${CI_PIPELINE_ID}"
-        "uds/user" = "${UDS_RUN_AS_USER}"
-        "uds/group" = "${UDS_RUN_AS_GROUP}"
-        "uds/network-access-gitlab" = "true"
-      {{- if .Values.kubernetesSandbox.enableSecurityExceptions }}
-      [runners.kubernetes.build_container_security_context]
-        [runners.kubernetes.build_container_security_context.capabilities]
-          add = ["SETUID", "SETGID"]
-      {{- end }}
-      [runners.kubernetes.helper_container_security_context]
-        run_as_non_root = {{ .Values.runners.helper.securityContext.runAsNonRoot }}
-        run_as_user = {{ .Values.runners.helper.securityContext.runAsUser }}
-        run_as_group = {{ .Values.runners.helper.securityContext.runAsGroup }}
+        [runners.kubernetes.pod_labels]
+          "job_id" = "${CI_JOB_ID}"
+          "job_name" = "${CI_JOB_NAME}"
+          "pipeline_id" = "${CI_PIPELINE_ID}"
+          "uds/user" = "${UDS_RUN_AS_USER}"
+          "uds/group" = "${UDS_RUN_AS_GROUP}"
+          "uds/network-access-gitlab" = "true"
+        {{- if .Values.kubernetesSandbox.enableSecurityExceptions }}
+        [runners.kubernetes.build_container_security_context]
+          [runners.kubernetes.build_container_security_context.capabilities]
+            add = ["SETUID", "SETGID"]
+        {{- end }}
+        [runners.kubernetes.helper_container_security_context]
+          run_as_non_root = {{ .Values.runners.helper.securityContext.runAsNonRoot }}
+          run_as_user = {{ .Values.runners.helper.securityContext.runAsUser }}
+          run_as_group = {{ .Values.runners.helper.securityContext.runAsGroup }}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.node_selector" "data" .Values.runners.kubernetes.node_selector) }}
+    {{ include "toml.block" (dict "path" "runners.kubernetes.node_tolerations" "data" .Values.runners.kubernetes.node_tolerations) }}
     {{- end }}
 
 concurrent: 50
