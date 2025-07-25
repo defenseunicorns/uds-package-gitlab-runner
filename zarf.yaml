@@ -20,9 +20,9 @@ variables:
   # - name: EXTERNAL_GITLAB
   #   description: Set whether the GitLab instance is external or not (this will create netpol for egress to that instance)
   #   default: "false"
-  - name: ADDITIONAL_NETWORK_ALLOW
-    description: The additional network policies to allow for the GitLab Runner
-    default: ""
+  # - name: ADDITIONAL_NETWORK_ALLOW
+  #   description: The additional network policies to allow for the GitLab Runner
+  #   default: ""
   - name: RUNNER_AUTH_TOKEN
     description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
   - name: RUNNER_SANDBOX_NAMESPACE
@@ -32,23 +32,23 @@ variables:
     default: uds
   - name: ENABLE_SECURITY_CAPABILITIES
     default: "false"
-  - name: RUNNER_EXECUTOR_TYPE
-    description: The executor type to use for the GitLab Runner (kubernetes, instance, or docker_autoscaler)
-    default: kubernetes
+  # - name: RUNNER_EXECUTOR_TYPE
+  #   description: The executor type to use for the GitLab Runner (kubernetes, instance, or docker_autoscaler)
+  #   default: kubernetes
   
-  # Fleeting Executor Variables
-  - name: GITLAB_RUNNER_AUTOSCALING_GROUP
-    description: The name of the AWS Autoscaling Group to use for the Fleeting Executor
-    default: my-linux-asg
-  - name: GITLAB_RUNNER_AUTOSCALING_ROLE_ARN
-    description: The ARN of the IAM role to use for the Fleeting Autoscaling Group
-  - name: GITLAB_RUNNER_AUTOSCALING_IDLE_COUNT
-    default: "1"
-  - name: GITLAB_RUNNER_AUTOSCALING_MAX_INSTANCES
-    default: "10"
-  - name: RUNNER_AMI_USERNAME
-    default: ec2-user
-    description: The username to use when connecting to the Fleeting instance (ie. "ec2-user" for amazon linux, "ubuntu" for ubuntu etc)
+  # # Fleeting Executor Variables
+  # - name: GITLAB_RUNNER_AUTOSCALING_GROUP
+  #   description: The name of the AWS Autoscaling Group to use for the Fleeting Executor
+  #   default: my-linux-asg
+  # - name: GITLAB_RUNNER_AUTOSCALING_ROLE_ARN
+  #   description: The ARN of the IAM role to use for the Fleeting Autoscaling Group
+  # - name: GITLAB_RUNNER_AUTOSCALING_IDLE_COUNT
+  #   default: "1"
+  # - name: GITLAB_RUNNER_AUTOSCALING_MAX_INSTANCES
+  #   default: "10"
+  # - name: RUNNER_AMI_USERNAME
+  #   default: ec2-user
+  #   description: The username to use when connecting to the Fleeting instance (ie. "ec2-user" for amazon linux, "ubuntu" for ubuntu etc)
 
 components:
 
