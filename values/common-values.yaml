@@ -29,6 +29,16 @@ runners:
       runAsGroup: 0
   executor: kubernetes
   allowedPullPolicies: []
+  cache: {}
+    # Type: "s3"
+    # Path: "runners"
+    # Shared: true
+    # s3:
+    #   ServerAddress: "s3.us-gov-west-1.amazonaws.com"
+    #   AuthenticationType: "iam"
+    #   ServerSideEncryption: "S3"
+    #   BucketName: "your-bucket"
+    #   BucketLocation: "us-gov-west-1"
 
   fleeting:
     maxInstances: 10
@@ -51,6 +61,18 @@ runners:
       url = "{{ .Values.runners.gitlab_endpoint }}"
       clone_url = "{{ .Values.runners.gitlab_endpoint }}"
       cache_dir = "/tmp/gitlab-runner/cache"
+
+    {{- $cache := .Values.runners.cache | default dict }}
+    {{- if gt (len $cache) 0 }}
+    {{- $wrapped := dict "runners" (dict "cache" $cache) }}
+    {{- $toml := toToml $wrapped }}
+    {{- $cleaned := regexReplaceAll "^\\[runners\\]\\n" $toml "" }}
+    {{- range $line := splitList "\n" $cleaned }}
+    {{ $line }}
+    {{- end }}
+    {{- end }}
+
+
     {{- if eq .Values.runners.executor "docker-autoscaler" }}
       [runners.docker]
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
