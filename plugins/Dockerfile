@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
 # Stage 1: Pull the image and prepare the registry layout
-FROM alpine:3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715 AS prep
+FROM alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS prep
 
 ARG TARGETARCH
 
@@ -103,7 +103,7 @@ RUN <<EXE
 EXE
 
 # Stage 2: Build the final registry image
-FROM registry:3.0.0@sha256:1fc7de654f2ac1247f0b67e8a459e273b0993be7d2beda1f3f56fbf1001ed3e7
+FROM registry:3.0.0@sha256:3725021071ec9383eb3d87ddbdff9ed602439b3f7c958c9c2fb941049ea6531d
 
 # Copy the prepared registry layout from the build stage
 COPY --from=prep /registry_data/docker/registry/v2/ /var/lib/registry/docker/registry/v2/
