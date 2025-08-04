@@ -65,6 +65,9 @@ runners:
         capacity_per_instance = 1
         max_use_count = 1
         max_instances = {{ .Values.runners.fleeting.maxInstances }}
+        {{- if gt (len .Values.runners.autoscaler.extra_config) 0 }}
+        {{- toToml .Values.runners.autoscaler.extra_config | nindent 4 }}
+        {{- end }}
         [runners.autoscaler.plugin_config]
           {{- toToml .Values.runners.fleeting.pluginConfig | nindent 6 }}
         [runners.autoscaler.connector_config]
