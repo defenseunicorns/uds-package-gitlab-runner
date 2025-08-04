@@ -29,6 +29,8 @@ runners:
       runAsGroup: 0
   executor: kubernetes
   allowedPullPolicies: []
+  autoscaler:
+    extra_config: {}
 
   fleeting:
     maxInstances: 10
