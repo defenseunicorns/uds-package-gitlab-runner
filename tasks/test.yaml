@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
 includes:
-  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.17.0/tasks/remove.yaml
-  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.17.0/tasks/deploy.yaml
+  - remove: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.18.0/tasks/remove.yaml
+  - deploy: https://raw.githubusercontent.com/defenseunicorns/uds-common/v1.18.0/tasks/deploy.yaml
 
 tasks:
   - name: all

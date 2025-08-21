@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.1",
-    "kubernetes-fluent-client": "3.10.0",
+    "kubernetes-fluent-client": "3.10.1",
     "vitest": "^3.2.3"
   }
 }
