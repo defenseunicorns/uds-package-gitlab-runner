@@ -29,7 +29,13 @@ runners:
       runAsGroup: 0
   executor: kubernetes
   allowedPullPolicies: []
+  # Applies to [runners.autoscaler] section of config
+  # https://docs.gitlab.com/runner/configuration/advanced-configuration/#the-runnersautoscaler-section
   autoscaler:
+    extra_config: {}
+  # Applies to [runners.kubernetes] section of config
+  # https://docs.gitlab.com/runner/configuration/advanced-configuration/#the-runnerskubernetes-section
+  kubernetes:
     extra_config: {}
 
   fleeting:
@@ -45,7 +51,8 @@ runners:
     registry: "gitlab-runner-registry.{{ .Release.Namespace }}.svc.cluster.local"
     repository: gitlab-org/fleeting/plugins/aws
     tag: "1.0.0"
-    # extra config for [runners.docker] section
+    # Applies to [runners.docker] section of config
+    # https://docs.gitlab.com/runner/configuration/advanced-configuration/#the-runnersdocker-section
     docker_extra_config: {}
 
   config: |
@@ -85,9 +92,12 @@ runners:
         helper_image = "{{ printf "%s/%s:%s" .Values.runners.helper.registry .Values.runners.helper.repository .Values.runners.helper.tag }}"
         image = "{{ printf "%s/%s:%s" .Values.runners.job.registry .Values.runners.job.repository .Values.runners.job.tag }}"
         image_pull_secrets = ["private-registry"]
-      {{- if .Values.runners.allowedPullPolicies }}
+        {{- if .Values.runners.allowedPullPolicies }}
         allowed_pull_policies = [{{ range $index, $val := .Values.runners.allowedPullPolicies }}{{ if $index }}, {{ end }}"{{ $val }}"{{ end }}]
-      {{- end }}
+        {{- end }}
+        {{- if gt (len .Values.runners.kubernetes.extra_config) 0 }}
+        {{- toToml .Values.runners.kubernetes.extra_config | nindent 4 }}
+        {{- end }}
       [runners.kubernetes.pod_labels]
         "job_id" = "${CI_JOB_ID}"
         "job_name" = "${CI_JOB_NAME}"
