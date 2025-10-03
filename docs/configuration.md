@@ -23,16 +23,18 @@ Network policies are controlled via the `uds-gitlab-runner-config` chart in acco
 
 ### GitLab Server Gateway
 
-The `gateway` configuration value specifies which Istio gateway the GitLab Runner should use to connect to the GitLab server. This determines the network policy for runner-to-server communication.
+The `gateway` configuration value specifies which Istio gateway the GitLab Runner should use to connect to the GitLab instance. This determines the network policy for runner-to-server communication.
+
+By default, this is set to `tenant` which routes traffic through the tenant gateway. In the infrequent edge case where your GitLab instance is inaccessible through the tenant gateway, you can override this value.
 
 Example:
 ```yaml
-gateway: tenant
+gateway: admin
 ```
 
-By default, this is set to `tenant` which routes traffic through the tenant gateway. You can override this value in the `uds-gitlab-runner-config` chart to use a different gateway if your GitLab server is accessible through an alternative gateway such as admin.
+**Important:** It is not recommended to deploy Kubernetes executor runners in the same cluster as GitLab, as this would allow arbitrary code execution within the GitLab cluster boundary. This gateway configuration should only be used with fleeting-based runners (such as those using the instance or autoscaler executors), where the runner manager orchestrates ephemeral VMs outside the cluster boundary via cloud management APIs, rather than executing workloads directly in-cluster.
 
-When using this option, you may need to manually set the `runners.gitlab_endpoint` value to be the correct domain for your gateway.
+When using this option, you may need to manually set the `runners.gitlab_endpoint` value to be the correct domain for your GitLab instance.
 
 ## Runner
 
