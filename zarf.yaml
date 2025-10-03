@@ -73,6 +73,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.4.0"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.4.0"
-      - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
+      - "quay.io/rfcurated/gitlab/gitlab-runner:18.4.0-jammy-fips-rfcurated"
+      - "quay.io/rfcurated/gitlab/gitlab-runner-helper:18.4.0-jammy-fips-rfcurated"
+      - "quay.io/rfcurated/rfubu:22.04-scratch-fips-rfcurated"
