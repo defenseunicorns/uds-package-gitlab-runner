@@ -32,6 +32,8 @@ gateway: tenant
 
 By default, this is set to `tenant` which routes traffic through the tenant gateway. You can override this value in the `uds-gitlab-runner-config` chart to use a different gateway if your GitLab server is accessible through an alternative gateway such as admin.
 
+When using this option, you may need to manually set the `runners.gitlab_endpoint` value to be the correct domain for your gateway.
+
 ## Runner
 
 Additional runner configuration can be achieved by setting the following Zarf variables or helm values across the `uds-gitlab-runner-config` chart and the `gitlab-runner` chart.
