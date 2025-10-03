@@ -56,10 +56,10 @@ jobs:
         uses: defenseunicorns/setup-uds@ab842abcad1f7a3305c2538e3dd1950d0daacfa5 # v1.0.1
         with:
           # renovate: datasource=github-tags depName=defenseunicorns/uds-cli versioning=semver
-          version: v0.27.11
+          version: v0.27.14
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4
+        uses: aws-actions/configure-aws-credentials@a03048d87541d1d9fcf2ecf528a4a65ba9bd7838 # v5
         with:
           role-to-assume: ${{ secrets.AWS_GOVCLOUD_ROLE_TO_ASSUME }}
           role-session-name: ${{ github.job || github.event.client_payload.pull_request.head.sha || github.sha }}
