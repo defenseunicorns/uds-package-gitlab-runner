@@ -23,7 +23,7 @@ Network policies are controlled via the `uds-gitlab-runner-config` chart in acco
 
 ### GitLab Server Gateway
 
-The `gateway` configuration value specifies which UDS gateway the GitLab Runner should use to connect to the GitLab server. This determines the network policy for runner-to-server communication.
+The `gateway` configuration value specifies which Istio gateway the GitLab Runner should use to connect to the GitLab server. This determines the network policy for runner-to-server communication.
 
 Example:
 ```yaml
