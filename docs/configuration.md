@@ -21,6 +21,21 @@ Network policies are controlled via the `uds-gitlab-runner-config` chart in acco
 - `additionalNetworkAllow`: sets custom network policies for the GitLab runner namespace - note this is _not_ where jobs run and is the orchestration side of the GitLab runner deployment.
 - `kubernetesSandbox.additionalNetworkAllow`: sets custom network policies for the GitLab runner sandbox namespace - this is where jobs will execute and can be used to allow them to access external services.
 
+### GitLab Server Gateway
+
+The `gateway` configuration value specifies which Istio gateway the GitLab Runner should use to connect to the GitLab instance. This determines the network policy for runner-to-server communication.
+
+By default, this is set to `tenant` which routes traffic through the tenant gateway. In the infrequent edge case where your GitLab instance is inaccessible through the tenant gateway, you can override this value.
+
+Example:
+```yaml
+gateway: admin
+```
+
+**Important:** It is not recommended to deploy Kubernetes executor runners in the same cluster as GitLab, as this would allow arbitrary code execution within the GitLab cluster boundary. This gateway configuration should only be used with fleeting-based runners (such as those using the instance or autoscaler executors), where the runner manager orchestrates ephemeral VMs outside the cluster boundary via cloud management APIs, rather than executing workloads directly in-cluster.
+
+When using this option, you may need to manually set the `runners.gitlab_endpoint` value to be the correct domain for your GitLab instance.
+
 ## Runner
 
 Additional runner configuration can be achieved by setting the following Zarf variables or helm values across the `uds-gitlab-runner-config` chart and the `gitlab-runner` chart.

@@ -20,13 +20,13 @@ spec:
     allow:
       # Allow access to other UDS services (i.e. gitlab.<domain>, sonarqube.<domain>) from the runner
       - direction: Egress
-        remoteNamespace: istio-tenant-gateway
+        remoteNamespace: istio-{{ .Values.gateway }}-gateway
         remoteSelector:
-          app: tenant-ingressgateway
+          app: {{ .Values.gateway }}-ingressgateway
         selector:
           app: gitlab-runner
         port: 443
-        description: "UDS Tenant Gateway Services"
+        description: "UDS {{ .Values.gateway }} Gateway Services"
 
     {{- if eq .Values.executor "kubernetes" }}
       - direction: Egress

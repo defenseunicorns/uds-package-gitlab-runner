@@ -31,3 +31,6 @@ kubernetesSandbox:
   # - direction: Egress
   #   remoteGenerated: Anywhere
   #   description: "Egress from to external GitLab"
+
+# gateway of gitlab server
+gateway: tenant
