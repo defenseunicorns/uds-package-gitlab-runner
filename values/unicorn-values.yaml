@@ -6,7 +6,7 @@ useTini: true
 
 image:
   registry: "quay.io"
-  image: "rfcurated/gitlab/gitlab-runner"
+  image: "rfcurated/gitlab/gitlab-runner-ocp"
   # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner versioning=semver
   tag: 18.4.0-jammy-fips-rfcurated
 
@@ -15,9 +15,9 @@ runners:
     registry: "###ZARF_REGISTRY###"
     repository: rfcurated/rfubu
     # renovate: datasource=docker depName=quay.io/rfcurated/rfubu versioning=docker
-    tag: 22.04-scratch-fips-rfcurated
+    tag: 22.04-fips-rfcurated
   helper:
     registry: "###ZARF_REGISTRY###"
-    repository: rfcurated/gitlab/gitlab-runner-helper
+    repository: rfcurated/gitlab/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper versioning=semver
     tag: 18.4.0-jammy-fips-rfcurated
