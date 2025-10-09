@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
 # This allows the runner to install on UBI-based images (https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/main/values.yaml?ref_type=heads#L20)
-useTini: true
+# useTini: true
 
 image:
   registry: "quay.io"
-  image: "rfcurated/gitlab/gitlab-runner-ocp"
+  image: "rfcurated/gitlab/gitlab-runner"
   # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner versioning=semver
   tag: 18.4.0-jammy-fips-rfcurated
 
@@ -19,5 +19,9 @@ runners:
   helper:
     registry: "###ZARF_REGISTRY###"
     repository: rfcurated/gitlab/gitlab-runner-helper-ocp
-    # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper versioning=semver
+    # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp versioning=semver
     tag: 18.4.0-jammy-fips-rfcurated
+
+podSecurityContext:
+  runAsUser: 999
+  fsGroup: 65534
