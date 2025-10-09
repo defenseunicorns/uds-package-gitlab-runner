@@ -75,4 +75,4 @@ components:
     images:
       - "quay.io/rfcurated/gitlab/gitlab-runner:18.4.0-jammy-fips-rfcurated"
       - "quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp:18.4.0-jammy-fips-rfcurated"
-      - "quay.io/rfcurated/rfubu:22.04-scratch-fips-rfcurated"
+      - "quay.io/rfcurated/rfubu:22.04-fips-rfcurated"
