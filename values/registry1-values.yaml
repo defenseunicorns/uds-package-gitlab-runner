@@ -21,7 +21,3 @@ runners:
     repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
     tag: v18.4.0
-
-podSecurityContext:
-  runAsUser: 100
-  fsGroup: 65534

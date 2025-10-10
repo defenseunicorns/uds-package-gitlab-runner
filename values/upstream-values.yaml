@@ -18,7 +18,3 @@ runners:
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
     tag: v18.4.0
-
-podSecurityContext:
-  runAsUser: 100
-  fsGroup: 65534

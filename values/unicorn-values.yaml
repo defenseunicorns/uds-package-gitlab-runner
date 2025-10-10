@@ -6,8 +6,8 @@
 
 image:
   registry: "quay.io"
-  image: "rfcurated/gitlab/gitlab-runner"
-  # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner versioning=semver
+  image: "rfcurated/gitlab/gitlab-runner-ocp"
+  # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-ocp versioning=semver
   tag: 18.4.0-jammy-fips-rfcurated
 
 runners:
@@ -21,7 +21,3 @@ runners:
     repository: rfcurated/gitlab/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp versioning=semver
     tag: 18.4.0-jammy-fips-rfcurated
-
-podSecurityContext:
-  runAsUser: 999
-  fsGroup: 65534
