@@ -2,22 +2,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
 # This allows the runner to install on UBI-based images (https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/main/values.yaml?ref_type=heads#L20)
-useTini: true
+# useTini: true
 
 image:
-  registry: "registry1.dso.mil"
-  image: "ironbank/gitlab/gitlab-runner/gitlab-runner"
-  # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner versioning=semver
-  tag: v18.3.0
+  registry: "quay.io"
+  image: "rfcurated/gitlab/gitlab-runner-ocp"
+  # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-ocp versioning=semver
+  tag: 18.4.0-jammy-fips-rfcurated
 
 runners:
   job:
     registry: "###ZARF_REGISTRY###"
-    repository: ironbank/redhat/ubi/ubi9
-    # renovate: datasource=docker depName=registry1.dso.mil/ironbank/redhat/ubi/ubi9 versioning=docker
-    tag: "9.6"
+    repository: rfcurated/rfubu
+    # renovate: datasource=docker depName=quay.io/rfcurated/rfubu versioning=docker
+    tag: 22.04-fips-rfcurated
   helper:
     registry: "###ZARF_REGISTRY###"
-    repository: ironbank/gitlab/gitlab-runner/gitlab-runner-helper
-    # renovate: datasource=docker depName=registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper versioning=semver
-    tag: v18.3.0
+    repository: rfcurated/gitlab/gitlab-runner-helper-ocp
+    # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp versioning=semver
+    tag: 18.4.0-jammy-fips-rfcurated
