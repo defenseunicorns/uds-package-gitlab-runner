@@ -19,6 +19,7 @@ variables:
     default: "uds.dev"
   - name: RUNNER_AUTH_TOKEN
     description: The Runner Authentication Token to use when registering the GitLab Runner (if none is provided will register a default instance runner)
+    sensitive: true
   - name: RUNNER_SANDBOX_NAMESPACE
     default: gitlab-runner-sandbox
   - name: RUNNER_TAGS
