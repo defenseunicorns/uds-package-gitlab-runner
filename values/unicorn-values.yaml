@@ -8,16 +8,16 @@ image:
   registry: "quay.io"
   image: "rfcurated/gitlab/gitlab-runner-ocp"
   # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-ocp versioning=docker
-  tag: 18.4.0-jammy-fips-rfcurated
+  tag: 18.5.0-jammy-fips-rfcurated
 
 runners:
   job:
     registry: "###ZARF_REGISTRY###"
     repository: rfcurated/rfubu
     # renovate: datasource=docker depName=quay.io/rfcurated/rfubu versioning=docker
-    tag: 22.04-fips-rfcurated
+    tag: 24.4-fips-rfcurated
   helper:
     registry: "###ZARF_REGISTRY###"
     repository: rfcurated/gitlab/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp versioning=docker
-    tag: 18.4.0-jammy-fips-rfcurated
+    tag: 18.5.0-jammy-fips-rfcurated

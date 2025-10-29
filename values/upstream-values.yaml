@@ -5,16 +5,16 @@ image:
   registry: registry.gitlab.com
   image: gitlab-org/gitlab-runner
   # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/gitlab-runner versioning=regex:^alpine-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  tag: alpine-v18.4.0
+  tag: alpine-v18.5.0
 
 runners:
   job:
     registry: "###ZARF_REGISTRY###"
     repository: library/alpine
     # renovate: datasource=docker depName=library/alpine versioning=semver
-    tag: "3.22.1"
+    tag: "3.22.2"
   helper:
     registry: "###ZARF_REGISTRY###"
     repository: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp
     # renovate: datasource=docker depName=registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp versioning=semver
-    tag: v18.4.0
+    tag: v18.5.0

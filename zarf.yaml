@@ -42,8 +42,8 @@ components:
         valuesFiles:
           - values/registry1-values.yaml
     images:
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.4.0"
-      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.4.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner:v18.5.0"
+      - "registry1.dso.mil/ironbank/gitlab/gitlab-runner/gitlab-runner-helper:v18.5.0"
       - "registry1.dso.mil/ironbank/redhat/ubi/ubi9:9.6"
 
   - name: gitlab-runner
@@ -58,9 +58,9 @@ components:
         valuesFiles:
           - values/upstream-values.yaml
     images:
-      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v18.4.0" # renovate: versioning=regex:^alpine-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v18.4.0"
-      - "library/alpine:3.22.1"
+      - "registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v18.5.0" # renovate: versioning=regex:^alpine-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+      - "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v18.5.0"
+      - "library/alpine:3.22.2"
 
   - name: gitlab-runner
     required: true
@@ -74,6 +74,6 @@ components:
         valuesFiles:
           - values/unicorn-values.yaml
     images:
-      - "quay.io/rfcurated/gitlab/gitlab-runner-ocp:18.4.0-jammy-fips-rfcurated"
-      - "quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp:18.4.0-jammy-fips-rfcurated"
-      - "quay.io/rfcurated/rfubu:22.04-fips-rfcurated"
+      - "quay.io/rfcurated/gitlab/gitlab-runner-ocp:18.5.0-jammy-fips-rfcurated"
+      - "quay.io/rfcurated/gitlab/gitlab-runner-helper-ocp:18.5.0-jammy-fips-rfcurated"
+      - "quay.io/rfcurated/rfubu:24.4-fips-rfcurated"
