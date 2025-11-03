@@ -1,0 +1,20 @@
+# Copyright 2024 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
+name: Scan Experimental
+on:
+  # This workflow is triggered on pull requests to the main branch.
+  pull_request:
+    # TODO: align this with `scan` once we have a stable version of the workflow
+    types: [milestoned, opened, reopened, synchronize]
+
+jobs:
+  scan:
+    permissions:
+      contents: read # Allows reading the content of the repository.
+      packages: read # Allows reading the content of the repository's packages.
+      id-token: write # Allows authentication to Chainguard via OIDC.
+      pull-requests: write # Allows writing the scan results comment to the pull request.
+      # mstodo change to sha
+    uses: defenseunicorns/uds-common/.github/workflows/callable-scan-2.yaml@afa332f9a101e08b3c21f6e84a79fa1cd1db0668 # unreleased version - for tests
+    secrets: inherit # Inherits all secrets from the parent workflow.
