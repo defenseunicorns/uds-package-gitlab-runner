@@ -16,5 +16,5 @@ jobs:
       id-token: write # Allows authentication to Chainguard via OIDC.
       pull-requests: write # Allows writing the scan results comment to the pull request.
       # mstodo change to sha
-    uses: defenseunicorns/uds-common/.github/workflows/callable-scan-2.yaml@michalsz/new-scan-test # unreleased version - for tests
+    uses: defenseunicorns/uds-common/.github/workflows/callable-scan-2.yaml@dcaf4e1eda5408a1e937cc0aa6b77e0bc4ee23af # unreleased version - for tests
     secrets: inherit # Inherits all secrets from the parent workflow.
